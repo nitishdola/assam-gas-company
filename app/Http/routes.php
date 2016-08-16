@@ -191,3 +191,41 @@ Route::group(['prefix'=>'item-sub-group'], function() {
         'uses' => 'ItemSubGroupsController@disable'
     ]);
 });
+
+Route::group(['prefix'=>'measurement-unit'], function() {
+    Route::get('/create', [
+        'as' => 'measurement_unit.create',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'measurement_unit.store',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'measurement_unit.index',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'measurement_unit.edit',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'measurement_unit.update',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'measurement_unit.disable',
+        'middleware' => ['admin'],
+        'uses' => 'MeasurementUnitsController@disable'
+    ]);
+});

@@ -83,8 +83,13 @@
 <!-- <script src="javascripts/morris.min.js" type="text/javascript"></script> -->
 <script src="{{ asset('assets/javascripts/main.js') }}" type="text/javascript"></script>
 
+<script>
+$('.select2able').select2({  placeholder: "Select a customer"});
+</script>
+
 @yield('pageJs')
     
 @yield('pageSpecificScripts')
+
 </body>
 </html>

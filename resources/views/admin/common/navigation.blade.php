@@ -27,9 +27,43 @@
         <li>
           <a class="current" href="{{ route('admin.dashboard') }}"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
         </li>
-        <li><a href="social.html">
-          <span aria-hidden="true" class="se7en-feed"></span>Social Feed</a>
+
+        <li class="dropdown"><a data-toggle="dropdown" href="#">
+          <span aria-hidden="true" class="se7en-tables"></span>Department and Section<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{{ route('department.create') }}">Add Department</a>
+            </li>
+            <li>
+              <a href="{{ route('department.index') }}">View Departments</a>
+            </li>
+            <li>
+              <a href="{{ route('section.create') }}">Add Section</a>
+            </li>
+            <li>
+              <a href="{{ route('section.index') }}">View Sections</a>
+            </li>
+          </ul>
         </li>
+
+        <li class="dropdown"><a data-toggle="dropdown" href="#">
+          <span aria-hidden="true" class="se7en-tables"></span>Item Group &amp; Sub-group<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{{ route('item_group.create') }}">Add Item Group</a>
+            </li>
+            <li>
+              <a href="{{ route('item_group.index') }}">View Item Group</a>
+            </li>
+            <li>
+              <a href="{{ route('item_sub_group.create') }}">Add Item Sub Group</a>
+            </li>
+            <li>
+              <a href="{{ route('item_sub_group.index') }}">View All Item Sub Group</a>
+            </li>
+          </ul>
+        </li>
+
         <li class="dropdown"><a data-toggle="dropdown" href="#">
           <span aria-hidden="true" class="se7en-star"></span>Features<b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -60,41 +94,8 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown"><a data-toggle="dropdown" href="#">
-          <span aria-hidden="true" class="se7en-forms"></span>Department<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ route('department.create') }}">
-              <p>
-                Add
-              </p>
-              </a>
-              
-            </li>
-            <li>
-              <a href="{{ route('department.index') }}">View All</a>
-            </li>
-          </ul>
-        </li>
-        <li class="dropdown"><a data-toggle="dropdown" href="#">
-          <span aria-hidden="true" class="se7en-tables"></span>Tables<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="tables.html">Basic tables</a>
-            </li>
-            <li>
-              <a href="datatables.html">DataTables</a>
-            </li>
-            <li><a href="datatables-editable.html">
-              <div class="notifications label label-warning">
-                New
-              </div>
-              <p>
-                Editable DataTables
-              </p></a>
-              
-            </li>
-          </ul>
-        </li>
+        
+        
         <li><a href="charts.html">
           <span aria-hidden="true" class="se7en-charts"></span>Charts</a>
         </li>

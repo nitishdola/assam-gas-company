@@ -74,3 +74,120 @@ Route::group(['prefix'=>'department'], function() {
         'uses' => 'DepartmentsController@disable'
     ]);
 });
+
+
+Route::group(['prefix'=>'section'], function() {
+    Route::get('/create', [
+        'as' => 'section.create',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'section.store',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'section.index',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'section.edit',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'section.update',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'section.disable',
+        'middleware' => ['admin'],
+        'uses' => 'SectionsController@disable'
+    ]);
+});
+
+
+Route::group(['prefix'=>'item-group'], function() {
+    Route::get('/create', [
+        'as' => 'item_group.create',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'item_group.store',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'item_group.index',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'item_group.edit',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'item_group.update',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'item_group.disable',
+        'middleware' => ['admin'],
+        'uses' => 'ItemGroupsController@disable'
+    ]);
+});
+
+
+Route::group(['prefix'=>'item-sub-group'], function() {
+    Route::get('/create', [
+        'as' => 'item_sub_group.create',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'item_sub_group.store',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'item_sub_group.index',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'item_sub_group.edit',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'item_sub_group.update',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'item_sub_group.disable',
+        'middleware' => ['admin'],
+        'uses' => 'ItemSubGroupsController@disable'
+    ]);
+});

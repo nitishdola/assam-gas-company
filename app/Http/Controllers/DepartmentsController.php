@@ -28,7 +28,7 @@ class DepartmentsController extends Controller
 
         $data['created_by'] = Auth::guard('admin')->user()->id;  
     	$message = '';
-    	if($renter = Department::create($data)) {
+    	if(Department::create($data)) {
             $message .= 'Department added successfully !';
         }else{
             $message .= 'Unable to add department !';

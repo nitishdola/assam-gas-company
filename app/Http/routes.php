@@ -37,6 +37,45 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/admin', ['as' => 'admin.dashboard', 'uses' => 'AdminController@index']);
 });  
 
+
+Route::group(['prefix'=>'user'], function() {
+    Route::get('/create', [
+        'as' => 'admin.create.user',
+        'middleware' => ['admin'],
+        'uses' => 'AdminsController@create_user'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'rack.store',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'rack.index',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'rack.edit',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'rack.update',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'rack.disable',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@disable'
+    ]);
+});
+
 Route::group(['prefix'=>'department'], function() {
     Route::get('/create', [
         'as' => 'department.create',

@@ -1,95 +1,134 @@
 <!DOCTYPE html>
-<html>
-  
+<html lang="en">
 <head>
-	<title> Dashboard @yield('title')</title>
-	<link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/bootstrap.min.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/font-awesome.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/se7en-font.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/isotope.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/jquery.fancybox.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/fullcalendar.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/wizard.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/select2.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/morris.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/datatables.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/datepicker.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/timepicker.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/colorpicker.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/bootstrap-switch.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/daterange-picker.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/typeahead.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/summernote.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/pygments.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/style.css') }}" media="all" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/color/green.css') }}" media="all" rel="alternate stylesheet" title="green-theme" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/color/orange.css') }}" media="all" rel="alternate stylesheet" title="orange-theme" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/color/magenta.css') }}" media="all" rel="alternate stylesheet" title="magenta-theme" type="text/css" />
-	<link href="{{ asset('assets/stylesheets/color/gray.css') }}" media="all" rel="alternate stylesheet" title="gray-theme" type="text/css" />
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-
-	@yield('pageCss')
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Admin Dashboard | @yield('pageTitle')</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" type="text/css"  href="{{ asset('assets/css/admin.css') }}" >
+	<link rel="stylesheet" type="text/css"  href="{{ asset('assets/css/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css"  href="{{ asset('assets/css/responsive.css') }}" >
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+	<!-- ANIMATE -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animatecss/animate.min.css') }}" />
+	<!-- DATE RANGE PICKER -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" />
+	<!-- TODO -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/jquery-todo/css/styles.css') }}" />
+	<!-- FULL CALENDAR -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/fullcalendar/fullcalendar.min.css') }}" />
+	<!-- GRITTER -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/gritter/css/jquery.gritter.css') }}" />
+	<!-- FONTS -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 </head>
-
 <body>
+	@include('admin.common.header')
+	<!-- PAGE -->
+	<section id="page">
+		@include('admin.common.sidebar')		
+		<div id="main-content">
+			<div class="container">
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<div class="row">
+						  <div class="col-sm-12">
+						    <div class="page-header">
+						      <!-- STYLER -->
+						      
+						      <!-- /STYLER -->
+						      <!-- BREADCRUMBS -->
+						      <ul class="breadcrumb">
+						        @yield('breadcumb')
+						      </ul>
+						      <!-- /BREADCRUMBS -->
+						      <div class="clearfix">
+						        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
+						        <!-- DATE RANGE PICKER -->
+						        <span class="date-range pull-right">
+						          @yield('sorting')
+						        </span>
+						        <!-- /DATE RANGE PICKER -->
+						      </div>
+						      <div class="description">@yield('pageSubTitle')</div>
+						    </div>
+						  </div>
+						</div>
 
-<div class="modal-shiftfix">
-<!--nav-->
-@include('admin.common.navigation')
-<!--/nav-->
+						<div class="row">
+							<div class="col-lg-12">
+								@if(Session::has('message'))
+	                            <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+	                                <button type="button" class="close" data-dismiss="alert">×</button>
+	                                {!! Session::get('message') !!}
+	                            </div>
+	                            @endif
+	                        </div>
+						</div>
 
-	<div class="container-fluid main-content">
-		<div class="row">
-            <div class="col-md-8  col-offset-2 alert_msg">
-                @if (Session::has('message'))
-                <div class="alert alert-warning alert-dismissable alert-red">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-                  {!!Session::get('message')!!}
-                </div>
-                @endif
-            </div>
-        </div>
-        <div class="row">
-			<div class="container-fluid main-content"><div class="page-title">
-		  		<h3>@yield('pageTitle')</h3>
+						@yield('content')
+						
+					</div><!-- /CONTENT-->
+				</div>
 			</div>
-			@yield('content')
 		</div>
-	</div>
-
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="{{ asset('assets/javascripts/bootstrap.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/javascripts/jquery.mousewheel.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/javascripts/jquery.bootstrap.wizard.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/javascripts/fullcalendar.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ asset('assets/javascripts/jquery.dataTables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/javascripts/datatable-editable.js') }}" type="text/javascript"></script>
-<!-- <script src="javascripts/jquery.easy-pie-chart.js" type="text/javascript"></script> -->
-
-<script src="{{ asset('assets/javascripts/modernizr.custom.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/javascripts/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/javascripts/select2.js') }}" type="text/javascript"></script>
-<!-- <script src="javascripts/wysiwyg.js" type="text/javascript"></script>
-<script src="javascripts/summernote.min.js" type="text/javascript"></script> -->
-<script src="{{ asset('assets/javascripts/typeahead.js') }}" type="text/javascript"></script>
-<!-- <script src="javascripts/morris.min.js" type="text/javascript"></script> -->
-<script src="{{ asset('assets/javascripts/main.js') }}" type="text/javascript"></script>
-
-<script>
-$('.select2able').select2({  placeholder: "Select a customer"});
-</script>
-
-@yield('pageJs')
-    
-@yield('pageSpecificScripts')
-
+	</section>
+	<!--/PAGE -->
+	<!-- JAVASCRIPTS -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- JQUERY -->
+	<script src="{{ asset('assets/js/jquery/jquery-2.0.3.min.js') }}"></script>
+	<!-- JQUERY UI-->
+	<script src="{{ asset('assets/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}"></script>
+	<!-- BOOTSTRAP -->
+	<script src="{{ asset('assets/bootstrap-dist/js/bootstrap.min.js') }}"></script>
+	
+		
+	<!-- DATE RANGE PICKER -->
+	<script src="{{ asset('assets/js/bootstrap-daterangepicker/moment.min.js') }}"></script>
+	
+	<script src="{{ asset('assets/js/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript" src="{{ asset('assets/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js') }}"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript" src="{{ asset('assets/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js') }}"></script>
+	<!-- BLOCK UI -->
+	<script type="text/javascript" src="{{ asset('assets/js/jQuery-BlockUI/jquery.blockUI.min.js') }}"></script>
+	<!-- SPARKLINES -->
+	<script type="text/javascript" src="{{ asset('assets/js/sparklines/jquery.sparkline.min.js') }}"></script>
+	<!-- EASY PIE CHART -->
+	<script src="{{ asset('assets/js/jquery-easing/jquery.easing.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/js/easypiechart/jquery.easypiechart.min.js') }}"></script>
+	<!-- FLOT CHARTS -->
+	<script src="{{ asset('assets/js/flot/jquery.flot.min.js') }}"></script>
+	<script src="{{ asset('assets/js/flot/jquery.flot.time.min.js') }}"></script>
+    <script src="{{ asset('assets/js/flot/jquery.flot.selection.min.js') }}"></script>
+	<script src="{{ asset('assets/js/flot/jquery.flot.resize.min.js') }}"></script>
+    <script src="{{ asset('assets/js/flot/jquery.flot.pie.min.js') }}"></script>
+    <script src="{{ asset('assets/js/flot/jquery.flot.stack.min.js') }}"></script>
+    <script src="{{ asset('assets/js/flot/jquery.flot.crosshair.min.js') }}"></script>
+	<!-- TODO -->
+	<script type="text/javascript" src="{{ asset('assets/js/jquery-todo/js/paddystodolist.js') }}"></script>
+	<!-- TIMEAGO -->
+	<script type="text/javascript" src="{{ asset('assets/js/timeago/jquery.timeago.min.js') }}"></script>
+	<!-- FULL CALENDAR -->
+	<script type="text/javascript" src="{{ asset('assets/js/fullcalendar/fullcalendar.min.js') }}"></script>
+	<!-- COOKIE -->
+	<script type="text/javascript" src="{{ asset('assets/js/jQuery-Cookie/jquery.cookie.min.js') }}"></script>
+	<!-- GRITTER -->
+	<script type="text/javascript" src="{{ asset('assets/js/gritter/js/jquery.gritter.min.js') }}"></script>
+	<!-- CUSTOM SCRIPT -->
+	<script src="{{ asset('assets/js/script.js') }}"></script>
+	<script>
+		jQuery(document).ready(function() {		
+			App.setPage("index");  //Set current page
+			App.init(); //Initialise plugins and elements
+		});
+	</script>
+	<!-- /JAVASCRIPTS -->
 </body>
 </html>

@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\Rack;
+use App\Rack, App\Location;
 
 class RacksController extends Controller
 {
@@ -18,8 +18,9 @@ class RacksController extends Controller
 	}
 
     public function create() {
+        $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
     	$results = Rack::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
-    	return view('admin.racks.create', compact('results'));
+    	return view('admin.racks.create', compact('results', 'locations'));
     }
 
     public function store(Request $request) {
@@ -40,7 +41,8 @@ class RacksController extends Controller
     public function edit( $id ) {
     	$id = Crypt::decrypt($id);
     	$rack = Rack::findOrFail($id);
-    	return view('admin.racks.edit', compact('rack'));
+        $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
+    	return view('admin.racks.edit', compact('rack', 'locations'));
     }
 
     public function update( $id, Request $request) { 

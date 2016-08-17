@@ -24,6 +24,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/gritter/css/jquery.gritter.css') }}" />
 	<!-- FONTS -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select2/select2.min.css') }}">
 </head>
 <body>
 	@include('admin.common.header')
@@ -121,12 +123,16 @@
 	<script type="text/javascript" src="{{ asset('assets/js/jQuery-Cookie/jquery.cookie.min.js') }}"></script>
 	<!-- GRITTER -->
 	<script type="text/javascript" src="{{ asset('assets/js/gritter/js/jquery.gritter.min.js') }}"></script>
+
+	<script src="{{ asset('assets/js/select2/select2.min.js') }}"></script>
+
 	<!-- CUSTOM SCRIPT -->
 	<script src="{{ asset('assets/js/script.js') }}"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("index");  //Set current page
 			App.init(); //Initialise plugins and elements
+			$(".select2").select2();
 		});
 	</script>
 	<!-- /JAVASCRIPTS -->

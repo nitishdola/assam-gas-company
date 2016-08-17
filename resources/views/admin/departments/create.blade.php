@@ -1,6 +1,22 @@
 @extends('layouts.admin')
 @section('title') Add a Department @stop
 @section('pageTitle') Add a Department @stop
+@section('breadcumb') 
+<li>
+	<i class="fa fa-home"></i>
+	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
+</li>
+
+<li>
+	<i class="fa fa-th"></i>
+	<a href="{{ route('department.index') }}">Department</a>
+</li>
+
+<li>
+	Add a Department
+</li>
+
+@stop
 @section('content')
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">

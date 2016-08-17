@@ -1,6 +1,24 @@
 @extends('layouts.admin')
 @section('title') Add a Item Sub Group @stop
 @section('pageTitle') Add a Item Sub Group @stop
+
+@section('breadcumb') 
+<li>
+	<i class="fa fa-home"></i>
+	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
+</li>
+
+<li>
+	<i class="fa fa-th"></i>
+	<a href="{{ route('item_sub_group.index') }}">Item Sub Groups</a>
+</li>
+
+<li>
+	Add a Item sub group
+</li>
+
+@stop
+
 @section('content')
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">

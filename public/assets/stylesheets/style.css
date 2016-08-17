@@ -268,6 +268,7 @@ body.login2 {
 .navbar {
   background: white;
   background: rgba(255, 255, 255, 0.95);
+  /*background: #178EFE;*/
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   padding: 0;
   min-height: 45px;

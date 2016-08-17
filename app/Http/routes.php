@@ -229,3 +229,81 @@ Route::group(['prefix'=>'measurement-unit'], function() {
         'uses' => 'MeasurementUnitsController@disable'
     ]);
 });
+
+
+Route::group(['prefix'=>'location'], function() {
+    Route::get('/create', [
+        'as' => 'location.create',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'location.store',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'location.index',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'location.edit',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'location.update',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'location.disable',
+        'middleware' => ['admin'],
+        'uses' => 'LocationsController@disable'
+    ]);
+});
+
+
+Route::group(['prefix'=>'rack'], function() {
+    Route::get('/create', [
+        'as' => 'rack.create',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'rack.store',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'rack.index',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'rack.edit',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'rack.update',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'rack.disable',
+        'middleware' => ['admin'],
+        'uses' => 'RacksController@disable'
+    ]);
+});

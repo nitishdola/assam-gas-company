@@ -2936,9 +2936,9 @@ var App = function () {
         }
         
         //Run the charts
-        chartMonth();
-        chart_select();
-        chart_revenue();
+        //chartMonth();
+        //chart_select();
+        //chart_revenue();
         
         //Pie 1
         $('#dash_pie_1').easyPieChart({

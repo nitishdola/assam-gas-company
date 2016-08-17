@@ -73,6 +73,37 @@
 	   </div>
 	</div>
 	<!-- /COLUMN 1 -->
+	
+	<!-- COLUMN 2 -->
+	<div class="col-md-6">
+		<div class="box solid grey">
+			<div class="box-title">
+				<h4><i class="fa fa-dollar"></i>Revenue</h4>
+				<div class="tools">
+					<span class="label label-danger">
+						20% <i class="fa fa-arrow-up"></i>
+					</span>
+					<a href="#box-config" data-toggle="modal" class="config">
+						<i class="fa fa-cog"></i>
+					</a>
+					
+					<a href="javascript:;" class="reload">
+						<i class="fa fa-refresh"></i>
+					</a>
+					<a href="javascript:;" class="collapse">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a href="javascript:;" class="remove">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div id="chart-revenue" style="height:240px"></div>
+			</div>
+		</div>
+	</div>
+	<!-- /COLUMN 2 -->
 </div>
 <!-- /DASHBOARD CONTENT -->
 <div class="row">

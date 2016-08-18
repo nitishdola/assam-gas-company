@@ -26,6 +26,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select2/select2.min.css') }}">
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/zebra/css/default.css') }}">
 </head>
 <body>
 	@include('department_user.common.header')
@@ -126,6 +128,8 @@
 
 	<script src="{{ asset('assets/js/select2/select2.min.js') }}"></script>
 
+	<script src="{{ asset('assets/zebra/javascript/zebra_datepicker.js') }}"></script>
+
 	<!-- CUSTOM SCRIPT -->
 	<script src="{{ asset('assets/js/script.js') }}"></script>
 	<script>
@@ -133,6 +137,7 @@
 			App.setPage("index");  //Set current page
 			App.init(); //Initialise plugins and elements
 			$(".select2").select2();
+			$('input.datepicker').Zebra_DatePicker({ format: 'd-m-Y'});
 		});
 	</script>
 	<!-- /JAVASCRIPTS -->

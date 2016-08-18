@@ -16,13 +16,13 @@
 			</li>
 			<li class="has-sub">
 				<a href="javascript:;" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Department</span>
+				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Measurement of Item</span>
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
-					<li><a class="" href="{{ route('department.create') }}"><span class="sub-menu-text">Add Department</span></a>
+					<li><a class="" href="{{ route('measurement_unit.create') }}"><span class="sub-menu-text">Add Item</span></a>
 					</li>
-					<li><a class="" href="{{ route('department.index') }}"><span class="sub-menu-text">View Departments</span></a></li>
+					<li><a class="" href="{{ route('measurement_unit.index') }}"><span class="sub-menu-text">View Items</span></a></li>
 				</ul>
 			</li>
 		</ul>

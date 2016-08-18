@@ -1,7 +1,7 @@
 <div class="form-group {{ $errors->has('department_id') ? 'has-error' : ''}}">
   {!! Form::label('department_id', 'Select Department', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
-  {!! Form::select('department_id', $departments, null, ['class' => 'select2able required', 'id' => 'department_id','required' => 'true']) !!}
+  {!! Form::select('department_id', $departments, null, ['class' => 'col-md-12 select2 required', 'id' => 'department_id','required' => 'true']) !!}
   {!! $errors->first('department_id', '<span class="help-inline">:message</span>') !!}
   </div>
 </div>

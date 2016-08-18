@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\AdminAuth;
+namespace App\Http\Controllers\DepartmentUserAuth;
 
-use App\Admin;
+use App\DepartmentUser;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -28,8 +28,8 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
-    protected $guard = 'admin';
+    protected $redirectTo = '/department/dashboard';
+    protected $guard = 'department_user';
     protected $username = 'username';
     /**
      * Create a new authentication controller instance.
@@ -46,12 +46,12 @@ class AuthController extends Controller
         if(view()->exists('auth.authenticate')){
             return view('auth.authenticate');
         }
-        return view('admin.auth.login');
+        return view('department_user.auth.login');
     }
     
     public function showRegistrationForm(){
 
-        return view('admin.auth.register');
+        return view('department_user.auth.register');
     }
 
     /**
@@ -63,9 +63,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:admins,email',
-            'password' => 'required|min:6|confirmed',
+            'name'      => 'required|max:255',
+            'username'  => 'required|email|max:255|unique:department_users,username',
+            'password'  => 'required|min:6|confirmed',
         ]);
     }
 
@@ -79,7 +79,7 @@ class AuthController extends Controller
     {
         return Admin::create([
             'name'      => $data['name'],
-            'email'     => $data['email'],
+            'username'  => $data['username'],
             'password'  => bcrypt($data['password']),
         ]);
     }

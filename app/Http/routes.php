@@ -35,6 +35,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('admin/password/reset/{token?}','AdminAuth\PasswordController@showResetForm');
 
     Route::get('/admin', ['as' => 'admin.dashboard', 'uses' => 'AdminController@index']);
+
+
+
+    //Department User
+    Route::get('/user/department/login','DepartmentUserAuth\AuthController@showLoginForm');
+    Route::post('/user/department/login','DepartmentUserAuth\AuthController@login');
+    Route::get('/user/department/logout',['as' => 'department_user.logout', 'uses' =>'DepartmentUserAuth\AuthController@logout']);
+    Route::get('/department/dashboard', ['as' => 'department_user.dashboard', 'uses' => 'DepartmentUsersController@index']);
+
 });  
 
 
@@ -345,4 +354,50 @@ Route::group(['prefix'=>'rack'], function() {
         'middleware' => ['admin'],
         'uses' => 'RacksController@disable'
     ]);
+});
+
+Route::group(['prefix'=>'user'], function() {
+    Route::group(['prefix'=>'department'], function() {
+        Route::get('/create', [
+            'as' => 'department_user.create',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@create_department_user'
+        ]);
+
+        Route::post('/store', [
+            'as' => 'department_user.store',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@store_department_user'
+        ]);
+
+        Route::get('/view-all', [
+            'as' => 'department_user.index',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@view_department_users'
+        ]);
+
+        Route::get('/change-password', [
+            'as' => 'department_user.change_password',
+            'middleware' => ['department_user'],
+            'uses' => 'DepartmentUsersController@change_password'
+        ]);
+
+        /*Route::get('/edit/{num}', [
+            'as' => 'rack.edit',
+            'middleware' => ['admin'],
+            'uses' => 'RacksController@edit'
+        ]);
+
+        Route::post('/update/{num}', [
+            'as' => 'rack.update',
+            'middleware' => ['admin'],
+            'uses' => 'RacksController@update'
+        ]);
+
+        Route::get('/disable/{num}', [
+            'as' => 'rack.disable',
+            'middleware' => ['admin'],
+            'uses' => 'RacksController@disable'
+        ]);*/
+    });
 });

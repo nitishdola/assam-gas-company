@@ -31,8 +31,8 @@
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
-					<li><a class="" href="{{ route('department.create') }}"><span class="sub-menu-text">Add Section</span></a></li>
-					<li><a class="" href="{{ route('department.create') }}"><span class="sub-menu-text">View Sections</span></a></li>
+					<li><a class="" href="{{ route('section.create') }}"><span class="sub-menu-text">Add Section</span></a></li>
+					<li><a class="" href="{{ route('section.create') }}"><span class="sub-menu-text">View Sections</span></a></li>
 				</ul>
 			</li>
 			<li class="has-sub">
@@ -48,6 +48,42 @@
 					<li><a class="" href="{{ route('item_sub_group.index') }}"><span class="sub-menu-text">View All Item Sub Group</span></a></li>
 				</ul>
 			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-location-arrow"></i> <span class="menu-text">Location</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('location.create') }}"><span class="sub-menu-text">Add Location</span></a>
+					</li>
+					<li><a class="" href="{{ route('location.index') }}"><span class="sub-menu-text">View Location</span></a></li>
+				</ul>
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-bars"></i> <span class="menu-text">Rack</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('rack.create') }}"><span class="sub-menu-text">Add Rack</span></a>
+					</li>
+					<li><a class="" href="{{ route('rack.index') }}"><span class="sub-menu-text">View Rack</span></a></li>
+				</ul>
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-bars"></i> <span class="menu-text">User</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('department_user.create') }}"><span class="sub-menu-text">Add Department User</span></a>
+					</li>
+				</ul>
+			</li>
+			
 		</ul>
 		<!-- /SIDEBAR MENU -->
 	</div>

@@ -19,8 +19,10 @@
 		<div class="widget-content padded">
 			{!! Form::open(array('route' => 'item_measurement.index', 'id' => 'item_measurement.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
 			@include('department_user.item_measurements._search_form')
-			{!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
-		    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
+			<div class="col-md-12"> 
+				{!! Form::label('', '', array('class' => 'col-md-4 control-label')) !!}
+			    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
+			</div>
 
 			{!!form::close()!!}
 		</div>
@@ -39,18 +41,23 @@
 			            <th class="hidden-xs">Item Name</th>
 			            <th> Item Code </th>
 			            <th> Part Number </th>
-			            <th> Latest rate </th>
+			            <th> Minimum Stock Level </th>
+			            <th> Action </th>
 			        </tr>
 			    </thead>
 			    <tbody>
 			        @foreach($results as $k => $v)
-			        <tr>
+			        <tr @if(!$v->status) class="danger" @endif>
 			            <td> {{ (($results->currentPage() - 1 ) * $results->perPage() ) + $count + $k }} </td>
 			            <td class="hidden-xs"> {{ $v->item_name }} </td>
 			            <td class="hidden-xs"> {{ $v->item_code }} </td>
 			            <td> {{ $v->part_number }} </td>
-			            <td> {{ $v->username }} </td>
-			            <td class="hidden-xs"> {{ $v->latest_rate }} </td>
+			            <td> {{ $v->minimum_stock_level }} </td>
+			            <td> <a href="{{ route('item_measurement.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
+			            @if($v->status) | 
+						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('item_measurement.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash" aria-hidden="true"></i>Remove</a>
+						@endif
+						</td>
 			        </tr>
 			        @endforeach
 			    </tbody>

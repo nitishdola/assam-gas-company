@@ -9,7 +9,7 @@
 		<!-- SIDEBAR MENU -->
 		<ul>
 			<li class="active">
-				<a href="{{ route('admin.dashboard') }}">
+				<a href="{{ route('department_user.dashboard') }}">
 				<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Dashboard</span>
 				<span class="selected"></span>
 				</a>					
@@ -20,9 +20,9 @@
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
-					<li><a class="" href="{{ route('measurement_unit.create') }}"><span class="sub-menu-text">Add Item</span></a>
+					<li><a class="" href="{{ route('item_measurement.create') }}"><span class="sub-menu-text">Add Item</span></a>
 					</li>
-					<li><a class="" href="{{ route('measurement_unit.index') }}"><span class="sub-menu-text">View Items</span></a></li>
+					<li><a class="" href="{{ route('item_measurement.index') }}"><span class="sub-menu-text">View Items</span></a></li>
 				</ul>
 			</li>
 		</ul>

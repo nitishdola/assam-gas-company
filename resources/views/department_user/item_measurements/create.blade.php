@@ -24,7 +24,7 @@
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 		    <div class="col-xs-12">
-			    {!! Form::open(array('route' => 'item_sub_group.store', 'id' => 'item_sub_group.store', 'class' => 'form-horizontal row-border')) !!}
+			    {!! Form::open(array('route' => 'item_measurement.store', 'id' => 'item_measurement.store', 'class' => 'form-horizontal row-border')) !!}
 			        @include('department_user.item_measurements._form')
 
 			        <div class="col-md-12"> 

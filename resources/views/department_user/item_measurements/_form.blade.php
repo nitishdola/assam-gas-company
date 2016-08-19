@@ -10,7 +10,7 @@
   <div class="form-group {{ $errors->has('barcode') ? 'has-error' : ''}}">
     {!! Form::label('barcode', 'Barcode', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-9">
-      {!! Form::text('barcode', null, ['class' => 'form-control required', 'id' => 'barcode', 'placeholder' => 'Barcode', 'autocomplete' => 'off', 'required' => 'true']) !!}
+      {!! Form::text('barcode', null, ['class' => 'form-control', 'id' => 'barcode', 'placeholder' => 'Barcode', 'autocomplete' => 'off']) !!}
     </div>
     {!! $errors->first('barcode', '<span class="help-inline">:message</span>') !!}
   </div>
@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('item_sub_group_id') ? 'has-error' : ''}}">
+  <div class="form-group {{ $errors->has('measurement_unit_id') ? 'has-error' : ''}}">
     {!! Form::label('measurement_unit_id', 'Unit of Measurement', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-9">
     {!! Form::select('measurement_unit_id', $measurement_units, null, ['class' => 'col-md-12 select2 required', 'id' => 'measurement_unit_id','required' => 'true']) !!}
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('item_sub_group_id') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('asset_type') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">Asset Type</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">
@@ -94,7 +94,7 @@
   </div>
 
 
-  <div class="form-group {{ $errors->has('item_sub_group_id') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('insured') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">Insured</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">
@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('item_sub_group_id') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('review') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">Review</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">
@@ -126,15 +126,15 @@
     <label class="col-md-3 control-label" for="radios">Product Preference</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">
-        <input name="product_preference" id="radios-0" value="vital" checked="checked" type="radio">
+        <input name="product_preference" id="radios-v" value="vital" checked="checked" type="radio">
         Vital
       </label> 
       <label class="radio-inline" for="radios-1">
-        <input name="product_preference" id="radios-1" value="essential" type="radio">
+        <input name="product_preference" id="radios-e" value="essential" type="radio">
         Essential
       </label>
       <label class="radio-inline" for="radios-1">
-        <input name="product_preference" id="radios-1" value="desirable" type="radio">
+        <input name="product_preference" id="radios-d" value="desirable" type="radio">
         Desirable
       </label>
     </div>
@@ -181,7 +181,7 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('abc') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('xyz') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">XYZ</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">
@@ -195,7 +195,7 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('abc') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('fsn') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">FSN</label>
     <div class="col-md-9"> 
       <label class="radio-inline" for="radios-0">

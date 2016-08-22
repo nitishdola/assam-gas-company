@@ -46,8 +46,8 @@ Route::group(['middleware' => ['web']], function () {
 
     //Accounts User
     Route::get('/user/accounts/login','AccountsUserAuth\AuthController@showLoginForm');
-    Route::post('/user/department/login','AccountsUserAuth\AuthController@login');
-    Route::get('/user/department/logout',['as' => 'accounts_user.logout', 'uses' =>'AccountsUserAuth\AuthController@logout']);
+    Route::post('/user/accounts/login','AccountsUserAuth\AuthController@login');
+    Route::get('/user/accounts/logout',['as' => 'accounts_user.logout', 'uses' =>'AccountsUserAuth\AuthController@logout']);
     Route::get('/accounts/dashboard', ['as' => 'accounts_user.dashboard', 'uses' => 'AccountsUsersController@index']);
 
 });  
@@ -522,5 +522,67 @@ Route::group(['prefix'=>'measurement-of-salvage-item'], function() {
         'as' => 'salvage_item_measurement.disable',
         'middleware' => ['department_user'],
         'uses' => 'SalvageItemMeasurementsController@disable'
+    ]);
+});
+
+
+/**************Accounts User routes*********************/
+Route::group(['prefix'=>'chargeable-accounts'], function() {
+    Route::get('/create', [
+        'as' => 'chargeable_account.create',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'chargeable_account.store',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'chargeable_account.index',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@index'
+    ]);
+});
+
+Route::group(['prefix'=>'budget-heads'], function() {
+    Route::get('/create', [
+        'as' => 'budget_head.create',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'budget_head.store',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'budget_head.index',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@index'
+    ]);
+});
+
+Route::group(['prefix'=>'budget-head-transactions'], function() {
+    Route::get('/create', [
+        'as' => 'budget_head_transaction.create',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'budget_head_transaction.store',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'budget_head_transaction.index',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@index'
     ]);
 });

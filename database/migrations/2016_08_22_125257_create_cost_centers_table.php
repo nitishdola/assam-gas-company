@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBudgetHeadsTable extends Migration
+class CreateCostCentersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateBudgetHeadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('budget_heads', function (Blueprint $table) {
+        Schema::create('cost_centers', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ class CreateBudgetHeadsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('budget_heads');
+        Schema::drop('cost_centers');
     }
 }

@@ -44,6 +44,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/user/department/logout',['as' => 'department_user.logout', 'uses' =>'DepartmentUserAuth\AuthController@logout']);
     Route::get('/department/dashboard', ['as' => 'department_user.dashboard', 'uses' => 'DepartmentUsersController@index']);
 
+    //Accounts User
+    Route::get('/user/accounts/login','AccountsUserAuth\AuthController@showLoginForm');
+    Route::post('/user/department/login','AccountsUserAuth\AuthController@login');
+    Route::get('/user/department/logout',['as' => 'accounts_user.logout', 'uses' =>'AccountsUserAuth\AuthController@logout']);
+    Route::get('/accounts/dashboard', ['as' => 'accounts_user.dashboard', 'uses' => 'AccountsUsersController@index']);
+
 });  
 
 
@@ -402,6 +408,47 @@ Route::group(['prefix'=>'user'], function() {
     });
 });
 
+Route::group(['prefix'=>'admin'], function() {
+    Route::group(['prefix'=>'vendor'], function() {
+        Route::get('/create', [
+            'as' => 'admin.vendor.create',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@create'
+        ]);
+
+        Route::post('/store', [
+            'as' => 'admin.vendor.store',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@store'
+        ]);
+
+        Route::get('/view-all', [
+            'as' => 'admin.vendor.index',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@index'
+        ]);
+        Route::get('/edit/{num}', [
+            'as' => 'admin.vendor.edit',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@edit'
+        ]);
+
+        Route::post('/update/{num}', [
+            'as' => 'admin.vendor.update',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@update'
+        ]);
+
+        Route::get('/disable/{num}', [
+            'as' => 'admin.vendor.disable',
+            'middleware' => ['admin'],
+            'uses' => 'VendorsController@disable'
+        ]);
+    });
+});
+
+
+/******************Department User*******************/
 Route::group(['prefix'=>'measurement-of-item'], function() {
     Route::get('/create', [
         'as' => 'item_measurement.create',

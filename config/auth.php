@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'department_users'
         ],
+        'accounts_user' => [
+            'driver' => 'session',
+            'provider' => 'accounts_users'
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -89,6 +93,10 @@ return [
         'department_users' => [
             'driver' => 'eloquent',
             'model' => App\DepartmentUser::class,
+        ],
+        'accounts_users' => [
+            'driver' => 'eloquent',
+            'model' => App\AccountsUser::class,
         ]
         // 'users' => [
         //     'driver' => 'database',

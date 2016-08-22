@@ -49,8 +49,7 @@
 				        @foreach($results as $k => $v)
 				        <tr>
 				            <td> {{ (($results->currentPage() - 1 ) * $results->perPage() ) + $count + $k }} </td>
-				            <td class="hidden-xs"> {{ $v->name }} </td>
-				            <td> {{ $v->budget_head['name'] ( $v->budget_head['budget_head_code'])}} </td>
+				            <td> {{ $v->budget_head['name'] }} ( {{ $v->budget_head['budget_head_code'] }}) </td>
 				            <td> {{ $v->department['name'] }} </td>
 				            <td> {{ $v->section['name'] }} </td>
 				            <td> {{ $v->creator['name'] }} </td>

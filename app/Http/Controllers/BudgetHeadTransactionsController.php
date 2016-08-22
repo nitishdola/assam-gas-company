@@ -12,7 +12,7 @@ use App\BudgetHeadTransaction, App\Section, App\Department, App\BudgetHead;
 class BudgetHeadTransactionsController extends Controller
 {
     public function index() {
-		$results = BudgetHeadTransaction::whereStatus(1)->with(['creator', 'department', 'section', 'budget_head'])->orderBy('name', 'DESC')->paginate(20);
+		$results = BudgetHeadTransaction::whereStatus(1)->with(['creator', 'department', 'section', 'budget_head'])->orderBy('created_at', 'DESC')->paginate(20);
 		return view('accounts_user.budget_head_transactions.index', compact('results'));
 	}
 

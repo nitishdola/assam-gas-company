@@ -1,6 +1,6 @@
 @extends('layouts.accounts_user')
-@section('title') Add a Chargeable Account @stop
-@section('pageTitle') Add a Chargeable Account @stop
+@section('title') Add a Budget Head @stop
+@section('pageTitle') Add a Budget Head @stop
 
 @section('breadcumb') 
 <li>

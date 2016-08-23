@@ -13,6 +13,7 @@ class BudgetHeadTransactionsController extends Controller
 {
     public function index() {
 		$results = BudgetHeadTransaction::whereStatus(1)->with(['creator', 'department', 'section', 'budget_head'])->orderBy('created_at', 'DESC')->paginate(20);
+        //dump($results);
 		return view('accounts_user.budget_head_transactions.index', compact('results'));
 	}
 
@@ -28,12 +29,12 @@ class BudgetHeadTransactionsController extends Controller
     	$validator = Validator::make($data = $request->all(), BudgetHeadTransaction::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $data['created_by'] = Auth::guard('accounts_user')->user()->id; 
+       $data['created_by'] = Auth::guard('accounts_user')->user()->id; 
     	$message = '';
     	if(BudgetHeadTransaction::create($data)) {
-            $message .= 'budget head added successfully !';
+            $message .= 'Budget Head Transaction added successfully !';
         }else{
-            $message .= 'Unable to add budget head !';
+            $message .= 'Unable to add Budget Head Transaction !';
         }
 
         return Redirect::route('budget_head_transaction.index')->with('message', $message);
@@ -66,9 +67,9 @@ class BudgetHeadTransactionsController extends Controller
         //var_dump($data);
         //exit();
         if($BudgetHeadTransaction->save()) {
-            $message .= 'Budget Head Transaction  edited successfully !';
+            $message .= 'Budget Head Transaction  Edited successfully !';
         }else{
-            $message .= 'Unable to edit  Budget Head Transaction !';
+            $message .= 'Unable to update Budget Head Transaction !';
         }
 
         return Redirect::route('budget_head_transaction.index')->with('message', $message);
@@ -87,5 +88,5 @@ class BudgetHeadTransactionsController extends Controller
         }
 
         return Redirect::route('budget_head_transaction.index')->with('message', $message);
-    }*/
+    }
 }

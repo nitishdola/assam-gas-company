@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('admins')->insert(['username' => 'admin', 'password' => bcrypt('mmsAdmin#')]);
+         DB::table('admins')->insert(['username' => 'admin', 'password' => bcrypt('mmsAdmin#')]);
 
         // $this->command->info('Admin Added !');
         // $faker = Faker::create();

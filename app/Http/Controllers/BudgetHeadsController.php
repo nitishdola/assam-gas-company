@@ -36,7 +36,7 @@ class BudgetHeadsController extends Controller
             $message .= 'Unable to add budget head !';
         }
 
-        return Redirect::route('chargeable_account.index')->with('message', $message);
+        return Redirect::route('budget_head.index')->with('message', $message);
     }
 
       public function edit( $id ) {

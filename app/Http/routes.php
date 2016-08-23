@@ -540,6 +540,24 @@ Route::group(['prefix'=>'chargeable-accounts'], function() {
         'uses' => 'ChargeableAccountsController@store'
     ]);
 
+     Route::get('/edit/{num}', [
+        'as' => 'chargeable_account.edit',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@edit'
+    ]);
+      Route::post('/update/{num}', [
+        'as' => 'chargeableaccount.update',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@update'
+    ]);
+
+
+    Route::get('/disable/{num}', [
+        'as' => 'chargeable_account.disable',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ChargeableAccountsController@disable'
+    ]);
+
     Route::get('/view-all', [
         'as' => 'chargeable_account.index',
         'middleware' => ['accounts_user'],
@@ -558,6 +576,23 @@ Route::group(['prefix'=>'budget-heads'], function() {
         'as' => 'budget_head.store',
         'middleware' => ['accounts_user'],
         'uses' => 'BudgetHeadsController@store'
+    ]);
+    Route::get('/edit/{num}', [
+        'as' => 'budget_head.edit',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@edit'
+    ]);
+      Route::post('/update/{num}', [
+        'as' => 'head.update',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@update'
+    ]);
+
+
+    Route::get('/disable/{num}', [
+        'as' => 'BudgetHeads.disable',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadsController@disable'
     ]);
 
     Route::get('/view-all', [

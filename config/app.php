@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/mms'),
+    'url' => env('APP_URL', 'http://localhost/assam-gas'),
 
     /*
     |--------------------------------------------------------------------------

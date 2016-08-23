@@ -58,9 +58,9 @@
 				            <td> {{ $v->section['name'] }} </td>
 				            <td> {{ $v->creator['name'] }} </td>
 				            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
-				            <td> <a href="{{ route('department.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department">Edit</a>
+				            <td> <a href="{{ route('budget_head.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department">Edit</a>
 				            </td>
-				            <td> <a onclick="return confirm('Are you sure you want to delete this department ?');" href="{{ route('department.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
+				            <td> <a onclick="return confirm('Are you sure you want to delete this Budget Head ?');" href="{{ route('BudgetHeads.disable', Crypt::encrypt($v->id) ) }}" title="Remove Budget Head"><i class="fa fa-trash"></i>Remove</a> </td>
 				        </tr>
 				        @endforeach
 				    </tbody>
@@ -71,10 +71,10 @@
 		    @else
 		    	<div class="alert alert-danger alert-dismissable alert-red">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-                  No Departments Found !
+                  No Budget Head Found !
                 </div>
 
-                <a href="{{ route('department.create') }}" class="btn btn-success">Add new Department</a>
+                <a href="{{ route('budget_head.create') }}" class="btn btn-success">Add new Budget Head</a>
 		    @endif
 		</div>
 	</div>

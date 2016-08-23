@@ -38,4 +38,53 @@ class BudgetHeadsController extends Controller
 
         return Redirect::route('chargeable_account.index')->with('message', $message);
     }
+
+      public function edit( $id ) {
+        $id = Crypt::decrypt($id);
+        $BudgetHead = BudgetHead::findOrFail($id);
+        $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+       return view('accounts_user.budget_heads.edit', compact('BudgetHead', 'departments', 'sections'));
+      
+    }
+
+    public function update( $id, Request $request) { 
+        $id = Crypt::decrypt($id); 
+        $rules = BudgetHead::$rules;
+
+        $rules['name']  = $rules['name'] . ',id,' . $id;
+        
+        $validator = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+        $BudgetHead = BudgetHead::findOrFail($id);
+
+        $message = '';
+
+        $BudgetHead->fill($data);
+        //var_dump($data);
+        //exit();
+        if($BudgetHead->save()) {
+            $message .= 'Budget Head edited successfully !';
+        }else{
+            $message .= 'Unable to edit  Budget Head !';
+        }
+
+        return Redirect::route('budget_head.index')->with('message', $message);
+    }
+
+    public function disable($id ) {
+        $id = Crypt::decrypt($id); 
+        $BudgetHead = BudgetHead::findOrFail($id);
+        $message = '';
+        //change the status of department to 0
+        $BudgetHead->status = 0;
+        if($BudgetHead->save()) {
+            $message .= 'Budget Head removed successfully !';
+        }else{
+            $message .= 'Unable to remove  Budget Head !';
+        }
+
+        return Redirect::route('budget_head.index')->with('message', $message);
+    }
 }

@@ -533,6 +533,8 @@ Route::group(['prefix'=>'chargeable-accounts'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'ChargeableAccountsController@create'
     ]);
+    /*
+    Route::get('/create/ajax/{id}',array('as'=>'create.ajax','uses'=>'ChargeableAccountsController@myformAjax'));*/
 
     Route::post('/store', [
         'as' => 'chargeable_account.store',

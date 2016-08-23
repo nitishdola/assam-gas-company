@@ -87,5 +87,5 @@ class BudgetHeadTransactionsController extends Controller
         }
 
         return Redirect::route('budget_head_transaction.index')->with('message', $message);
-    }*/
+    }
 }

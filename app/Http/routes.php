@@ -533,6 +533,8 @@ Route::group(['prefix'=>'chargeable-accounts'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'ChargeableAccountsController@create'
     ]);
+    
+   
 
     Route::post('/store', [
         'as' => 'chargeable_account.store',
@@ -615,9 +617,34 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
         'uses' => 'BudgetHeadTransactionsController@store'
     ]);
 
+  Route::get('/edit/{num}', [
+        'as' => 'budget_head_transaction.edit',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@edit'
+    ]);
+      Route::post('/update/{num}', [
+        'as' => 'budget_head_transaction.update',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@update'
+    ]);
+
+
+    Route::get('/disable/{num}', [
+        'as' => 'budget_head_transaction.disable',
+        'middleware' => ['accounts_user'],
+        'uses' => 'BudgetHeadTransactionsController@disable'
+    ]);
     Route::get('/view-all', [
         'as' => 'budget_head_transaction.index',
         'middleware' => ['accounts_user'],
         'uses' => 'BudgetHeadTransactionsController@index'
+    ]);
+});
+/*******************REST CONTROLLER*************/
+Route::group(['prefix'=>'rest'], function() {
+    Route::get('/get-sections', [
+        'as' => 'rest.get_sections',
+        //'middleware' => ['accounts_user'],
+        'uses' => 'RestController@getSections'
     ]);
 });

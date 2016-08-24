@@ -1,5 +1,5 @@
 @extends('layouts.accounts_user')
-@section('title') Update Your Chargeable Account @stop
+@section('title') Update Budget Head Transactions @stop
 
 
 @section('breadcumb') 
@@ -10,10 +10,12 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	<a href="{{ route('chargeable_account.index') }}">Chargeable Account</a>
+	<a href="{{ route('budget_head_transaction.index') }}">Budget Heads Transaction</a>
 </li>
 
-
+<li>
+	Update Your Budget Head Transaction
+</li>
 
 @stop
 
@@ -21,8 +23,8 @@
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-		    {!! Form::model($ChargeableAccount, array('route' => ['chargeableaccount.update', Crypt::encrypt($ChargeableAccount->id)], 'id' => 'ChargeableAccount', 'class' => 'form-horizontal row-border')) !!}
-		        @include('chargeable_accounts._form')
+		    {!! Form::model($BudgetHeadTransaction, array('route' => ['budget_head_transaction.update', Crypt::encrypt($BudgetHeadTransaction->id)], 'id' => 'BudgetHeadTransaction_update', 'class' => 'form-horizontal row-border')) !!}
+		        @include('budget_head_transactions._form')
 		        {!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
 		        {!! Form:: submit('Update', ['class' => 'btn btn-success']) !!}
 		    {!!form::close()!!}

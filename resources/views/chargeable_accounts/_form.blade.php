@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="form-group {{ $errors->has('department_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('section_id') ? 'has-error' : ''}}">
   {!! Form::label('section_id', 'Select Section', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
   {!! Form::select('section_id', $sections, null, ['class' => 'col-md-12 select2 required', 'id' => 'section_id','required' => 'true']) !!}

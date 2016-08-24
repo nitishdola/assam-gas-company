@@ -21,8 +21,10 @@ class ChargeableAccountsController extends Controller
         $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$results = ChargeableAccount::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
-    	return view('accounts_user.chargeable_accounts.create', compact('results', 'departments', 'sections'));
+    	return view('accounts_user.chargeable_accounts.create', compact('results','sections' ,'departments'));
     }
+
+     
 
     public function store(Request $request) {
     	$validator = Validator::make($data = $request->all(), ChargeableAccount::$rules);

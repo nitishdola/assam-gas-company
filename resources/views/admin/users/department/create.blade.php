@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title') Add a Section @stop
-@section('pageTitle') Add a Section @stop
+@section('title') Add a User @stop
+@section('pageTitle') Add a User @stop
 
 @section('breadcumb') 
 <li>
@@ -14,7 +14,7 @@
 </li>
 
 <li>
-	Create a Section
+	Create a Department User
 </li>
 
 @stop
@@ -33,4 +33,6 @@
 		</div>
 	</div>
 </div>
+
 @endsection
+@section('pageJs') <script> load_sections(); </script> @stop

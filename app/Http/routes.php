@@ -533,8 +533,8 @@ Route::group(['prefix'=>'chargeable-accounts'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'ChargeableAccountsController@create'
     ]);
-    /*
-    Route::get('/create/ajax/{id}',array('as'=>'create.ajax','uses'=>'ChargeableAccountsController@myformAjax'));*/
+    
+   
 
     Route::post('/store', [
         'as' => 'chargeable_account.store',
@@ -638,5 +638,13 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
         'as' => 'budget_head_transaction.index',
         'middleware' => ['accounts_user'],
         'uses' => 'BudgetHeadTransactionsController@index'
+    ]);
+});
+/*******************REST CONTROLLER*************/
+Route::group(['prefix'=>'rest'], function() {
+    Route::get('/get-sections', [
+        'as' => 'rest.get_sections',
+        //'middleware' => ['accounts_user'],
+        'uses' => 'RestController@getSections'
     ]);
 });

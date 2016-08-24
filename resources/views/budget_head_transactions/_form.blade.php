@@ -46,10 +46,10 @@
   {!! $errors->first('budget_head_utilized_amount', '<span class="help-inline">:message</span>') !!}
 </div>
 
-<div class="form-group {{ $errors->has('financial_year') ? 'has-error' : ''}}">
-  {!! Form::label('financial_year', '', array('class' => 'col-md-3 control-label')) !!}
+<div class="form-group {{ $errors->has('department_id') ? 'has-error' : ''}}">
+  {!! Form::label('section_id', 'Select Section', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
-    {!! Form::text('financial_year', null, ['class' => 'form-control required', 'id' => 'financial_year', 'placeholder' => 'Financial year', 'autocomplete' => 'off','required' => 'true']) !!}
+  {!! Form::select('section_id', $sections, null, ['class' => 'col-md-12 select2 required', 'id' => 'section_id','required' => 'true']) !!}
+  {!! $errors->first('section_id', '<span class="help-inline">:message</span>') !!}
   </div>
-  {!! $errors->first('financial_year', '<span class="help-inline">:message</span>') !!}
 </div>

@@ -25,6 +25,8 @@ class BudgetHeadTransactionsController extends Controller
     	return view('accounts_user.budget_head_transactions.create', compact('results', 'departments', 'sections', 'budget_heads'));
     }
 
+
+
     public function store(Request $request) {
     	$validator = Validator::make($data = $request->all(), BudgetHeadTransaction::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();

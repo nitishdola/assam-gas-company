@@ -14,7 +14,7 @@
 </li>
 
 <li>
-	Create a Budget Head
+	Update Your Budget Head Transaction
 </li>
 
 @stop

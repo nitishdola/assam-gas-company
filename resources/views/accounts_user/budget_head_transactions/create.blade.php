@@ -10,7 +10,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	<a href="{{ route('budget_head_transaction.index') }}">Budget Heads</a>
+	<a href="{{ route('budget_head_transaction.index') }}">Budget Transaction</a>
 </li>
 
 <li>
@@ -33,4 +33,6 @@
 		</div>
 	</div>
 </div>
+
+
 @endsection

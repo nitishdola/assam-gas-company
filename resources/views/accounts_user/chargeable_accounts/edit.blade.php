@@ -10,7 +10,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	<a href="{{ route('budget_head.index') }}">Budget Heads</a>
+	<a href="{{ route('chargeable_account.index') }}">Chargeable Account</a>
 </li>
 
 

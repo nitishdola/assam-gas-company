@@ -28,6 +28,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select2/select2.min.css') }}">
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/zebra/css/default.css') }}">
+
+	@yield('pageCss')
 </head>
 <body>
 	@include('accounts_user.common.header')
@@ -143,17 +145,17 @@
 	</script>
 
 	<script type="text/javascript">
-
-    $('#department_id').on('change', function() {
-        	
+	/****************************************Restcontroller*********************/
+    /*****************************casecading drop down,block ui etc*************/
+    function load_sections() {
+        $('#department_id').on('change', function() {
+            
             var departmentID = $(this).val();
             var data = '';
             data += '&department_id='+departmentID;
-           
             url = "{{ route('rest.get_sections') }}";
-            //'/myform/ajax/'+stateID,
+
             if(departmentID ) {
-            	//window.alert(departmentID);
                 $.ajax({
                     url  : url,
                     type : "GET",
@@ -161,11 +163,11 @@
                     dataType: "json",
                     
                     error : function(resp) {
-                    	console.log(resp);
+                        console.log(resp);
                     },
                     success:function(data) {
-                    	$.blockUI();
-                    	setTimeout($.unblockUI, 500); 
+                        $.blockUI();
+                        setTimeout($.unblockUI, 500); 
                         $('select[name="section_id"]').empty();
                         $.each(data, function(key, value) {
                             $('select[name="section_id"]').append('<option value="'+ key +'">'+ value +'</option>');
@@ -174,18 +176,14 @@
                      }
                 });
             }else{
-            	
+                
                 $('select[name="section_id"]').empty();
             }
         });
+    }
+	</script>
 
-</script>
-
-
-
-
-
-	
+	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->
 </body>
 </html>

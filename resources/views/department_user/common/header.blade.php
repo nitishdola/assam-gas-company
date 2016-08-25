@@ -32,7 +32,7 @@
 						<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu skins">
-						<li><a href="#" data-skin="default">Change Password</a></li>
+						<li><a href="{{route('chnage_department_user_password')}}" data-skin="default">Change Password</a></li>
 						<li><a href=" {{ route('department_user.logout') }} " data-skin="night">Sign Out</a></li>
 					 </ul>
 				</li>

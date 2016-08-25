@@ -14,7 +14,7 @@
 </li>
 
 <li>
-	Create a Department User
+	Create a department user
 </li>
 
 @stop

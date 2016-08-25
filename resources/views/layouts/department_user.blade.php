@@ -28,6 +28,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select2/select2.min.css') }}">
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/zebra/css/default.css') }}">
+
+	@yield('pageCss')
 </head>
 <body>
 	@include('department_user.common.header')
@@ -140,6 +142,8 @@
 			$('input.datepicker').Zebra_DatePicker({ format: 'd-m-Y'});
 		});
 	</script>
+
+	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->
 </body>
 </html>

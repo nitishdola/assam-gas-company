@@ -449,6 +449,28 @@ Route::group(['prefix'=>'admin'], function() {
 
 
 /******************Department User*******************/
+
+//requisition 
+Route::group(['prefix'=>'requisition'], function() {
+    Route::get('/create', [
+        'as' => 'requisition.create',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'requisition.store',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'requisition.index',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@index'
+    ]);
+});
+
 Route::group(['prefix'=>'measurement-of-item'], function() {
     Route::get('/create', [
         'as' => 'item_measurement.create',

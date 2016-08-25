@@ -11,7 +11,7 @@ class Requisition extends Model
     protected $guarded  = ['_token'];
 
     public static $rules = [
-    	'department_id' 		=>  'required|exists:departments,id',
+    	//'department_id' 		=>  'required|exists:departments,id',
     	'requisition_number' 	=>  'required',
     	'job_number' 			=>  'required',
     	'name_of_work' 			=>  'required',

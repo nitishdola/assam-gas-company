@@ -29,8 +29,8 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/department/dashboard';
-    protected $guard = 'department_user';
-    protected $username = 'username';
+    protected $guard      = 'department_user';
+    protected $username   = 'username';
     /**
      * Create a new authentication controller instance.
      *

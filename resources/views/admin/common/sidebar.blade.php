@@ -81,7 +81,10 @@
 				<ul class="sub">
 					<li><a class="" href="{{ route('department_user.create') }}"><span class="sub-menu-text">Add Department User</span></a>
 					</li>
+					<li><a class="" href="{{route('account_user.create')}}"><span class="sub-menu-text">Add Account User</span></a>
+					</li>
 				</ul>
+				
 			</li>
 			
 		</ul>

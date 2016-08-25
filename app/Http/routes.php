@@ -640,6 +640,7 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
         'uses' => 'BudgetHeadTransactionsController@index'
     ]);
 });
+
 /*******************REST CONTROLLER*************/
 Route::group(['prefix'=>'rest'], function() {
     Route::get('/get-sections', [

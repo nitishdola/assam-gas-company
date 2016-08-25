@@ -8,5 +8,7 @@ use App\Http\Requests;
 
 class RequisitionsController extends Controller
 {
-    //
+    public function create() {
+    	
+    }
 }

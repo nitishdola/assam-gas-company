@@ -11,8 +11,16 @@ class DepartmentUser extends Authenticatable
      *
      * @var array
      */
+    public static $rules = [
+        'name'              =>  'required|max:255',
+        'username'          =>  'required|unique:department_users|max:255',
+        'section_id'        =>  'required|exists:sections,id',
+        'department_id'     =>  'required|exists:departments,id',
+        //'password'          =>  'required|min:3',
+    ];
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'section_id', 'department_id', 'password', 'created_by',
     ];
 
     /**

@@ -25,19 +25,8 @@
     {!! $errors->first('username', '<span class="help-inline">:message</span>') !!}
   </div>
 
-  <?php
+  
 
-  $status[1] = 'Active';
-  $status[0] = 'Deactive';
-
-  ?>
-
-  <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
-    {!! Form::label('status', 'Employee Status', array('class' => 'col-md-3 control-label')) !!}
-    <div class="col-md-9">
-    {!! Form::select('status', $status, 1, ['class' => 'control-label', 'id' => 'status']) !!}
-    {!! $errors->first('status', '<span class="help-inline">:message</span>') !!}
-    </div>
-  </div>
+  
 </div>
 

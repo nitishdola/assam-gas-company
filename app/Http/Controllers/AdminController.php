@@ -21,6 +21,8 @@ class AdminController extends Controller
     	return view('admin.dashboard');
     }
 
+
+   /*****************creation of department users by admin*****************/
     public function create_department_user() {
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -47,7 +49,7 @@ class AdminController extends Controller
     }
 
 
-   /*********************creation of account users*******************/
+   /*********************creation of account users by admin*******************/
 
    public function create_account_user() {
        
@@ -65,7 +67,7 @@ class AdminController extends Controller
 
         $message = '';
         if(AccountsUser::create($data)) {
-            $message .= 'User added successfully !';
+            $message .= 'User add successfully !';
         }else{
             $message .= 'Unable to add user !';
         }
@@ -77,7 +79,7 @@ class AdminController extends Controller
 
 
     public function view_department_users(Request $request) { 
-        $where = [];
+        $where['status'] = 1;
         if($request->department_id) {
             $where['department_id'] = $request->department_id;
         }
@@ -90,13 +92,11 @@ class AdminController extends Controller
             $where['username'] = $request->username;
         }
 
-        if($request->status) {
-            $where['status'] = $request->status;
-        }
-
-        $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
+       
+        
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
         return view('admin.users.department.index', compact('results', 'departments', 'sections'));
     }
 }

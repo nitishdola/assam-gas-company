@@ -62,7 +62,7 @@ class PasswordController  extends Controller
 
 
 
-   /*******************For Admin Panel,Change password********************/
+   /*********************For Admin Panel,Change password********************/
     public function change_password_admin() {
          return view('admin.change_password');
      }
@@ -101,7 +101,7 @@ class PasswordController  extends Controller
 
 
 
-  /*****************************For Department,Change password**********************/
+  /*****************************For Department Panel,Change Password**********************/
 
   public function change_password_department() {
          return view('department_user.change_password');

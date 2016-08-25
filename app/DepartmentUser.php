@@ -19,6 +19,21 @@ class DepartmentUser extends Authenticatable
         //'password'          =>  'required|min:3',
     ];
 
+     public function creator() 
+    {
+        return $this->belongsTo('App\DepartmentUser', 'created_by');
+    }
+
+    public function department() 
+    {
+        return $this->belongsTo('App\Department', 'department_id');
+    }
+
+    public function section() 
+    {
+        return $this->belongsTo('App\Section', 'section_id');
+    }
+
     protected $fillable = [
         'name', 'username', 'section_id', 'department_id', 'password', 'created_by',
     ];

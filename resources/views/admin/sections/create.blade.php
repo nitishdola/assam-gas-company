@@ -57,7 +57,7 @@
 				   	<td class="hidden-xs"> {{ $v->department['name'] }} </td>
 				    <td class="hidden-xs"> {{ $v->name }} </td>
 				    <td> {{ $v->department_code }} </td>
-				    <td> <a href="{{ route('department.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section">Edit</a>
+				    <td> <a href="{{ route('section.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section">Edit</a>
 				    </td>
 			    </tr>
 			  @endforeach

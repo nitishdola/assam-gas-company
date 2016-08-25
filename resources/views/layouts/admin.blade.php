@@ -141,5 +141,47 @@
 		});
 	</script>
 	<!-- /JAVASCRIPTS -->
+	<script type="text/javascript">
+	/****************************************Restcontroller*********************/
+    /*****************************casecading drop down,block ui etc*************/
+    function load_sections() {
+        $('#department_id').on('change', function() {
+            
+            var departmentID = $(this).val();
+            var data = '';
+            data += '&department_id='+departmentID;
+            url = "{{ route('rest.get_sections') }}";
+
+            if(departmentID ) {
+                $.ajax({
+                    url  : url,
+                    type : "GET",
+                    data : data,
+                    dataType: "json",
+                    
+                    error : function(resp) {
+                        console.log(resp);
+                    },
+                    success:function(data) {
+                        $.blockUI();
+                        setTimeout($.unblockUI, 500); 
+                        $('select[name="section_id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="section_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+
+                     }
+                });
+            }else{
+                
+                $('select[name="section_id"]').empty();
+            }
+        });
+    }
+
+  
+   
+	</script>
+	@yield('pageJs')
 </body>
 </html>

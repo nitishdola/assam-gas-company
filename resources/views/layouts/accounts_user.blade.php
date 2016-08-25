@@ -181,6 +181,16 @@
             }
         });
     }
+
+    $(document).ready(function() {
+   
+    $('#edit').click(function() { 
+        $.blockUI(); 
+ 
+        setTimeout($.unblockUI, 2000); 
+    }); 
+}); 
+   
 	</script>
 
 	@yield('pageJs')

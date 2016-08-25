@@ -58,7 +58,7 @@
 				            <td> {{ $v->section['name'] }} </td>
 				            <td> {{ $v->creator['name'] }} </td>
 				            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
-				            <td> <a href="{{ route('budget_head.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department">Edit</a>
+				            <td> <a href="{{ route('budget_head.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department" id="edit">Edit</a>
 				            </td>
 				            <td> <a onclick="return confirm('Are you sure you want to delete this Budget Head ?');" href="{{ route('BudgetHeads.disable', Crypt::encrypt($v->id) ) }}" title="Remove Budget Head"><i class="fa fa-trash"></i>Remove</a> </td>
 				        </tr>

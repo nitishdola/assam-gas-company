@@ -1,3 +1,4 @@
+{{ dump($errors)}}
 <div id="items_block" class="col-xs-12" style="margin-bottom:15px;">
 	<div class="item" style="border:1px solid #D9D6D6; padding:8px; background:#E7E3E3; margin:10px 0">
 		<div class="form-group {{ $errors->has('item_measurement_id') ? 'has-error' : ''}}">

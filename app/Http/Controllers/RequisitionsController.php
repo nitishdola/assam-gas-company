@@ -21,52 +21,45 @@ class RequisitionsController extends Controller
     	return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units'));
     }
 
-    public function store(Request $request) {
-    	
-    	$item_data = '';
-    	for($i = 0; $i < count($request->item_measurement_id); $i++) {
-    		echo $request->item_measurement_id[$i];
-    	}
-    dd($item_data);
-        $data['created_by'] = Auth::guard('admin')->user()->id;  
+    public function store(Request $request) {  
     	$message = '';
-    	Auth::guard('accounts_user')->user()->id;
-
     	DB::beginTransaction();
     	/* Insert data to requisitions table */
     	try {
 		    // Validate, then create if valid
 		    $validator = Validator::make($data = $request->all(), Requisition::$rules);
-        	if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-
+        	if ($validator->fails()) return 'error !'; //Redirect::back()->withErrors($validator)->withInput();
+        	$data['department_id'] 	= Auth::guard('department_user')->user()->department_id;
+        	$data['issue_date'] 	= date('Y-m-d'); 
+        	$data['raised_by'] 		= Auth::guard('department_user')->user()->id;
 		    $requisition = Requisition::create( $data );
-		} catch(ValidationException $e)
+		}catch(ValidationException $e)
 		{
 		    return Redirect::back()->withErrors($e->getErrors())->withInput();
 		}
-
 		try {
-
 			//loop through the items entered
-			for($i = 0; $i < count($request->item_measurement_id); $i++) {
-				$item_data = '';
-				$validator = Validator::make($item_data = $request->all(), Requisition::$rules);
-	        	if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+			for($i = 0; $i < count($request->store_description); $i++) {
+	    		$item_data['item_measurement_id'] 	= $request->item_measurement_id[$i];
+	    		$item_data['store_description'] 	= $request->store_description[$i];
+	    		$item_data['measurement_unit_id'] 	= $request->measurement_unit_id[$i];
+	    		$item_data['quantity_demanded'] 	= $request->quantity_demanded[$i];
+	    		$item_data['rate'] 					= $request->rate[$i];
 
-			    $requisition_items = User::create([
-			        'username' => Input::get('username'),
-			        'account_id' => $requisition->id
-			    ]);	
-			}
+	    		$validator = Validator::make($item_data, RequisitionItem::$rules);
+	        	if ($validator->fails()) return 'Error !'; //Redirect::back()->withErrors( $validator )->withInput();
+	        	$item_data['requisition_id'] 	= $requisition->id;
+			    $requisition_item = RequisitionItem::create( $item_data );
+	    	}
 		    // Validate, then create if valid
 		} catch(ValidationException $e)
 		{
 		    // Back to form with errors
-		    return Redirect::to('/form')
-		        ->withErrors( $e->getErrors() )
-		        ->withInput();
+		    return Redirect::back()->withErrors($e->getErrors())->withInput();
 		}
 		// Commit the queries!
 		DB::commit();
+
+		return 'Success !';
     }
 }

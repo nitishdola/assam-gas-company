@@ -70,7 +70,7 @@
                             </ul>
                         </li>
                     @else
-                        <li><a href="{{ url('/login') }}">Login User</a></li>
+                        <!-- <li><a href="{{ url('/login') }}">Login User</a></li> -->
                         <li><a href="{{ url('/admin/login') }}">Login Admin</a></li>
                         <li><a href="{{ url('/user/department/login') }}">Login Department User</a></li>
                         <li><a href="{{ url('/user/accounts/login') }}">Login Accounts User</a></li>

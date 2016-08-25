@@ -375,6 +375,7 @@ Route::group(['prefix'=>'user'], function() {
             'middleware' => ['admin'],
             'uses' => 'AdminController@store_department_user'
         ]);
+       
 
         Route::get('/view-all', [
             'as' => 'department_user.index',
@@ -406,6 +407,22 @@ Route::group(['prefix'=>'user'], function() {
             'uses' => 'RacksController@disable'
         ]);*/
     });
+     Route::group(['prefix'=>'account'], function() {
+
+            Route::get('/create', [
+            'as' => 'account_user.create',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@create_account_user'
+        ]);
+
+        Route::post('/store', [
+            'as' => 'account_user.store',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@store_account_user'
+        ]);
+
+          });
+
 });
 
 Route::group(['prefix'=>'admin'], function() {

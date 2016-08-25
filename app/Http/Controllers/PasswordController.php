@@ -43,7 +43,7 @@ class PasswordController  extends Controller
           $user->password = bcrypt($new_password);
 
           if($user->save()) {
-            $message .= 'Password updated Successfully !';
+            $message .= 'Password Updated Successfully !';
             $class   .= 'alert-success';
           }else{
             $message .= 'Unable to update password !';
@@ -62,7 +62,7 @@ class PasswordController  extends Controller
 
 
 
-   /*****************For Admin Panel,Change password********************/
+   /*******************For Admin Panel,Change password********************/
     public function change_password_admin() {
          return view('admin.change_password');
      }
@@ -109,15 +109,18 @@ class PasswordController  extends Controller
 
   public function update_password_department(Request $request) {
 
+     
       $rules = array(
           'current_password'          => 'required',
           'password_new'              => 'required|confirmed|different:current_password',
           'password_new_confirmation' => 'required',
       );
+
       $error_msg = array(
           'current_password.required' => 'Current Password is required',
           'password_new.confirmed'    => 'Confirm Password does not match',
       );
+
       $this->validate($request, $rules,$error_msg );
       $username = Auth::guard('department_user')->user()->username;
       $message = $class = '';
@@ -134,6 +137,7 @@ class PasswordController  extends Controller
             $message .= 'Unable to update password !';
             $class   .= 'alert-danger';
           }
+
       Session::flash('message', $message);
       Session::flash('alert-class', $class);
       return Redirect::route('chnage_department_user_password');

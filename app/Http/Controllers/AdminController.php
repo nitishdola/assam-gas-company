@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\Department, App\Section, App\DepartmentUser;
+use App\Department, App\Section, App\DepartmentUser,App\AccountsUser;
 
 class AdminController extends Controller
 {
@@ -45,6 +45,36 @@ class AdminController extends Controller
 
         return Redirect::route('department_user.create')->with('message', $message);
     }
+
+
+   /*********************creation of account users*******************/
+
+   public function create_account_user() {
+       
+        return view('admin.users.account.create');
+    }
+
+    public function store_account_user(Request $request) {
+        $validator = Validator::make($data = $request->all(), AccountsUser::$rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+        $data['created_by'] = Auth::guard('admin')->user()->id; 
+        $data['password']   = bcrypt( config('globals.account_user_password') );
+
+        //dd($data);
+
+        $message = '';
+        if(AccountsUser::create($data)) {
+            $message .= 'User added successfully !';
+        }else{
+            $message .= 'Unable to add user !';
+        }
+
+        return Redirect::route('account_user.create')->with('message', $message);
+    }
+
+
+
 
     public function view_department_users(Request $request) { 
         $where = [];

@@ -31,7 +31,7 @@ class DepartmentsController extends Controller
     	if(Department::create($data)) {
             $message .= 'Department added successfully !';
         }else{
-            $message .= 'Unable to add department !';
+            $message .= 'Unable store department sucessfully !';
         }
 
         return Redirect::route('department.index')->with('message', $message);
@@ -59,9 +59,9 @@ class DepartmentsController extends Controller
 
         $department->fill($data);
         if($department->save()) {
-            $message .= 'Department edited successfully !';
+            $message .= 'Department Edited Successfully !';
         }else{
-            $message .= 'Unable to edit  Department !';
+            $message .= 'Unable to Edit  Department !';
         }
 
         return Redirect::route('department.index')->with('message', $message);
@@ -74,9 +74,9 @@ class DepartmentsController extends Controller
         //change the status of department to 0
         $department->status = 0;
         if($department->save()) {
-            $message .= 'Department removed successfully !';
+            $message .= 'Department Removed Successfully !';
         }else{
-            $message .= 'Unable to remove  Department !';
+            $message .= 'Unable to Remove Department !';
         }
 
         return Redirect::route('department.index')->with('message', $message);

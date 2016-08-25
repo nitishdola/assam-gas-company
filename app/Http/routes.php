@@ -445,6 +445,16 @@ Route::group(['prefix'=>'admin'], function() {
             'uses' => 'VendorsController@disable'
         ]);
     });
+
+    /********Change password route for admin*******/
+    /******************************************************/
+    Route::get('chnage-password/admin',[
+      'as' => 'chnage_admin_user_password', 
+      'uses' => 'PasswordController@change_password_admin']);
+
+    Route::post('chnage-password/admin', [ 
+        'as' => 'update_admin_user_password',
+        'uses' => 'PasswordController@update_password_admin']);
 });
 
 
@@ -545,6 +555,17 @@ Route::group(['prefix'=>'measurement-of-salvage-item'], function() {
         'middleware' => ['department_user'],
         'uses' => 'SalvageItemMeasurementsController@disable'
     ]);
+
+
+    /********Change password route for department*******/
+    /******************************************************/
+    Route::get('chnage-password/department',[
+      'as' => 'chnage_department_user_password', 
+      'uses' => 'PasswordController@change_password_department']);
+
+    Route::post('chnage-password/department', [ 
+        'as' => 'update_department_user_password',
+        'uses' => 'PasswordController@update_password_department']);
 });
 
 
@@ -661,6 +682,17 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'BudgetHeadTransactionsController@index'
     ]);
+    /********Change password route for account users*******/
+    /******************************************************/
+    Route::get('chnage-password/accountusers',[
+      'as' => 'chnage_accounts_user_password', 
+      //'middleware' => ['accounts_user'],
+      'uses' => 'PasswordController@change_password']);
+
+    Route::post('chnage-password/accountusers', [ 
+        'as' => 'update_accounts_user_password',
+       // 'middleware' => ['accounts_user'],
+        'uses' => 'PasswordController@update_password']);
 });
 
 /*******************REST CONTROLLER*************/

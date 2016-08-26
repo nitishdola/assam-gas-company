@@ -63,6 +63,18 @@
 
 			<li class="has-sub">
 				<a href="javascript:;" class="">
+				<i class="fa fa-bars"></i> <span class="menu-text">Designation</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('designation.create') }}"><span class="sub-menu-text">Add Designations</span></a>
+					</li>
+					<li><a class="" href="{{ route('designation.index') }}"><span class="sub-menu-text">View Designations</span></a></li>
+				</ul>
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
 				<i class="fa fa-bars"></i> <span class="menu-text">Rack</span>
 				<span class="arrow"></span>
 				</a>

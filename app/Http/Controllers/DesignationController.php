@@ -37,32 +37,32 @@ class DesignationController extends Controller
 
     public function edit( $id ) {
     	$id = Crypt::decrypt($id);
-    	$rack = Rack::findOrFail($id);
+    	$designation = Designation::findOrFail($id);
         $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
-    	return view('admin.racks.edit', compact('rack', 'locations'));
+    	return view('admin.racks.edit', compact('designation', 'locations'));
     }
 
     public function update( $id, Request $request) { 
         $id = Crypt::decrypt($id); 
-        $rules = Rack::$rules;
+        $rules = Designation::$rules;
 
         $rules['name']	= $rules['name'] . ',id,' . $id;
         
     	$validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $rack = Rack::findOrFail($id);
+        $designation = Rack::findOrFail($id);
 
         $message = '';
 
-        $rack->fill($data);
-        if($rack->save()) {
-            $message .= 'Rack edited successfully !';
+        $designation->fill($data);
+        if($designation->save()) {
+            $message .= 'designation edited successfully !';
         }else{
-            $message .= 'Unable to edit  rack !';
+            $message .= 'Unable to edit  designation !';
         }
 
-        return Redirect::route('rack.index')->with('message', $message);
+        return Redirect::route('designation.index')->with('message', $message);
     }
 
     public function disable($id ) {
@@ -70,13 +70,13 @@ class DesignationController extends Controller
         $designation = Designation::findOrFail($id);
         $message = '';
         //change the status of department to 0
-        $rack->status = 0;
-        if($rack->save()) {
-            $message .= 'rack removed successfully !';
+        $designation->status = 0;
+        if($designation->save()) {
+            $message .= 'designation removed successfully !';
         }else{
-            $message .= 'Unable to remove  rack !';
+            $message .= 'Unable to remove  designation !';
         }
 
-        return Redirect::route('rack.index')->with('message', $message);
+        return Redirect::route('designation.index')->with('message', $message);
     }
 }

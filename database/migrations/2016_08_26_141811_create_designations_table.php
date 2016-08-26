@@ -18,6 +18,10 @@ class CreateDesignationsTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
+
+        Schema::table('designations', function ($table) {
+         $table->string('email');
+        });
     }
 
     /**

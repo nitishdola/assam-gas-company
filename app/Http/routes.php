@@ -527,15 +527,17 @@ Route::group(['prefix'=>'admin'], function() {
             'uses' => 'VendorsController@disable'
         ]);
     });
-     Route::get('chnage-password/department/{num}',[
+    Route::get('chnage-password/department/{num}',[
       'as' => 'chnage_department_user_password_admin', 
       'middleware' => ['admin'],
-      'uses' => 'PasswordController@change_password_department']);
+      'uses' => 'PasswordController@change_password_department']
+    );
 
     Route::post('chnage-password/department/{num}', [ 
         'as' => 'update_department_user_password_admin',
         'middleware' => ['admin'],
-        'uses' => 'PasswordController@update_password_department']);
+        'uses' => 'PasswordController@update_password_department']
+    );
 
     /********Change password route for admin*******/
     /******************************************************/
@@ -797,7 +799,11 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
 Route::group(['prefix'=>'rest'], function() {
     Route::get('/get-sections', [
         'as' => 'rest.get_sections',
-        //'middleware' => ['accounts_user'],
         'uses' => 'RestController@getSections'
+    ]);
+
+    Route::get('/item-values', [
+        'as' => 'rest.item_values',
+        'uses' => 'RestController@itemValues'
     ]);
 });

@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\Department, App\Section, App\DepartmentUser,App\AccountsUser;
+use App\Department, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
 
 class AdminController extends Controller
 {
@@ -26,7 +26,8 @@ class AdminController extends Controller
     public function create_department_user() {
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	return view('admin.users.department.create', compact('departments', 'sections'));
+        $designations    = [''=> 'Select Designation'] + Designation::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	return view('admin.users.department.create', compact('departments', 'sections','designations'));
     }
 
     public function store_department_user(Request $request) {

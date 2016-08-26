@@ -362,6 +362,44 @@ Route::group(['prefix'=>'rack'], function() {
     ]);
 });
 
+Route::group(['prefix'=>'designation'], function() {
+    Route::get('/create', [
+        'as' => 'designation.create',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'designation.store',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'designation.index',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'designation.edit',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'designation.update',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'designation.disable',
+        'middleware' => ['admin'],
+        'uses' => 'DesignationController@disable'
+    ]);
+});
+
   
 
 

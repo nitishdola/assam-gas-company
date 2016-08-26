@@ -16,6 +16,7 @@ class DepartmentUser extends Authenticatable
         'username'          =>  'required|unique:department_users|max:255',
         'section_id'        =>  'required|exists:sections,id',
         'department_id'     =>  'required|exists:departments,id',
+        'designation_id'     =>  'required|exists:designations,id',
         //'password'          =>  'required|min:3',
     ];
 
@@ -33,9 +34,13 @@ class DepartmentUser extends Authenticatable
     {
         return $this->belongsTo('App\Section', 'section_id');
     }
+     public function designation() 
+    {
+        return $this->belongsTo('App\Designation', 'designation_id');
+    }
 
     protected $fillable = [
-        'name', 'username', 'section_id', 'department_id', 'password', 'created_by',
+        'name', 'username','designation_id', 'section_id', 'department_id', 'password', 'created_by',
     ];
 
     /**

@@ -25,8 +25,5 @@
     {!! $errors->first('username', '<span class="help-inline">:message</span>') !!}
   </div>
 
-  
-
-  
 </div>
 

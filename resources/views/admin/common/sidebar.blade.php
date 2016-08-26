@@ -85,7 +85,7 @@
 					</li>
 					<li><a class="" href="{{route('account_user.create')}}"><span class="sub-menu-text">Add Account User</span></a>
 					</li>
-					<li><a class="" href="#"><span class="sub-menu-text">View Account Users</span></a>
+					<li><a class="" href="{{route('account_user.index')}}"><span class="sub-menu-text">View Account Users</span></a>
 					</li>
 				</ul>
 				

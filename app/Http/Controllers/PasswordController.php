@@ -13,54 +13,10 @@ use App\DepartmentUser;
 class PasswordController  extends Controller
 {
 
- 
-/************************For Accounts User,change password**************************/
+   public function __construct(){
+      $this->middleware('admin');
 
-  public function change_password() {
-    return view('accounts_user.change_password');
-  }
-
- public function update_password(Request $request) {
-
-      $rules = array(
-          'current_password'          => 'required',
-          'password_new'              => 'required|confirmed|different:current_password',
-          'password_new_confirmation' => 'required',
-      );
-      $error_msg = array(
-          'current_password.required' => 'Current password is required',
-          'password_new.confirmed'    => 'Confirm password doesnot match',
-      );
-      $this->validate($request, $rules,$error_msg );
-      $username = Auth::guard('accounts_user')->user()->username;
-     // $password = Auth::guard('accounts_user')->user()->password;
-      $message = $class = '';
-    // if (Auth::attempt(['username' => $username, 'password' => $password])) {
-          $new_password = trim($request->get('password_new'));
-
-          $user = AccountsUser::where('username', $username)->first();
-
-          $user->password = bcrypt($new_password);
-
-          if($user->save()) {
-            $message .= 'Password Updated Successfully !';
-            $class   .= 'alert-success';
-          }else{
-            $message .= 'Unable to update password !';
-            $class   .= 'alert-danger';
-          }
-    /*  }else{
-        $message .= 'Invalid Password Entered !';
-        $class   .= 'alert-danger';
-      }*/
-      Session::flash('message', $message);
-      Session::flash('alert-class', $class);
-      return Redirect::route('chnage_accounts_user_password');
-     
-
-    }
-
-
+}
 
    /*********************For Admin Panel,Change password********************/
     public function change_password_admin() {
@@ -99,30 +55,32 @@ class PasswordController  extends Controller
       return Redirect::route('chnage_admin_user_password');
     }
 
+    /*****************For Department ,Change Password**********************/
 
-
-  /*****************************For Department Panel,Change Password**********************/
-
-  public function change_password_department() {
-         return view('department_user.change_password');
+  public function change_password_department($id) {
+         $id = Crypt::decrypt($id);
+         $departmentuser = DepartmentUser::findOrFail($id);
+         return view('admin.users.department.change_password',compact('departmentuser'));
      }
 
-  public function update_password_department(Request $request) {
+  public function update_password_department($id,Request $request) {
 
+      $id = Crypt::decrypt($id); 
      
-      $rules = array(
-          'current_password'          => 'required',
-          'password_new'              => 'required|confirmed|different:current_password',
+      $rules = array(         
+          'password_new'              => 'required|confirmed',
           'password_new_confirmation' => 'required',
       );
 
       $error_msg = array(
-          'current_password.required' => 'Current Password is required',
+          //'current_password.required' => 'Current Password is required',
           'password_new.confirmed'    => 'Confirm Password does not match',
       );
 
       $this->validate($request, $rules,$error_msg );
-      $username = Auth::guard('department_user')->user()->username;
+      $department_user = DepartmentUser::findOrFail($id);
+     // $username = Auth::guard('department_user')->user()->username;
+      $username = $department_user->username;
       $message = $class = '';
           $new_password = trim($request->get('password_new'));
 
@@ -140,7 +98,7 @@ class PasswordController  extends Controller
 
       Session::flash('message', $message);
       Session::flash('alert-class', $class);
-      return Redirect::route('chnage_department_user_password');
+      return Redirect::route('department_user.index');
     }
 
 }

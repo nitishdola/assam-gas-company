@@ -17,6 +17,20 @@ class AccountsUser extends Authenticatable
         'username'          =>  'required|unique:accounts_users|max:255',
      
     ];
+      public function creator() 
+    {
+        return $this->belongsTo('App\DepartmentUser', 'created_by');
+    }
+
+    public function department() 
+    {
+        return $this->belongsTo('App\Department', 'department_id');
+    }
+
+    public function section() 
+    {
+        return $this->belongsTo('App\Section', 'section_id');
+    }
 
     protected $fillable = [
         'name', 'username', 'password', 'created_by',

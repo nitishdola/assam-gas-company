@@ -18,7 +18,7 @@ class PasswordController  extends Controller
 
   public function change_password() {
     return view('accounts_user.change_password');
-     }
+  }
 
  public function update_password(Request $request) {
 

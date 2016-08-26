@@ -18,11 +18,12 @@ class CreateRequisitionsTable extends Migration
             $table->string('requisition_number');
             $table->date('issue_date');
             $table->string('job_number');
-            $table->string('name_of_work');
+            $table->string('nature_of_work');
             $table->integer('chargeable_account_id', false,true);
             $table->string('financial_year', 10);
             $table->date('receive_date');
             $table->integer('raised_by', false,true);
+            $table->integer('hod', false,true)->nullable();
             $table->dateTime('hod_approve_date')->nullable();
             $table->integer('authorised_by', false,true)->nullable();
             $table->dateTime('authorised_date')->nullable();

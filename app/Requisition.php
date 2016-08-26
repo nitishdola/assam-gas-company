@@ -18,4 +18,14 @@ class Requisition extends Model
     	'chargeable_account_id' =>  'required|exists:chargeable_accounts,id',
     	'financial_year' 		=>  'required|min:7',
     ];
+
+    public function department() 
+    {
+        return $this->belongsTo('App\Department', 'department_id');
+    }
+
+    public function chargeable_account() 
+    {
+        return $this->belongsTo('App\ChargeableAccount', 'chargeable_account_id');
+    }
 }

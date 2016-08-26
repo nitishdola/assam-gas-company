@@ -99,4 +99,5 @@ class AdminController extends Controller
         $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
         return view('admin.users.department.index', compact('results', 'departments', 'sections'));
     }
+    
 }

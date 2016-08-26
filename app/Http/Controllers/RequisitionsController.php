@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
-use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit;
+use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit, App\Department;
 
 class RequisitionsController extends Controller
 {
@@ -28,14 +28,14 @@ class RequisitionsController extends Controller
     	try {
 		    // Validate, then create if valid
 		    $validator = Validator::make($data = $request->all(), Requisition::$rules);
-        	if ($validator->fails()) return 'error !'; //Redirect::back()->withErrors($validator)->withInput();
+        	if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
         	$data['department_id'] 	= Auth::guard('department_user')->user()->department_id;
         	$data['issue_date'] 	= date('Y-m-d'); 
         	$data['raised_by'] 		= Auth::guard('department_user')->user()->id;
 		    $requisition = Requisition::create( $data );
 		}catch(ValidationException $e)
 		{
-		    return Redirect::back()->withErrors($e->getErrors())->withInput();
+		    return Redirect::back();
 		}
 		try {
 			//loop through the items entered
@@ -47,19 +47,33 @@ class RequisitionsController extends Controller
 	    		$item_data['rate'] 					= $request->rate[$i];
 
 	    		$validator = Validator::make($item_data, RequisitionItem::$rules);
-	        	if ($validator->fails()) return 'Error !'; //Redirect::back()->withErrors( $validator )->withInput();
+	        	if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors( $validator )->withInput();
 	        	$item_data['requisition_id'] 	= $requisition->id;
 			    $requisition_item = RequisitionItem::create( $item_data );
 	    	}
 		    // Validate, then create if valid
 		} catch(ValidationException $e)
 		{
-		    // Back to form with errors
-		    return Redirect::back()->withErrors($e->getErrors())->withInput();
+		    // Back to form
+		    return Redirect::back();
 		}
 		// Commit the queries!
 		DB::commit();
+		$message .= 'Requisition successfully generated !';
+		return Redirect::route('requisition.index')->with('message', $message);
+    }
 
-		return 'Success !';
+    public function index(Request $request) {
+    	$departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+    	$where = [];
+        if($request->department_id) {
+            $where['department_id'] = $request->department_id;
+        }
+        $where['status'] = 1;
+      
+       	$results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+
+    	return view('department_user.requisitions.index', compact('departments', 'results'));
     }
 }

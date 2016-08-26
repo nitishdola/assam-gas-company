@@ -162,6 +162,7 @@ public function view_account_users(Request $request) {
         return view('admin.users.account.index', compact('results', 'departments', 'sections'));
     }
 
+
       public function edit_account_user( $id ) {
         $id = Crypt::decrypt($id);
         $accountuser = AccountsUser::findOrFail($id);
@@ -204,4 +205,5 @@ public function view_account_users(Request $request) {
 
         return Redirect::route('account_user.index')->with('message', $message);
        } 
+
 }

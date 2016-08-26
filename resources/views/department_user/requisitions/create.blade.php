@@ -44,11 +44,30 @@
 @section('pageJs') 
 <script> 
 //load_sections();
+var item = 1;
 $('.add_more_item').click(function(e) {
+	item++;
 	e.preventDefault();
 	var $item = $('.item');
-	var $clone = $item.clone().removeClass('item'); // Clone item 
+	var $clone = $item.clone(true).removeClass('item'); // Clone item 
 	$clone.appendTo("#items_block");
+	show_hide_item(item);
 });
+
+$('.remove_item').click(function(e) {
+	item--;
+	e.preventDefault();
+	$('.material_item:last').css("background-color", "#F56E6E").remove();
+	show_hide_item(item);
+});
+
+function show_hide_item( item ) {
+	if(item > 1) {
+		$('.remove_item').show();
+	}else{
+		$('.remove_item').hide();
+	}
+}
+
 </script>
 @stop

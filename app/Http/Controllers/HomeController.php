@@ -27,4 +27,10 @@ class HomeController extends Controller
     {   
         return view('home');
     }
+
+    public function home() {
+        dd(Auth::user());
+        //check the user type
+        // /Auth::guard('guard_name');
+    }
 }

@@ -1,6 +1,5 @@
-{{ dump($errors)}}
 <div id="items_block" class="col-xs-12" style="margin-bottom:15px;">
-	<div class="item" style="border:1px solid #D9D6D6; padding:8px; background:#E7E3E3; margin:10px 0">
+	<div class="item material_item" style="border:1px solid #D9D6D6; padding:8px; background:#E7E3E3; margin:10px 0">
 		<div class="form-group {{ $errors->has('item_measurement_id') ? 'has-error' : ''}}">
 		  {!! Form::label('item_measurement_id', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-9">
@@ -28,7 +27,7 @@
 		<div class="form-group {{ $errors->has('quantity_demanded') ? 'has-error' : ''}}">
 		  {!! Form::label('quantity_demanded', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-3">
-		    {!! Form::text('quantity_demanded[]', null, ['class' => 'form-control required', 'id' => 'quantity_demanded', 'placeholder' => 'Quantity Demanded', 'autocomplete' => 'off', 'required' => 'true']) !!}
+		    {!! Form::number('quantity_demanded[]', null, ['class' => 'form-control required', 'id' => 'quantity_demanded', 'step' => '0.01', 'placeholder' => 'Quantity Demanded', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 
 		  {!! Form::label('quantity_issued', '', array('class' => 'col-md-3 control-label')) !!}
@@ -67,5 +66,7 @@
 
 <div id="col-md-12">
 	<a href="#" class="btn btn-warning add_more_item">Add More Item <i class="fa fa-plus-square" aria-hidden="true"></i></a>
+
+	<a href="#" class="btn btn-danger remove_item" style="display:none">Remove <i class="fa fa-minus-square" aria-hidden="true"></i></a>
 </div>
 

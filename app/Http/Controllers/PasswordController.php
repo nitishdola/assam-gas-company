@@ -12,10 +12,11 @@ use App\DepartmentUser;
 
 class PasswordController  extends Controller
 {
+
    public function __construct(){
       $this->middleware('admin');
-    }
- 
+
+}
 
    /*********************For Admin Panel,Change password********************/
     public function change_password_admin() {

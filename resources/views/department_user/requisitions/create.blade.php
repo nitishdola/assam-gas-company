@@ -70,7 +70,10 @@ function show_hide_item( item ) {
 }
 
 $('.item_measurement').change(function(e) {
-	console.log('Test ');
+	$this = $(this);
+	var item_measurement_id = $this.val();
+	$parent = $this.parent();
+	$this.find('.rate').val('123');
 });
 </script>
 @stop

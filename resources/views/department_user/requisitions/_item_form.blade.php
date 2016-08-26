@@ -42,7 +42,7 @@
 		<div class="form-group {{ $errors->has('rate') ? 'has-error' : ''}}">
 		  {!! Form::label('rate', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-3">
-		    {!! Form::number('rate[]', null, ['class' => 'form-control required', 'id' => 'rate', 'placeholder' => 'Rate', 'step' => '0.01', 'autocomplete' => 'off', 'required' => 'true']) !!}
+		    {!! Form::number('rate[]', null, ['class' => 'rate form-control required', 'id' => 'rate', 'placeholder' => 'Rate', 'step' => '0.01', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 
 		  {!! Form::label('value', '', array('class' => 'col-md-3 control-label')) !!}

@@ -69,5 +69,8 @@ function show_hide_item( item ) {
 	}
 }
 
+$('.item_measurement').change(function(e) {
+	console.log('Test ');
+});
 </script>
 @stop

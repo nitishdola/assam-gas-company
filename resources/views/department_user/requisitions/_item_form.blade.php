@@ -3,7 +3,7 @@
 		<div class="form-group {{ $errors->has('item_measurement_id') ? 'has-error' : ''}}">
 		  {!! Form::label('item_measurement_id', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-9">
-		    {!! Form::select('item_measurement_id[]', $item_measurements, null, ['class' => 'required form-control col-md-12', 'id' => 'item_measurement_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
+		    {!! Form::select('item_measurement_id[]', $item_measurements, null, ['class' => 'required form-control col-md-12 item_measurement', 'id' => 'item_measurement_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 		  {!! $errors->first('item_measurement_id', '<span class="help-inline">:message</span>') !!}
 		</div>

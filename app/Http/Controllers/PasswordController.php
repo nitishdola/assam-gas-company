@@ -55,4 +55,50 @@ class PasswordController  extends Controller
       return Redirect::route('chnage_admin_user_password');
     }
 
+    /*****************For Department ,Change Password**********************/
+
+  public function change_password_department($id) {
+         $id = Crypt::decrypt($id);
+         $departmentuser = DepartmentUser::findOrFail($id);
+         return view('admin.users.department.change_password',compact('departmentuser'));
+     }
+
+  public function update_password_department($id,Request $request) {
+
+      $id = Crypt::decrypt($id); 
+     
+      $rules = array(         
+          'password_new'              => 'required|confirmed',
+          'password_new_confirmation' => 'required',
+      );
+
+      $error_msg = array(
+          //'current_password.required' => 'Current Password is required',
+          'password_new.confirmed'    => 'Confirm Password does not match',
+      );
+
+      $this->validate($request, $rules,$error_msg );
+      $department_user = DepartmentUser::findOrFail($id);
+     // $username = Auth::guard('department_user')->user()->username;
+      $username = $department_user->username;
+      $message = $class = '';
+          $new_password = trim($request->get('password_new'));
+
+          $user = DepartmentUser::where('username', $username)->first();
+
+          $user->password = bcrypt($new_password);
+
+          if($user->save()) {
+            $message .= 'Password updated Successfully !';
+            $class   .= 'alert-success';
+          }else{
+            $message .= 'Unable to update password !';
+            $class   .= 'alert-danger';
+          }
+
+      Session::flash('message', $message);
+      Session::flash('alert-class', $class);
+      return Redirect::route('department_user.index');
+    }
+
 }

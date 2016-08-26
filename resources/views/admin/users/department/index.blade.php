@@ -47,8 +47,9 @@
 
 			            <th> Name </th>
 			            <th> Username (CPF Number )</th>
-			            <th>Edit</th>
-                        <th>Remove</th>
+			            <th>Actions</th>
+                        
+
 			           
 			        </tr>
 			    </thead>
@@ -60,9 +61,8 @@
 			            <td class="hidden-xs"> {{ $v->section['name'] }} </td>
 			            <td> {{ $v->name }} </td>
 			            <td> {{ $v->username }} </td>
-			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>
-            </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('department_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
+			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>|
+            <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('department_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> | <a href="{{ route('chnage_department_user_password_admin', Crypt::encrypt($v->id) ) }}" title="Edit Location">Change Password</a></td>
 			            
 			        </tr>
 			        @endforeach

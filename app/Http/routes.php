@@ -362,6 +362,9 @@ Route::group(['prefix'=>'rack'], function() {
     ]);
 });
 
+  
+
+
 Route::group(['prefix'=>'user'], function() {
     Route::group(['prefix'=>'department'], function() {
         Route::get('/create', [
@@ -486,6 +489,15 @@ Route::group(['prefix'=>'admin'], function() {
             'uses' => 'VendorsController@disable'
         ]);
     });
+     Route::get('chnage-password/department/{num}',[
+      'as' => 'chnage_department_user_password_admin', 
+      'middleware' => ['admin'],
+      'uses' => 'PasswordController@change_password_department']);
+
+    Route::post('chnage-password/department/{num}', [ 
+        'as' => 'update_department_user_password_admin',
+        'middleware' => ['admin'],
+        'uses' => 'PasswordController@update_password_department']);
 
     /********Change password route for admin*******/
     /******************************************************/

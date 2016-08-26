@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title') All Department Users @stop
-@section('pageTitle') All Department Users @stop
+@section('title') All Account Users @stop
+
 @section('breadcumb') 
 <li>
 	<i class="fa fa-home"></i>
@@ -9,7 +9,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	Department Users
+	Accounts Users
 </li>
 
 @stop
@@ -17,8 +17,8 @@
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-			{!! Form::open(array('route' => 'department_user.index', 'id' => 'department_user.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
-			@include('admin.users.department._search_form')
+			{!! Form::open(array('route' => 'account_user.index', 'id' => 'account_user.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
+			@include('admin.users.account._search_form')
 			{!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
 		    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
 
@@ -39,31 +39,28 @@
 			                #
 			            </th>
 			            <th class="hidden-xs">
-			                Department
+			                Employee Name
 			            </th>
 			            <th>
-			                Section
+			                Username
 			            </th>
-
-			            <th> Name </th>
-			            <th> Username (CPF Number )</th>
-			            <th>Edit</th>
+			             <th>Edit</th>
                         <th>Remove</th>
-			           
+
+			          
 			        </tr>
 			    </thead>
 			    <tbody>
 			        @foreach($results as $k => $v)
 			        <tr>
 			            <td> {{ (($results->currentPage() - 1 ) * $results->perPage() ) + $count + $k }} </td>
-			            <td class="hidden-xs"> {{ $v->department['name'] }} </td>
-			            <td class="hidden-xs"> {{ $v->section['name'] }} </td>
+			           
 			            <td> {{ $v->name }} </td>
 			            <td> {{ $v->username }} </td>
-			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>
+			             <td> <a href="{{ route('account_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>
             </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('department_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
-			            
+            <td> <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('account_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
+			           
 			        </tr>
 			        @endforeach
 			    </tbody>

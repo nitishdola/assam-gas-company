@@ -812,6 +812,11 @@ Route::group(['prefix'=>'rest'], function() {
         'uses' => 'RestController@getSections'
     ]);
 
+    Route::get('/get-rackss', [
+        'as' => 'rest.get_racks',
+        'uses' => 'RestController@getRacks'
+    ]);
+
     Route::get('/item-values', [
         'as' => 'rest.item_values',
         'uses' => 'RestController@itemValues'

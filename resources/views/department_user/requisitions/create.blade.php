@@ -70,7 +70,30 @@ function show_hide_item( item ) {
 }
 
 $('.item_measurement').change(function(e) {
-	console.log('Test ');
+
+	var url 	= '';
+	var data	= '';
+	$this = $(this);
+	var item_measurement_id = $this.val();
+	$parent = $(this).parent(); //$('.material_item');
+
+
+	url 	+= '{{ route("rest.item_values") }}';
+	data 	+= '&item_measurement_id='+item_measurement_id;
+
+	$.ajax({
+		data : data,
+		url  : url,
+		type : 'get',
+		dataType : 'json',
+
+		error : function(resp) {
+			console.log(resp);
+		},
+		success : function(resp) { console.log(resp.latest_rate);
+			$parent.find('.rate').val(resp.latest_rate);
+		}
+	});
 });
 </script>
 @stop

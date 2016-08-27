@@ -153,10 +153,11 @@
                   <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Opening Stock</b></div>
                   <div class="col-md-6 no-padding"> {{ $info->opening_stock }}</div>
                 </div>
-                  <div class="col-md-12 item-field">
-                  <div class="col-md-6"><i class="fa fa-gg"></i><b>XYZ</b> </div>
-                  <div class="col-md-6">{{ $info->xyz }} </div>
+                 <div class="col-md-12 item-field">
+                  <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> XYZ</b></div>
+                  <div class="col-md-6 no-padding"> {{ $info->xyz }}</div>
                 </div>
+                 
               </div>
              
               <div class="col-md-10 col-md-offset-1">

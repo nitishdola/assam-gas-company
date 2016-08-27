@@ -54,7 +54,7 @@
 			            <td class="hidden-xs"> {{ $v->item_code }} </td>
 			            <td> {{ $v->part_number }} </td>
 			            <td> {{ $v->minimum_stock_level }} </td>
-			             <td> <a href="{{ route('item_measurement.view', Crypt::encrypt($v->id) ) }}" title="View Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Click Here</a></td>
+			             <td> <a href="{{ route('item_measurement.view', Crypt::encrypt($v->id) ) }}" title="View Item"><i class="fa fa-view" aria-hidden="true"></i>Click Here</a></td>
 			            <td> <a href="{{ route('item_measurement.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
 			            @if($v->status) | 
 						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('item_measurement.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash" aria-hidden="true"></i>Remove</a>

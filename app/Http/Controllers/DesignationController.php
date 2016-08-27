@@ -38,8 +38,8 @@ class DesignationController extends Controller
     public function edit( $id ) {
     	$id = Crypt::decrypt($id);
     	$designation = Designation::findOrFail($id);
-        $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
-    	return view('admin.racks.edit', compact('designation', 'locations'));
+        
+    	return view('admin.designation.edit', compact('designation'));
     }
 
     public function update( $id, Request $request) { 
@@ -51,7 +51,7 @@ class DesignationController extends Controller
     	$validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $designation = Rack::findOrFail($id);
+        $designation = Designation::findOrFail($id);
 
         $message = '';
 

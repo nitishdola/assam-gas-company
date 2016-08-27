@@ -1,6 +1,6 @@
 @extends('layouts.department_user')
 @section('title') Measurement of Item @stop
-@section('pageTitle') Measurement of Item @stop
+@section('pageTitle') Measurement of Salvage Item @stop
 
 @section('breadcumb') 
 <li>
@@ -14,7 +14,7 @@
 </li>
 
 <li>
-	Measurement of Item
+	Measurement of Salvage Item
 </li>
 
 @stop
@@ -24,8 +24,8 @@
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 		    <div class="col-xs-12">
-			    {!! Form::open(array('route' => 'item_measurement.store', 'id' => 'item_measurement.store', 'class' => 'form-horizontal row-border')) !!}
-			        @include('department_user.item_measurements._form')
+			    {!! Form::open(array('route' => 'salvage_item_measurement.store', 'id' => 'salvage_item_measurement.store', 'class' => 'form-horizontal row-border')) !!}
+			        @include('department_user.salvage_item_measurements._form')
 
 			        <div class="col-md-12"> 
 			        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}

@@ -62,6 +62,15 @@ class ItemMeasurement extends Model
 	{
 		return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');
 	}
+    public function location() 
+    {
+        return $this->belongsTo('App\Location', 'location_id');
+    }
+
+    public function rack() 
+    {
+        return $this->belongsTo('App\Rack', 'rack_id');
+    }
 
 	public function location_id() 
 	{

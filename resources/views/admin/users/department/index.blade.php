@@ -81,3 +81,4 @@
 	</div>
 </div>
 @endsection
+@section('pageJs') <script> load_sections(); </script> @stop

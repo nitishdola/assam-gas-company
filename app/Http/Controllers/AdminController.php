@@ -52,6 +52,9 @@ class AdminController extends Controller
         if($request->department_id) {
             $where['department_id'] = $request->department_id;
         }
+          if($request->designation_id) {
+            $where['designation_id'] = $request->designation_id;
+        }
 
         if($request->section_id) {
             $where['section_id'] = $request->section_id;
@@ -63,16 +66,18 @@ class AdminController extends Controller
 
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $designations    = [''=> 'Select Designation'] + Designation::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
-        return view('admin.users.department.index', compact('results', 'departments', 'sections'));
+        return view('admin.users.department.index', compact('results', 'departments','designations', 'sections'));
     }
 
     public function edit( $id ) {
         $id = Crypt::decrypt($id);
         $departmentuser = DepartmentUser::findOrFail($id);
-         $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        return view('admin.users.department.edit', compact('departmentuser','departments','sections'));
+        $designations    = [''=> 'Select Designation'] + Designation::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        return view('admin.users.department.edit', compact('departmentuser','departments','sections','designations'));
     }
 
      public function update( $id, Request $request) { 

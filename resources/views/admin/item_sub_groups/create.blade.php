@@ -31,34 +31,45 @@
 			    {!!form::close()!!}
 			</div>
 			<div class="col-xs-2"></div>
-			<div class="col-xs-4 pull-right">
+			<div class="col-xs-6 pull-right">
 			<h3>Latest Entries</h3>
 			@if(count($results))
 			<table class="table table-striped table-bordered table-advance table-hover">
 			  <thead>
 			      <tr>
-			          <th>
-			              #
-			          </th>
-			          <th> Department</th>
-			          <th class="hidden-xs">
-			              Section Name
-			          </th>
-			          <th>
-			              Section Code
-			          </th>
-			          <th>Edit</th>
+			           <th>
+                #
+            </th>
+            <th> Item Group </th>
+            
+            <th class="hidden-xs">
+                Item Sub Group Name
+            </th>
+            
+            <th>
+                Item Sub Group Name Code
+            </th>
+
+           
+            <th>
+                Creation Time
+            </th>
+            <th>Edit</th>
+            <th>Remove</th>
 			      </tr>
 			  </thead>
 			  <tbody>
 			  @foreach($results as $k => $v)
 			  	<tr>
 				   	<td> {{ $k+1 }} </td>
-				   	<td class="hidden-xs"> {{ $v->department['name'] }} </td>
-				    <td class="hidden-xs"> {{ $v->name }} </td>
-				    <td> {{ $v->department_code }} </td>
-				    <td> <a href="{{ route('department.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section">Edit</a>
-				    </td>
+				  <td> {{ $v->item_group['name'] }} </td>
+            <td class="hidden-xs"> {{ $v->name }} </td>
+            <td> {{ $v->item_sub_group_code }} </td>
+           
+            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
+            <td> <a href="{{ route('item_sub_group.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item Sub Group">Edit</a>
+            </td>
+            <td> <a onclick="return confirm('Are you sure you want to delete this item sub group ?');" href="{{ route('item_sub_group.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item Sub Group"><i class="fa fa-trash"></i>Remove</a> </td>
 			    </tr>
 			  @endforeach
 			  </tbody>

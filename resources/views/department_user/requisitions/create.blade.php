@@ -73,27 +73,31 @@ $('.item_measurement').change(function(e) {
 
 	var url 	= '';
 	var data	= '';
-	$this = $(this);
+	var $this = $(this);
 	var item_measurement_id = $this.val();
-	$parent = $(this).parent(); //$('.material_item');
+	var $parent = $this.parents('.material_item');//$this.parent(); //$('.material_item');
+	if(item_measurement_id != '' || item_measurement_id != 0) {
+		$.blockUI();
+		url 	+= '{{ route("rest.item_values") }}';
+		data 	+= '&item_measurement_id='+item_measurement_id;
 
+		$.ajax({
+			data : data,
+			url  : url,
+			type : 'get',
+			dataType : 'json',
 
-	url 	+= '{{ route("rest.item_values") }}';
-	data 	+= '&item_measurement_id='+item_measurement_id;
-
-	$.ajax({
-		data : data,
-		url  : url,
-		type : 'get',
-		dataType : 'json',
-
-		error : function(resp) {
-			console.log(resp);
-		},
-		success : function(resp) { console.log(resp.latest_rate);
-			$parent.find('.rate').val(resp.latest_rate);
-		}
-	});
+			error : function(resp) {
+				console.log(resp);
+				$.unblockUI();
+			},
+			success : function(resp) {
+				$.unblockUI();
+				$parent.find('.rate').val(resp.latest_rate);
+				$parent.find('.stock_in_hand').text(resp.stock_in_hand);
+			}
+		});
+	}
 });
 </script>
 @stop

@@ -30,9 +30,9 @@
 		    {!! Form::number('quantity_demanded[]', null, ['class' => 'form-control required', 'id' => 'quantity_demanded', 'step' => '0.01', 'placeholder' => 'Quantity Demanded', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 
-		  {!! Form::label('quantity_issued', '', array('class' => 'col-md-3 control-label')) !!}
-		  <div class="col-md-3">
-		    {!! Form::text('quantity_issued[]', null, ['class' => 'disabled form-control', 'id' => 'quantity_issued', 'disabled' => true, 'placeholder' => 'Quantity Issued', 'autocomplete' => 'off', ]) !!}
+		  {!! Form::label('stock_in_hand', '', array('class' => 'col-md-3 control-label')) !!}
+		  <div class="col-md-3 stock_in_hand" style="margin-top:4px">
+		    0
 		  </div>
 
 		  {!! $errors->first('quantity_issued', '<span class="help-inline">:message</span>') !!}
@@ -42,13 +42,14 @@
 		<div class="form-group {{ $errors->has('rate') ? 'has-error' : ''}}">
 		  {!! Form::label('rate', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-3">
-		    {!! Form::number('rate[]', null, ['class' => 'rate form-control required', 'id' => 'rate', 'placeholder' => 'Rate', 'step' => '0.01', 'autocomplete' => 'off', 'required' => 'true']) !!}
+		    {!! Form::number('rate[]', null, ['class' => 'rate form-control required', 'id' => 'rate', 'placeholder' => 'Rate', 'readonly' => true, 'step' => '0.01', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 
+		  <!-- 
 		  {!! Form::label('value', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-3">
 		    {!! Form::text('value[]', null, ['class' => 'disabled form-control', 'id' => 'value', 'disabled' => true, 'placeholder' => 'Value', 'autocomplete' => 'off',]) !!}
-		  </div>
+		  </div> -->
 
 		  {!! $errors->first('rate', '<span class="help-inline">:message</span>') !!}
 		</div>

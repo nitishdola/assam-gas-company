@@ -610,6 +610,11 @@ Route::group(['prefix'=>'measurement-of-item'], function() {
         'middleware' => ['department_user'],
         'uses' => 'ItemMeasurementsController@disable'
     ]);
+    Route::get('/view-item-details/{num}', [
+        'as' => 'item_measurement.view',
+        'middleware' => ['department_user'],
+        'uses' => 'ItemMeasurementsController@view'
+    ]);
 });
 
 Route::group(['prefix'=>'measurement-of-salvage-item'], function() {

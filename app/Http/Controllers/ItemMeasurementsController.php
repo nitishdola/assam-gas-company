@@ -83,6 +83,7 @@ class ItemMeasurementsController extends Controller
 		return view('department_user.item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results'));
 	}
 
+
     public function edit( $id ) {
         $id = Crypt::decrypt($id);
         $item_measurement = ItemMeasurement::findOrFail($id);
@@ -97,6 +98,13 @@ class ItemMeasurementsController extends Controller
         $item_measurement['wef']            = date('d-m-Y', strtotime( $item_measurement['wef'] ));
 
         return view('department_user.item_measurements.edit', compact('item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks'));
+    }
+
+     public function view( $id ) {
+        $id = Crypt::decrypt($id);
+      
+       $info = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
+       return view('department_user.item_measurements.view', compact('info'));
     }
 
     public function update($id , Request $request) {

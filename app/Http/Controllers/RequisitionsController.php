@@ -90,10 +90,10 @@ class RequisitionsController extends Controller
 
 
       public function edit( $id ) {
-        $id               = Crypt::decrypt($id);
-        $requisitions     = Requisition::findOrFail($id);
-        $requisition_id   = $requisitions->id;
-        $requisitionitems = RequisitionItem::where('requisition_id', $requisition_id)->get();
+        $id                 = Crypt::decrypt($id);
+        $requisitions       = Requisition::findOrFail($id);
+        $requisition_id     = $requisitions->id;
+        $requisition_items  = RequisitionItem::where('requisition_id', $requisition_id)->get();
 
 
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -101,7 +101,7 @@ class RequisitionsController extends Controller
     	$item_measurements    = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
 
     	$units    = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        return view('department_user.requisitions.edit', compact('units', 'item_measurements', 'chargeable_accounts', 'requisitions','requisitionitems'));
+        return view('department_user.requisitions.edit', compact('units', 'item_measurements', 'chargeable_accounts', 'requisitions','requisition_items'));
     }
 
     

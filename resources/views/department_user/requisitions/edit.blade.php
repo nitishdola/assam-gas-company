@@ -6,10 +6,10 @@
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 		    {!! Form::model($requisitions, array('route' => ['requisition.update', Crypt::encrypt($requisitions->id)], 'id' => 'requisition_update', 'class' => 'form-horizontal row-border')) !!}
-		        @include('department_user.requisitions._form',$requisitions)
-		         <div style="height:30px;"></div>
+		        @include('department_user.requisitions._form')
+		        <div style="height:30px;"></div>
 			        <h4> Requisition Material(s) </h4>
-			        @include('department_user.requisitions._item_form',$requisitionitems)
+			        @include('department_user.requisitions._item_form')
 		        <div class="col-md-12"> 
 			        {!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
 			        {!! Form:: submit('Update', ['class' => 'btn btn-success']) !!}

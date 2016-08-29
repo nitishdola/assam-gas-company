@@ -37,6 +37,17 @@
 					<li><a class="" href="{{ route('salvage_item_measurement.index') }}"><span class="sub-menu-text">View Salvage Items</span></a></li>
 				</ul>
 			</li>
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Requisition</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('requisition.create') }}"><span class="sub-menu-text">Add Requisition</span></a>
+					</li>
+					<li><a class="" href="{{ route('requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
+				</ul>
+			</li>
 		</ul>
 		<!-- /SIDEBAR MENU -->
 	</div>

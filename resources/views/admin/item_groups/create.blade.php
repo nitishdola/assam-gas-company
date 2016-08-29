@@ -55,7 +55,7 @@
 				   	<td> {{ $k+1 }} </td>
 				    <td class="hidden-xs"> {{ $v->name }} </td>
 				    <td> {{ $v->department_code }} </td>
-				    <td> <a href="{{ route('department.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department">Edit</a>
+				    <td> <a href="{{ route('item_group.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department">Edit</a>
 				    </td>
 			    </tr>
 			  @endforeach

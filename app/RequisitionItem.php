@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequisitionItem extends Model
 {
-    protected $fillable = array('requisition_id', 'item_measurement_id', 'store_description', 'measurement_unit_id', 'quantity_demanded', 'rate');
+    protected $fillable = array('id','requisition_id', 'item_measurement_id', 'store_description', 'measurement_unit_id', 'quantity_demanded', 'rate');
 	protected $table    = 'requisition_items';
     protected $guarded  = ['_token'];
 
@@ -17,5 +17,6 @@ class RequisitionItem extends Model
     	'measurement_unit_id' 	=>  'required|exists:measurement_units,id',
     	'quantity_demanded' 	=>  'required|numeric',
     	'rate' 					=>  'required|numeric',
+
     ];
 }

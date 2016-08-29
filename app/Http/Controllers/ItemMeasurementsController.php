@@ -36,7 +36,7 @@ class ItemMeasurementsController extends Controller
     	if(ItemMeasurement::create($data)) {
             $message .= 'Item added successfully !';
         }else{
-            $message .= 'Unable to add item !';
+            $message .= 'Unable to save item !';
         }
 
         return Redirect::route('item_measurement.index')->with('message', $message);

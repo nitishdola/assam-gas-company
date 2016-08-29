@@ -142,6 +142,93 @@
 			$('input.datepicker').Zebra_DatePicker({ format: 'd-m-Y'});
 		});
 	</script>
+	<script type="text/javascript">
+	/****************************************Restcontroller*********************/
+    /*****************************casecading drop down,block ui etc*************/
+    
+     function load_racks() {
+        $('#location_id').on('change', function() {
+          
+            var locationID = $(this).val();
+            var data = '';
+            data += '&location_id='+locationID;
+            url = "{{ route('rest.get_racks') }}";
+
+            if(locationID ) {
+                $.ajax({
+                    url  : url,
+                    type : "GET",
+                    data : data,
+                    dataType : "json",
+                    
+                    error : function(resp) {
+                        console.log(resp);
+                    },
+                    success:function(data) {
+                        $.blockUI();
+                        
+                        setTimeout($.unblockUI, 500); 
+                        $('select[name="rack_id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="rack_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+
+                     }
+                });
+            }else{
+                
+                $('select[name="rack_id"]').empty();
+            }
+        });
+    }
+// for load sub groups
+function load_subgroups() {
+        $('#item_group_id').on('change', function() {
+         
+            var groupID = $(this).val();
+            var data = '';
+            data += '&item_group_id='+groupID;
+            url = "{{ route('rest.get_sub_groups') }}";
+
+            if(groupID ) {
+                $.ajax({
+                    url  : url,
+                    type : "GET",
+                    data : data,
+                    dataType : "json",
+                    
+                    error : function(resp) {
+                        console.log(resp);
+                    },
+                    success:function(data) {
+                        $.blockUI();
+                        setTimeout($.unblockUI, 500); 
+                        $('select[name="item_sub_group_id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="item_sub_group_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+
+                     }
+                });
+            }else{
+                
+                $('select[name="item_sub_group_id"]').empty();
+            }
+        });
+    }
+
+    $(document).ready(function() {
+   
+    $('#edit').click(function() { 
+        $.blockUI(); 
+ 
+        setTimeout($.unblockUI, 2000); 
+    }); 
+}); 
+   
+	</script>
+
+
 
 	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->

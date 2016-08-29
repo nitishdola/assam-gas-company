@@ -12,9 +12,10 @@ use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasure
 class RequisitionsController extends Controller
 {
     public function create() {
+
     	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-    	$item_measurements    = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+    	$item_measurements      = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
 
     	$units    = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -65,15 +66,117 @@ class RequisitionsController extends Controller
 
     public function index(Request $request) {
     	$departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
     	$where = [];
         if($request->department_id) {
             $where['department_id'] = $request->department_id;
         }
+        if($request->chargeable_account_id) {
+            $where['chargeable_account_id'] = $request->chargeable_account_id;
+        }
+         if($request->requisition_number) {
+            $where['requisition_number'] = $request->requisition_number;
+        }
         $where['status'] = 1;
       
        	$results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-    	return view('department_user.requisitions.index', compact('departments', 'results'));
+    	return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results'));
+    }
+
+
+
+
+
+      public function edit( $id ) {
+        $id               = Crypt::decrypt($id);
+        $requisitions     = Requisition::findOrFail($id);
+        $requisition_id   = $requisitions->id;
+        $requisitionitems = RequisitionItem::where('requisition_id', $requisition_id)->get();
+
+
+        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+    	$item_measurements    = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+
+    	$units    = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        return view('department_user.requisitions.edit', compact('units', 'item_measurements', 'chargeable_accounts', 'requisitions','requisitionitems'));
+    }
+
+    
+
+    public function update($id , Request $request) {
+        $id = Crypt::decrypt($id); 
+        $rules = Requisition::$rules;
+
+       
+        
+        $validator = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+        $requisition = Requisition::findOrFail($id);
+        $requisition_id	= $requisition->id;
+	    
+
+
+       $message = '';
+    	DB::beginTransaction();
+    	/* Insert data to requisitions table */
+    	try {
+
+            $data['department_id'] 	= Auth::guard('department_user')->user()->department_id;
+        	$data['issue_date'] 	= date('Y-m-d'); 
+        	$data['raised_by'] 		= Auth::guard('department_user')->user()->id;
+            $requisition->fill($data);
+  
+            $requisition = $requisition->save();
+		}catch(ValidationException $e)
+		{
+		    return Redirect::back();
+		}
+
+		try {
+
+			for($i = 0; $i < count($request->store_description); $i++) {
+
+				$item_details = RequisitionItem::where('id', $data['id'][$i])->where('requisition_id',
+					$requisition_id)->first();
+				$item_details->item_measurement_id = $request->item_measurement_id[$i];
+				$item_details->store_description = $request->store_description[$i];	    		
+	    		$item_details->measurement_unit_id = $request->measurement_unit_id[$i];
+	    		$item_details->quantity_demanded = $request->quantity_demanded[$i];
+	    		$item_details->rate = $request->rate[$i];
+	    		$item_details->save();         
+
+	        	
+			}  
+		} 
+		catch(ValidationException $e)
+		{
+		    return Redirect::back();
+		}
+
+       // Commit the queries!
+		DB::commit();
+		$message .= 'Requisition successfully generated !';
+		return Redirect::route('requisition.index')->with('message', $message);
+    }
+
+
+
+     public function disable($id ) {
+        $id = Crypt::decrypt($id); 
+        $requisitions = Requisition::findOrFail($id);
+        $message = '';
+        //change the status of department to 0
+        $requisitions->status = 0;
+        if($requisitions->save()) {
+            $message .= 'Requisition removed successfully !';
+        }else{
+            $message .= 'Unable to remove Requisition !';
+        }
+
+        return Redirect::route('requisition.index')->with('message', $message);
     }
 }

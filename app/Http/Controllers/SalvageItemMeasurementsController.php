@@ -83,9 +83,16 @@ class SalvageItemMeasurementsController extends Controller
 		return view('department_user.salvage_item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results'));
 	}
 
+    public function view( $id ) {
+        $id = Crypt::decrypt($id);
+      
+       $info = SalvageItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
+       return view('department_user.salvage_item_measurements.view', compact('info'));
+    }
+
     public function edit( $id ) {
         $id = Crypt::decrypt($id);
-        $item_measurement = SalvageItemMeasurement::findOrFail($id);
+        $salvage_item_measurement = SalvageItemMeasurement::findOrFail($id);
 
         $item_groups          = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $item_sub_groups      = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -93,10 +100,10 @@ class SalvageItemMeasurementsController extends Controller
         $locations            = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $racks                = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-        $item_measurement['expiry_date']    = date('d-m-Y', strtotime( $item_measurement['expiry_date'] ));
-        $item_measurement['wef']            = date('d-m-Y', strtotime( $item_measurement['wef'] ));
+        $salvage_item_measurement['expiry_date']    = date('d-m-Y', strtotime( $salvage_item_measurement['expiry_date'] ));
+        $salvage_item_measurement['wef']            = date('d-m-Y', strtotime( $salvage_item_measurement['wef'] ));
 
-        return view('department_user.salvage_item_measurements.edit', compact('item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks'));
+        return view('department_user.salvage_item_measurements.edit', compact('salvage_item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks'));
     }
 
     public function update($id , Request $request) {
@@ -117,7 +124,7 @@ class SalvageItemMeasurementsController extends Controller
 
         $item_measurement->fill($data);
         if($item_measurement->save()) {
-            $message .= 'Item edited successfully !';
+            $message .= 'Item  Edited successfully !';
         }else{
             $message .= 'Unable to edit  item !';
         }

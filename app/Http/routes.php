@@ -572,6 +572,23 @@ Route::group(['prefix'=>'requisition'], function() {
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@index'
     ]);
+      Route::get('/edit/{num}', [
+            'as' => 'requisition.edit',
+            'middleware' => ['department_user'],
+            'uses' => 'RequisitionsController@edit'
+        ]);
+
+        Route::post('/update/{num}', [
+            'as' => 'requisition.update',
+            'middleware' => ['department_user'],
+            'uses' => 'RequisitionsController@update'
+        ]);
+
+        Route::get('/disable/{num}', [
+            'as' => 'requisition.disable',
+            'middleware' => ['department_user'],
+            'uses' => 'RequisitionsController@disable'
+        ]);
 });
 
 Route::group(['prefix'=>'measurement-of-item'], function() {
@@ -652,6 +669,11 @@ Route::group(['prefix'=>'measurement-of-salvage-item'], function() {
         'as' => 'salvage_item_measurement.disable',
         'middleware' => ['department_user'],
         'uses' => 'SalvageItemMeasurementsController@disable'
+    ]);
+     Route::get('/view-salvage-item-details/{num}', [
+        'as' => 'salvage_item_measurement.view',
+        'middleware' => ['department_user'],
+        'uses' => 'SalvageItemMeasurementsController@view'
     ]);
 
 });
@@ -805,6 +827,16 @@ Route::group(['prefix'=>'rest'], function() {
     Route::get('/get-sections', [
         'as' => 'rest.get_sections',
         'uses' => 'RestController@getSections'
+    ]);
+
+    Route::get('/get-rackss', [
+        'as' => 'rest.get_racks',
+        'uses' => 'RestController@getRacks'
+    ]);
+
+    Route::get('/get-subgroups', [
+        'as' => 'rest.get_sub_groups',
+        'uses' => 'RestController@getSubgroups'
     ]);
 
     Route::get('/item-values', [

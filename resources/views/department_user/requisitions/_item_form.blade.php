@@ -62,6 +62,15 @@
 		  </div>
 		  {!! $errors->first('remarks', '<span class="help-inline">:message</span>') !!}
 		</div>
+	 <div class="form-group {{ $errors->has('remarks') ? 'has-error' : ''}}">
+		 <div class="col-md-9" type="hidden">
+		    {!! Form::hidden('id[]', null, ['class' => 'form-control required', 'type'=>'hidden','id' => 'id', 'rows' => 2,]) !!}
+		  </div>
+		 
+		</div>
+
+
+	
 	</div>
 </div>
 

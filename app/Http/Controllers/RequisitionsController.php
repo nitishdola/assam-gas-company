@@ -12,6 +12,7 @@ use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasure
 class RequisitionsController extends Controller
 {
     public function create() {
+
     	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
     	$item_measurements      = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
@@ -92,7 +93,8 @@ class RequisitionsController extends Controller
         $id               = Crypt::decrypt($id);
         $requisitions     = Requisition::findOrFail($id);
         $requisition_id   = $requisitions->id;
-        $requisitionitems = RequisitionItem::where('requisition_id',$requisition_id)->get()->all();
+        $requisitionitems = RequisitionItem::where('requisition_id', $requisition_id)->get();
+
 
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -106,28 +108,59 @@ class RequisitionsController extends Controller
 
     public function update($id , Request $request) {
         $id = Crypt::decrypt($id); 
-        $rules = ItemMeasurement::$rules;
+        $rules = Requisition::$rules;
 
-        $rules['item_code']  = $rules['item_code'] . ',id,' . $id;
+       
         
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $item_measurement = ItemMeasurement::findOrFail($id);
+        $requisition = Requisition::findOrFail($id);
+        $requisition_id	= $requisition->id;
+	    
 
-        $message = '';
 
-        $data['expiry_date']    = date('Y-m-d', strtotime( $data['expiry_date'] ));
-        $data['wef']            = date('Y-m-d', strtotime( $data['wef'] ));
+       $message = '';
+    	DB::beginTransaction();
+    	/* Insert data to requisitions table */
+    	try {
 
-        $item_measurement->fill($data);
-        if($item_measurement->save()) {
-            $message .= 'Item edited successfully !';
-        }else{
-            $message .= 'Unable to edit  item !';
-        }
+            $data['department_id'] 	= Auth::guard('department_user')->user()->department_id;
+        	$data['issue_date'] 	= date('Y-m-d'); 
+        	$data['raised_by'] 		= Auth::guard('department_user')->user()->id;
+            $requisition->fill($data);
+  
+            $requisition = $requisition->save();
+		}catch(ValidationException $e)
+		{
+		    return Redirect::back();
+		}
 
-        return Redirect::route('item_measurement.index')->with('message', $message);
+		try {
+
+			for($i = 0; $i < count($request->store_description); $i++) {
+
+				$item_details = RequisitionItem::where('id', $data['id'][$i])->where('requisition_id',
+					$requisition_id)->first();
+				$item_details->item_measurement_id = $request->item_measurement_id[$i];
+				$item_details->store_description = $request->store_description[$i];	    		
+	    		$item_details->measurement_unit_id = $request->measurement_unit_id[$i];
+	    		$item_details->quantity_demanded = $request->quantity_demanded[$i];
+	    		$item_details->rate = $request->rate[$i];
+	    		$item_details->save();         
+
+	        	
+			}  
+		} 
+		catch(ValidationException $e)
+		{
+		    return Redirect::back();
+		}
+
+       // Commit the queries!
+		DB::commit();
+		$message .= 'Requisition successfully generated !';
+		return Redirect::route('requisition.index')->with('message', $message);
     }
 
 

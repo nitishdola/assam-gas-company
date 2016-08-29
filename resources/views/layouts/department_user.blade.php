@@ -166,6 +166,7 @@
                     },
                     success:function(data) {
                         $.blockUI();
+                        
                         setTimeout($.unblockUI, 500); 
                         $('select[name="rack_id"]').empty();
                         $.each(data, function(key, value) {

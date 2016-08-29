@@ -37,4 +37,4 @@
 	</div>
 </div>
 @endsection
-@section('pageJs') <script> load_sections(); </script> @stop
+@section('pageJs') <script> load_racks(),load_subgroups(); </script> @stop

@@ -145,9 +145,10 @@
 	<script type="text/javascript">
 	/****************************************Restcontroller*********************/
     /*****************************casecading drop down,block ui etc*************/
-    function load_sections() {
+    
+     function load_racks() {
         $('#location_id').on('change', function() {
-           
+          
             var locationID = $(this).val();
             var data = '';
             data += '&location_id='+locationID;
@@ -158,7 +159,7 @@
                     url  : url,
                     type : "GET",
                     data : data,
-                    dataType: "json",
+                    dataType : "json",
                     
                     error : function(resp) {
                         console.log(resp);
@@ -179,6 +180,41 @@
             }
         });
     }
+// for load sub groups
+function load_subgroups() {
+        $('#item_group_id').on('change', function() {
+         
+            var groupID = $(this).val();
+            var data = '';
+            data += '&item_group_id='+groupID;
+            url = "{{ route('rest.get_sub_groups') }}";
+
+            if(groupID ) {
+                $.ajax({
+                    url  : url,
+                    type : "GET",
+                    data : data,
+                    dataType : "json",
+                    
+                    error : function(resp) {
+                        console.log(resp);
+                    },
+                    success:function(data) {
+                        $.blockUI();
+                        setTimeout($.unblockUI, 500); 
+                        $('select[name="item_sub_group_id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="item_sub_group_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+
+                     }
+                });
+            }else{
+                
+                $('select[name="item_sub_group_id"]').empty();
+            }
+        });
+    }
 
     $(document).ready(function() {
    
@@ -190,6 +226,8 @@
 }); 
    
 	</script>
+
+
 
 	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->

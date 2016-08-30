@@ -16,7 +16,8 @@ class DepartmentUser extends Authenticatable
         'username'          =>  'required|unique:department_users|max:255',
         'section_id'        =>  'required|exists:sections,id',
         'department_id'     =>  'required|exists:departments,id',
-        'designation_id'     =>  'required|exists:designations,id',
+        'designation_id'    =>  'required|exists:designations,id',
+        'is_hod'            =>  'required|in:1,0',
         //'password'          =>  'required|min:3',
     ];
 
@@ -40,7 +41,7 @@ class DepartmentUser extends Authenticatable
     }
 
     protected $fillable = [
-        'name', 'username','designation_id', 'section_id', 'department_id', 'password', 'created_by',
+        'name', 'username','designation_id','is_hod', 'section_id', 'department_id', 'password', 'created_by',
     ];
 
     /**

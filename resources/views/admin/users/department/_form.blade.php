@@ -6,6 +6,19 @@
   {!! $errors->first('designation_id', '<span class="help-inline">:message</span>') !!}
   </div>
 </div>
+<div class="form-group {{ $errors->has('insured') ? 'has-error' : ''}}"">
+    <label class="col-md-3 control-label" for="radios">Is HOD</label>
+    <div class="col-md-9"> 
+      <label class="radio-inline" for="radios-0">
+        <input name="is_hod" id="radios-0" value="1" checked="checked" type="radio">
+        YES
+      </label> 
+      <label class="radio-inline" for="radios-1">
+        <input name="is_hod" id="radios-1" value="0" type="radio">
+        NO
+      </label>
+    </div>
+  </div>
 <div class="form-group {{ $errors->has('department_id') ? 'has-error' : ''}}">
   {!! Form::label('department_id', 'Select Department', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
@@ -37,4 +50,5 @@
   </div>
   {!! $errors->first('username', '<span class="help-inline">:message</span>') !!}
 </div>
+
 

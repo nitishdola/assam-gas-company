@@ -19,7 +19,7 @@
 						<i class="fa fa-bolt fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">152</div>
+						<div class="number">{{$total_item_measurement}}</div>
 						<div class="title">Total Measurements(Item)</div>
 				   </div>
 				</div>
@@ -32,7 +32,7 @@
 						<i class="fa fa-money fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">224</div>
+						<div class="number">{{$total_salvage_measurement}}</div>
 						<div class="title">Total Salvage(Item)</div>
 				   </div>
 				</div>
@@ -46,8 +46,8 @@
 						<i class="fa fa-retweet fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">124</div>
-						<div class="title">Total Users</div>
+						<div class="number">{{$total_requisition}}</div>
+						<div class="title">Total Requisition</div>
 				   </div>
 				</div>
 			 </div>

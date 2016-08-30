@@ -38,13 +38,13 @@ class LocationsController extends Controller
     }
 
     public function edit( $id ) {
-    	$id = Crypt::decrypt($id);
+    	$id       = Crypt::decrypt($id);
     	$location = Location::findOrFail($id);
     	return view('admin.locations.edit', compact('location'));
     }
 
     public function update( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id); 
         $rules = Location::$rules;
 
         $rules['name']	= $rules['name'] . ',id,' . $id;
@@ -67,9 +67,9 @@ class LocationsController extends Controller
     }
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id       = Crypt::decrypt($id); 
         $location = Location::findOrFail($id);
-        $message = '';
+        $message  = '';
         //change the status of department to 0
         $location->status = 0;
         if($location->save()) {

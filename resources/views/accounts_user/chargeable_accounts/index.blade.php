@@ -73,7 +73,6 @@
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
                   No Chargeable Account Found !
                 </div>
-
                 <a href="{{ route('chargeable_account.create') }}" class="btn btn-success">Add new Chargeable Account</a>
 		    @endif
 		</div>

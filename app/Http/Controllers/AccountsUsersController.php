@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use Session;
 use DB, Validator, Redirect, Auth, Crypt;
 use App\AccountsUser;
-use App\User;
+use App\User,App\BudgetHead,App\BudgetHeadTransaction,App\ChargeableAccount;
 
 class AccountsUsersController extends Controller
 {
@@ -17,7 +16,11 @@ class AccountsUsersController extends Controller
     	$this->middleware('accounts_user');
     }
    public function index(){
-    	return view('accounts_user.dashboard');
+      $total_head         = BudgetHead::count();
+      $total_transaction  = BudgetHeadTransaction::count();
+      $total_account      = ChargeableAccount::count();
+      return view('accounts_user.dashboard',compact('total_head','total_transaction','total_account'));
+    	//return view('accounts_user.dashboard');
     }
   /************************For Accounts User,change password**************************/
 

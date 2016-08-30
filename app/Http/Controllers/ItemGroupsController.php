@@ -29,16 +29,16 @@ class ItemGroupsController extends Controller
         $data['created_by'] = Auth::guard('admin')->user()->id;  
     	$message = '';
     	if(ItemGroup::create($data)) {
-            $message .= 'Item Group added successfully !';
+            $message .= 'Item Group Added Successfully !';
         }else{
-            $message .= 'Unable to add Item Group !';
+            $message .= 'Unable to Add Item Group !';
         }
 
         return Redirect::route('item_group.index')->with('message', $message);
     }
 
     public function edit( $id ) {
-    	$id = Crypt::decrypt($id);
+    	$id         = Crypt::decrypt($id);
     	$item_group = ItemGroup::findOrFail($id);
     	return view('admin.item_groups.edit', compact('item_group'));
     }
@@ -73,7 +73,7 @@ class ItemGroupsController extends Controller
         //change the status of item group to 0
         $item_group->status = 0;
         if($item_group->save()) {
-            $message .= 'Item Group removed successfully !';
+            $message .= 'Item Group removed Successfully !';
         }else{
             $message .= 'Unable to remove  Item Group !';
         }

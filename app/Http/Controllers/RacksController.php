@@ -19,7 +19,7 @@ class RacksController extends Controller
 
     public function create() {
         $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
-    	$results = Rack::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
+    	$results      = Rack::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
     	return view('admin.racks.create', compact('results', 'locations'));
     }
 
@@ -28,7 +28,7 @@ class RacksController extends Controller
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
         $data['created_by'] = Auth::guard('admin')->user()->id;  
-    	$message = '';
+    	$message   = '';
     	if(Rack::create($data)) {
             $message .= 'Rack added successfully !';
         }else{
@@ -39,14 +39,14 @@ class RacksController extends Controller
     }
 
     public function edit( $id ) {
-    	$id = Crypt::decrypt($id);
-    	$rack = Rack::findOrFail($id);
+    	$id    = Crypt::decrypt($id);
+    	$rack  = Rack::findOrFail($id);
         $locations    = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'ASC')->lists('name', 'id')->toArray();
     	return view('admin.racks.edit', compact('rack', 'locations'));
     }
 
     public function update( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id); 
         $rules = Rack::$rules;
 
         $rules['name']	= $rules['name'] . ',id,' . $id;
@@ -54,7 +54,7 @@ class RacksController extends Controller
     	$validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $rack = Rack::findOrFail($id);
+        $rack  = Rack::findOrFail($id);
 
         $message = '';
 
@@ -69,7 +69,7 @@ class RacksController extends Controller
     }
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id   = Crypt::decrypt($id); 
         $rack = Rack::findOrFail($id);
         $message = '';
         //change the status of department to 0

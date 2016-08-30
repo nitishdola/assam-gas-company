@@ -19,7 +19,7 @@
 						<i class="fa fa-bolt fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">12</div>
+						<div class="number">{{$total_account}}</div>
 						<div class="title">Chargeable Accounts</div>
 				   </div>
 				</div>
@@ -32,7 +32,7 @@
 						<i class="fa fa-money fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">2724</div>
+						<div class="number">{{$total_head}}</div>
 						<div class="title">Budget Heads</div>
 				   </div>
 				</div>
@@ -46,7 +46,7 @@
 						<i class="fa fa-retweet fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">2724</div>
+						<div class="number">{{$total_transaction}}</div>
 						<div class="title">Budget Head Trans process</div>
 				   </div>
 				</div>

@@ -1,26 +1,20 @@
 
 @extends('layouts.department_user')
-
 @section('pageTitle') View Item @stop
 <style>
   .item-field{padding: 6px 0;background: #f6f6f6;margin-bottom: 4px;}
-  h4 {text-align: center;padding: 15px 0;text-decoration: underline;}
-
- 
+  h5 {text-align: center;padding: 15px 0;text-decoration: underline;}
 </style>
 
 @section('content')
 <div class="row">
   <div class="col-md-12">
-
   <a class="btn btn-info" href="{{ route('salvage_item_measurement.edit', Crypt::encrypt($info->id) ) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a></button>
-<a class="btn btn-danger" href="{{ route('salvage_item_measurement.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a></button>
+  <a class="btn btn-danger" href="{{ route('salvage_item_measurement.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a></button>
     <div class="box box-primary">
         <div class="box-body item-view">
-          <h4><b>Salvage Item Measurement</b> </h4>
-
-
-              <div class="row">
+          <h5><b>Salvage Item Measurement</b> </h5>
+            <div class="row">
               <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Code</b> </div>
@@ -136,7 +130,7 @@
 
                   <div class="col-md-12 item-field">
                   <div class="col-md-6 no-padding"><i class="fa fa-gg"></i> <b>Store Code</b>
- </div>
+               </div>
                   <div class="col-md-6 no-padding">{{ $info->store_code }} </div>
                 </div>
 
@@ -161,15 +155,10 @@
               </div>
              
               <div class="col-md-10 col-md-offset-1">
-               
-              
-
-            </div>
-            <hr>
-          
+              </div>
+            <hr>   
         </div>
-
-	</div>
-</div>
+    </div>
+  </div>
 </div>
 @stop

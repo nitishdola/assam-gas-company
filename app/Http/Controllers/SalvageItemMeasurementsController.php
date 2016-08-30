@@ -14,6 +14,7 @@ use App\SalvageItemMeasurement;
 
 class SalvageItemMeasurementsController extends Controller
 {
+    
     public function create() {
     	$item_groups	      = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$item_sub_groups	  = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -73,13 +74,13 @@ class SalvageItemMeasurementsController extends Controller
             $where['item_code'] = $request->item_code;
         }
 
-        $where['status'] = 1;
-        $item_groups    = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $where['status']    = 1;
+        $item_groups        = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $item_sub_groups    = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $measurement_units  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $locations  = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $racks  = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
-		$results = SalvageItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
+        $locations          = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $racks              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
+		$results            = SalvageItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
 		return view('department_user.salvage_item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results'));
 	}
 

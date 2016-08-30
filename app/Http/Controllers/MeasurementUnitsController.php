@@ -12,6 +12,7 @@ use App\MeasurementUnit;
 
 class MeasurementUnitsController extends Controller
 {
+
     public function index() {
 		$results = MeasurementUnit::whereStatus(1)->with('creator')->orderBy('name', 'DESC')->paginate(20);
 		return view('admin.measurement_units.index', compact('results'));

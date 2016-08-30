@@ -4,7 +4,7 @@
 @section('pageTitle') View Requisition Details @stop
 <style>
   .item-field{padding: 6px 0;background: #f6f6f6;margin-bottom: 4px;}
-  h4 {text-align: center;padding: 15px 0;text-decoration: underline;}
+  h5 {text-align: center;padding: 15px 0;text-decoration: underline;}
 
  
 </style>
@@ -17,10 +17,11 @@
   <a class="btn btn-danger" href="{{ route('requisition.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
     <div class="box box-primary">
         <div class="box-body item-view">
-          <h4><b>Requisitions Details</b> </h4>
+          <h5><b>Requisitions Details</b></h5>
 
               
               <div class="row">
+
               <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Requisition Number</b> </div>
@@ -42,8 +43,6 @@
                   <div class="col-md-6">{{$info->nature_of_work}} </div>
                 </div>
 
-              
-              
               </div>
 
               <div class="col-md-6" style="padding-left:5px; padding-right:5px;">
@@ -67,7 +66,7 @@
 	</div>
 
                      <div class="box-body item-view">
-          <h4><b>Material(s) Details</b> </h4>
+          <h5><b>Material(s) Details</b> </h5>
           @foreach($requisition_items as $k => $v)
           <div> <b>{{ $k+1 }}.</b> </div>
         <div class="row">

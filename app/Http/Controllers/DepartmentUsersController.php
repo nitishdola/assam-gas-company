@@ -9,6 +9,7 @@ use Session;
 use DB, Validator, Redirect, Auth, Crypt;
 use App\DepartmentUser;
 use App\User;
+use App\ItemMeasurement,App\SalvageItemMeasurement,App\Requisition;
 
 class DepartmentUsersController extends Controller
 {
@@ -17,8 +18,11 @@ class DepartmentUsersController extends Controller
     }
 
     public function index(){
+        $total_item_measurement   = ItemMeasurement::count();
+        $total_salvage_measurement = SalvageItemMeasurement::count();
+        $total_requisition = Requisition::count();
     	// return Auth::guard('admin')->user();
-    	return view('department_user.dashboard');
+    	return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement'));
     }
 
     public function change_password() {

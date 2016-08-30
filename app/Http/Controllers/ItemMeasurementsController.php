@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use App\ItemGroup,App\ItemSubGroup,App\MeasurementUnit,App\Location, App\Rack;
-
 use DB, Validator, Redirect, Auth, Crypt;
-
 use App\ItemMeasurement;
 
 class ItemMeasurementsController extends Controller
@@ -73,13 +69,13 @@ class ItemMeasurementsController extends Controller
             $where['item_code'] = $request->item_code;
         }
 
-        $where['status'] = 1;
-        $item_groups    = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $item_sub_groups    = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $measurement_units  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $where['status']   = 1;
+        $item_groups       = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $item_sub_groups   = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $measurement_units = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $locations  = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $racks  = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
-       $results = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
+        $racks      = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
+       $results     = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
 		return view('department_user.item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results'));
 	}
 
@@ -101,14 +97,14 @@ class ItemMeasurementsController extends Controller
     }
 
      public function view( $id ) {
-        $id = Crypt::decrypt($id);
+        $id   = Crypt::decrypt($id);
       
-       $info = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
+       $info  = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
        return view('department_user.item_measurements.view', compact('info'));
     }
 
     public function update($id , Request $request) {
-        $id = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id); 
         $rules = ItemMeasurement::$rules;
 
         $rules['item_code']  = $rules['item_code'] . ',id,' . $id;
@@ -134,7 +130,7 @@ class ItemMeasurementsController extends Controller
     }
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id      = Crypt::decrypt($id); 
         $item_measurement = ItemMeasurement::findOrFail($id);
         $message = '';
         //change the status of department to 0

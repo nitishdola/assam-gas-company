@@ -11,6 +11,8 @@ use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasure
 
 class RequisitionsController extends Controller
 {
+
+
     public function create() {
 
     	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -21,6 +23,7 @@ class RequisitionsController extends Controller
 
     	return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units'));
     }
+
 
     public function store(Request $request) {  
     	$message = '';
@@ -64,7 +67,7 @@ class RequisitionsController extends Controller
 		return Redirect::route('requisition.index')->with('message', $message);
     }
 
-    public function index(Request $request) {
+  public function index(Request $request) {
     	$departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -117,9 +120,7 @@ class RequisitionsController extends Controller
 
         $requisition = Requisition::findOrFail($id);
         $requisition_id	= $requisition->id;
-	    
-
-
+	     
        $message = '';
     	DB::beginTransaction();
     	/* Insert data to requisitions table */
@@ -136,17 +137,17 @@ class RequisitionsController extends Controller
 		    return Redirect::back();
 		}
 
-		try {
+		try{
 
 			for($i = 0; $i < count($request->store_description); $i++) {
 
 				$item_details = RequisitionItem::where('id', $data['id'][$i])->where('requisition_id',
 					$requisition_id)->first();
 				$item_details->item_measurement_id = $request->item_measurement_id[$i];
-				$item_details->store_description = $request->store_description[$i];	    		
+				$item_details->store_description   = $request->store_description[$i];	    		
 	    		$item_details->measurement_unit_id = $request->measurement_unit_id[$i];
-	    		$item_details->quantity_demanded = $request->quantity_demanded[$i];
-	    		$item_details->rate = $request->rate[$i];
+	    		$item_details->quantity_demanded   = $request->quantity_demanded[$i];
+	    		$item_details->rate                = $request->rate[$i];
 	    		$item_details->save();         
 
 	        	

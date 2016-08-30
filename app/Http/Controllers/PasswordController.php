@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -89,10 +88,10 @@ class PasswordController  extends Controller
           $user->password = bcrypt($new_password);
 
           if($user->save()) {
-            $message .= 'Password updated Successfully !';
+            $message .= 'Password Updated Successfully !';
             $class   .= 'alert-success';
           }else{
-            $message .= 'Unable to update password !';
+            $message .= 'Unable to Update password !';
             $class   .= 'alert-danger';
           }
 
@@ -100,5 +99,4 @@ class PasswordController  extends Controller
       Session::flash('alert-class', $class);
       return Redirect::route('department_user.index');
     }
-
 }

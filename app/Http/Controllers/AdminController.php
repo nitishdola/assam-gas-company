@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\Department, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
+use App\Department, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
 
 class AdminController extends Controller
 {
@@ -18,7 +18,14 @@ class AdminController extends Controller
 
     public function index(){
     	// return Auth::guard('admin')->user();
-    	return view('admin.dashboard');
+        $total_department   = Department::count();
+        $total_designation  = Designation::count();
+        $total_section      = Section::count();
+        $total_rack         = Rack::count();
+        $total_location     = Location::count();
+        $total_department_user = DepartmentUser::count();
+        $total_account_user  = AccountsUser::count();
+    	return view('admin.dashboard',compact('total_rack','total_location','total_section','total_designation','total_department','total_section','total_account_user','total_department_user'));
     }
 
 
@@ -121,11 +128,6 @@ class AdminController extends Controller
     }
 
 
-
-
-
-
-
    /*********************creation of account users  CRUD by admin*******************/
 
    public function create_account_user() {
@@ -158,10 +160,7 @@ public function view_account_users(Request $request) {
 
         if($request->username) {
             $where['username'] = $request->username;
-        }
-
-       
-        
+        }  
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $results = AccountsUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);

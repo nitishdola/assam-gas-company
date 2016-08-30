@@ -74,9 +74,9 @@ class BudgetHeadsController extends Controller
     }
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id         = Crypt::decrypt($id); 
         $BudgetHead = BudgetHead::findOrFail($id);
-        $message = '';
+        $message    = '';
         //change the status of department to 0
         $BudgetHead->status = 0;
         if($BudgetHead->save()) {

@@ -4,7 +4,7 @@
 @section('pageTitle') View Item @stop
 <style>
   .item-field{padding: 6px 0;background: #f6f6f6;margin-bottom: 4px;}
-  h4 {text-align: center;padding: 15px 0;text-decoration: underline;}
+  h5 {text-align: center;padding: 15px 0;text-decoration: underline;}
 
  
 </style>
@@ -17,7 +17,7 @@
 <a class="btn btn-danger" href="{{ route('item_measurement.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back</a></button>
     <div class="box box-primary">
         <div class="box-body item-view">
-          <h4><b>Item Measurement</b> </h4>
+          <h5><b>Item Measurement</b> </h5>
 
 
               <div class="row">

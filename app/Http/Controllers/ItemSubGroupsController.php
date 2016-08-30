@@ -27,7 +27,7 @@ class ItemSubGroupsController extends Controller
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
         $data['created_by'] = Auth::guard('admin')->user()->id;  
-    	$message = '';
+    	$message   = '';
     	if(ItemSubGroup::create($data)) {
             $message .= 'Item Sub Group added successfully !';
         }else{
@@ -39,13 +39,13 @@ class ItemSubGroupsController extends Controller
 
     public function edit( $id ) {
         $item_groups    = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $id = Crypt::decrypt($id);
+        $id  = Crypt::decrypt($id);
         $item_sub_group = ItemSubGroup::findOrFail($id);
         return view('admin.item_sub_groups.edit', compact('item_sub_group', 'item_groups'));
     }
 
     public function update( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id); 
         $rules = ItemSubGroup::$rules;
 
         $rules['name']                      = $rules['name'] . ',id,' . $id;
@@ -69,7 +69,7 @@ class ItemSubGroupsController extends Controller
     }
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id  = Crypt::decrypt($id); 
         $item_sub_group = ItemSubGroup::findOrFail($id);
         $message = '';
         //change the status of section to 0

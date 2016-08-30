@@ -61,7 +61,7 @@
 			            <td class="hidden-xs"> {{ $v->section['name'] }} </td>
 			            <td> {{ $v->name }} </td>
 			            <td> {{ $v->username }} </td>
-			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>|
+			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>|
             <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('department_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> | <a href="{{ route('chnage_department_user_password_admin', Crypt::encrypt($v->id) ) }}" title="Edit Location">Change Password</a></td>
 			            
 			        </tr>

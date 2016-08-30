@@ -58,7 +58,7 @@
 				            <td> {{ $v->section['name'] }} </td>
 				            <td> {{ $v->creator['name'] }} </td>
 				            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
-				            <td> <a href="{{ route('chargeable_account.edit', Crypt::encrypt($v->id) ) }}" title="Edit Account" id="edit">Edit</a>
+				            <td> <a href="{{ route('chargeable_account.edit', Crypt::encrypt($v->id) ) }}" title="Edit Account" id="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
 				            </td>
 				            <td> <a onclick="return confirm('Are you sure you want to delete this Account ?');" href="{{ route('chargeable_account.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
 				        </tr>

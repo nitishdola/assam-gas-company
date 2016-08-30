@@ -17,7 +17,7 @@
         <tr>
             <td> {{ (($results->currentPage() - 1 ) * $results->perPage() ) + $count + $k }} </td>
             <td class="hidden-xs"> {{ $v->name }} </td>
-            <td> <a href="{{ route('location.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location">Edit</a>
+            <td> <a href="{{ route('location.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>
             <td> <a onclick="return confirm('Are you sure you want to delete this location ?');" href="{{ route('location.disable', Crypt::encrypt($v->id) ) }}" title="Remove Location"><i class="fa fa-trash"></i>Remove</a> </td>
         </tr>

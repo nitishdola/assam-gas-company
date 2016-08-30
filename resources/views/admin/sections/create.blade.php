@@ -31,7 +31,7 @@
 			    {!!form::close()!!}
 			</div>
 			<div class="col-xs-2"></div>
-			<div class="col-xs-4 pull-right">
+			<div class="col-xs-5 pull-right">
 			<h3>Latest Entries</h3>
 			@if(count($results))
 			<table class="table table-striped table-bordered table-advance table-hover">
@@ -57,7 +57,7 @@
 				   	<td class="hidden-xs"> {{ $v->department['name'] }} </td>
 				    <td class="hidden-xs"> {{ $v->name }} </td>
 				    <td> {{ $v->department_code }} </td>
-				    <td> <a href="{{ route('section.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section">Edit</a>
+				    <td> <a href="{{ route('section.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
 				    </td>
 			    </tr>
 			  @endforeach

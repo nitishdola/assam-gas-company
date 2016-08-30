@@ -19,7 +19,7 @@
         <div class="box-body item-view">
           <h4><b>Requisitions Details</b> </h4>
 
-
+              
               <div class="row">
               <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">
@@ -68,7 +68,8 @@
 
                      <div class="box-body item-view">
           <h4><b>Material(s) Details</b> </h4>
-          @foreach($requisition_items as $v)
+          @foreach($requisition_items as $k => $v)
+          <div> <b>{{ $k+1 }}.</b> </div>
         <div class="row">
             <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">

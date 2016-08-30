@@ -56,7 +56,8 @@
 			            <td> {{ $v->nature_of_work }} </td>
 			            <td class="hidden-xs"> {{ $v->chargeable_account['name'] }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
-			            <td> <a href="{{ route('requisition.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
+			            <td> <a href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>|
+			            <a href="{{ route('requisition.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
 			            @if($v->status) | 
 						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('requisition.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash" aria-hidden="true"></i>Remove</a>
 						@endif

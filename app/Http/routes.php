@@ -572,23 +572,30 @@ Route::group(['prefix'=>'requisition'], function() {
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@index'
     ]);
-      Route::get('/edit/{num}', [
+    Route::get('/edit/{num}', [
             'as' => 'requisition.edit',
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@edit'
-        ]);
+    ]);
 
-        Route::post('/update/{num}', [
+    Route::post('/update/{num}', [
             'as' => 'requisition.update',
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@update'
-        ]);
+    ]);
 
-        Route::get('/disable/{num}', [
+    Route::get('/disable/{num}', [
             'as' => 'requisition.disable',
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@disable'
-        ]);
+    ]);
+     Route::get('/view-requisition-details/{num}', [
+        'as' => 'requisition.view',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@view'
+    ]);
+
+
 });
 
 Route::group(['prefix'=>'measurement-of-item'], function() {

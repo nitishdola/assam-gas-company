@@ -19,4 +19,13 @@ class RequisitionItem extends Model
     	'rate' 					=>  'required|numeric',
 
     ];
+
+    public function measurement_unit() 
+    {
+        return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');
+    }
+    public function measurement_item() 
+    {
+        return $this->belongsTo('App\ItemMeasurement', 'item_measurement_id');
+    }
 }

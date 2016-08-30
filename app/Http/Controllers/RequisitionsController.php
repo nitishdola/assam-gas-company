@@ -179,4 +179,14 @@ class RequisitionsController extends Controller
 
         return Redirect::route('requisition.index')->with('message', $message);
     }
+
+
+     public function view( $id ) {
+        $id = Crypt::decrypt($id);
+      
+        $info = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
+
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
+       return view('department_user.requisitions.view',compact('info','requisition_items'));
+    }
 }

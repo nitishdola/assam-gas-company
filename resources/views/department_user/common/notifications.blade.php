@@ -1,4 +1,5 @@
 <!-- BEGIN NOTIFICATION DROPDOWN -->
+@if(isset($notification))
 	<li class="dropdown" id="header-notification">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 		<i class="fa fa-bell"></i>
@@ -85,3 +86,4 @@
 		</li>
 	</ul>
 </li>
+@endif

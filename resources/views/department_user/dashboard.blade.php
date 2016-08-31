@@ -12,11 +12,12 @@
 	<!-- COLUMN 1 -->
 	<div class="col-md-12">
 		<div class="row">
+
 		  <div class="col-lg-4">
 			 <div class="dashbox panel panel-default">
 				<div class="panel-body">
 				   <div class="panel-left red">
-						<i class="fa fa-bolt fa-3x"></i>
+						<i class="fa fa-tasks fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
 						<div class="number"> <a href="{{ route('item_measurement.index')}}">{{$total_item_measurement}}</a></div>
@@ -25,11 +26,12 @@
 				</div>
 			 </div>
 		  </div>
+		  
 		  <div class="col-lg-4">
 			 <div class="dashbox panel panel-default">
 				<div class="panel-body">
 				   <div class="panel-left blue">
-						<i class="fa fa-money fa-3x"></i>
+						<i class="fa fa-gears fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
 						<div class="number"><a href="{{ route('salvage_item_measurement.index')}}">{{$total_salvage_measurement}}</a></div>
@@ -43,7 +45,7 @@
 			 <div class="dashbox panel panel-default">
 				<div class="panel-body">
 				   <div class="panel-left blue">
-						<i class="fa fa-retweet fa-3x"></i>
+						<i class="fa fa-legal fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
 						<div class="number"><a href="{{ route('requisition.index')}}">{{$total_requisition}}</a></div>

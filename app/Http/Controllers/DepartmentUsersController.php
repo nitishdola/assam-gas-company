@@ -21,8 +21,10 @@ class DepartmentUsersController extends Controller
         $total_item_measurement   = ItemMeasurement::count();
         $total_salvage_measurement = SalvageItemMeasurement::count();
         $total_requisition = Requisition::count();
-    	// return Auth::guard('admin')->user();
-    	return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement'));
+    	  $username = Auth::guard('department_user')->user()->username;
+        $user = DepartmentUser::where('username', $username)->first();
+
+    	  return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement','user'));
     }
 
     public function change_password() {

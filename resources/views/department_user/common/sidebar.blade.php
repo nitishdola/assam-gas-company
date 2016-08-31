@@ -46,6 +46,10 @@
 					<li><a class="" href="{{ route('requisition.create') }}"><span class="sub-menu-text">Add Requisition</span></a>
 					</li>
 					<li><a class="" href="{{ route('requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
+					
+					 @if($user->is_hod == '1')
+					<li><a class="" href="{{ route('requisition.approve_index') }}"><span class="sub-menu-text">Approve Requisition</span></a></li>
+					@endif
 				</ul>
 			</li>
 		</ul>

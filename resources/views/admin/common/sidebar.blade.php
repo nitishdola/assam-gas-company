@@ -63,7 +63,7 @@
 
 			<li class="has-sub">
 				<a href="javascript:;" class="">
-				<i class="fa fa-bars"></i> <span class="menu-text">Designation</span>
+				<i class="fa fa-user"></i> <span class="menu-text">Designation</span>
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
@@ -87,7 +87,7 @@
 
 			<li class="has-sub">
 				<a href="javascript:;" class="">
-				<i class="fa fa-bars"></i> <span class="menu-text">User</span>
+				<i class="fa fa-users"></i> <span class="menu-text">User</span>
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">

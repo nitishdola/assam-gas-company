@@ -616,6 +616,16 @@ Route::group(['prefix'=>'requisition'], function() {
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@issueRequisition'
     ]);
+    Route::get('/requisition-received-view', [
+        'as' => 'requisition.Receivedindex',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@receive_index'
+    ]);
+      Route::get('/receive-requisition/{num}', [
+            'as' => 'requisition.receive',
+            'middleware' => ['department_user'],
+            'uses' => 'RequisitionsController@receiveRequisition'
+    ]);
 
 
 });

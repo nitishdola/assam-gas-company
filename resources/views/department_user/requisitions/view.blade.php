@@ -15,6 +15,7 @@
 
   <a class="btn btn-info" href="{{ route('requisition.edit', Crypt::encrypt($info->id) ) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
   <a class="btn btn-danger" href="{{ route('requisition.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
+ 
     <div class="box box-primary">
         <div class="box-body item-view">
           <h5><b>Requisitions Details</b></h5>

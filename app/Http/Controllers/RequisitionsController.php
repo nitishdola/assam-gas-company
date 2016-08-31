@@ -85,6 +85,9 @@ class RequisitionsController extends Controller
          if($request->requisition_number) {
             $where['requisition_number'] = $request->requisition_number;
         }
+         if($request->Approval) {
+            $where['hod'] = $request->Approval;
+        }
         $where['status'] = 1;
       
        	$results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
@@ -101,6 +104,7 @@ class RequisitionsController extends Controller
 
         $where = [];
        
+        $where['hod'] = NULL;
         $where['status'] = 1;
       
         $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
@@ -155,6 +159,21 @@ class RequisitionsController extends Controller
         }else{
             return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
         }
+    }
+
+    public function receive_index(Request $request) {
+        $username = Auth::guard('department_user')->user()->username;
+        $user     = DepartmentUser::where('username', $username)->first();
+        $departments      = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+        $where = [];
+       
+        $where['status'] = 1;
+      
+        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+
+        return view('department_user.requisitions.receive_index', compact('departments','chargeable_accounts', 'results','user'));
     }
 
 

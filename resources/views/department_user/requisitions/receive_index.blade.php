@@ -8,7 +8,7 @@
 </li>
 <li>
 	<i class="fa fa-th"></i>
-	Requisitions
+Received Condition
 </li>
 @stop
 
@@ -41,11 +41,14 @@
 			            <td class="hidden-xs"> {{ $v->job_number }} </td>
 			            <td> {{ $v->nature_of_work }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
-			            <td>
-			            
+			            <td> 
+
+			            @if($v->hod)  
+						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="#" title="Approved"><i class="fa fa-thumbs-up-o fa-fw"></i>Approved by HOD</a>
+						@else
 						
-						<button type="button"  class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
-					
+						 <a onclick="return confirm('Are you sure you want to approve this requisition ?');"  style="color:red" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}" title="Approve"><i class="fa fa-check-square-o fa-fw"></i>Approve</a>
+						@endif
 						</td>
 			        </tr>
 			        @endforeach

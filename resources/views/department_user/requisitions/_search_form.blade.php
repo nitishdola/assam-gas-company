@@ -28,3 +28,15 @@
 </div>
 </div>
 
+<div class="col-lg-6">
+ <div class="form-group {{ $errors->has('Approval') ? 'has-error' : ''}}">
+  {!! Form::label('Approval', '', array('class' => 'col-md-3 control-label')) !!}
+  <div class="col-md-9">
+    {!!Form::select('Approval', array('1' => 'Approved', 'NULL' => 'Not Approved')) !!}
+  </div>
+  {!! $errors->first('Approval', '<span class="help-inline">:message</span>') !!}
+</div>
+  
+</div>
+
+

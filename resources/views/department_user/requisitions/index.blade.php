@@ -61,6 +61,13 @@
 			            @if($v->status) | 
 						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('requisition.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash-o fa-fw"></i>Remove</a>
 						@endif
+						@if($v->hod) |
+						<button type="button" class="btn btn-primary disabled">Approved</button>
+						 
+						 @else|
+						 <button type="button"  class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
+						
+						  @endif
 						</td>
 			        </tr>
 			        @endforeach

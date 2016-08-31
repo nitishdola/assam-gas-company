@@ -56,7 +56,7 @@
 			            <td> {{ $v->minimum_stock_level }} </td>
 			             <td> <a href="{{ route('salvage_item_measurement.view', Crypt::encrypt($v->id) ) }}" title="View Item"><i class="fa fa-view" aria-hidden="true"></i>View More</a>| <a href="{{ route('salvage_item_measurement.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
 			            @if($v->status) | 
-						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('salvage_item_measurement.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash" aria-hidden="true"></i>Remove</a>
+						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('salvage_item_measurement.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash-o fa-fw"></i>Remove</a>
 						@endif
 						</td>
 			        </tr>

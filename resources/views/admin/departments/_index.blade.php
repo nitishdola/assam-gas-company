@@ -32,7 +32,7 @@
             <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
             <td> <a href="{{ route('department.edit', Crypt::encrypt($v->id) ) }}" title="Edit Department"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this department ?');" href="{{ route('department.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
+            <td> <a onclick="return confirm('Are you sure you want to delete this department ?');" href="{{ route('department.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash-o fa-fw"></i>Remove</a> </td>
         </tr>
         @endforeach
     </tbody>

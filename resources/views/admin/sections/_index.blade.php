@@ -34,7 +34,7 @@
             <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
             <td> <a href="{{ route('section.edit', Crypt::encrypt($v->id) ) }}" title="Edit Section"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this section ?');" href="{{ route('section.disable', Crypt::encrypt($v->id) ) }}" title="Remove Section"><i class="fa fa-trash"></i>Remove</a> </td>
+            <td> <a onclick="return confirm('Are you sure you want to delete this section ?');" href="{{ route('section.disable', Crypt::encrypt($v->id) ) }}" title="Remove Section"><i class="fa fa-trash-o fa-fw"></i>Remove</a> </td>
         </tr>
         @endforeach
     </tbody>

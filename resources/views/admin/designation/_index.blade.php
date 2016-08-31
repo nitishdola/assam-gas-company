@@ -19,7 +19,7 @@
             <td class="hidden-xs"> {{ $v->name }} </td>
             <td> <a href="{{ route('designation.edit', Crypt::encrypt($v->id) ) }}" title="Edit rack"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this rack ?');" href="{{ route('designation.disable', Crypt::encrypt($v->id) ) }}" title="Remove rack"><i class="fa fa-trash"></i>Remove</a> </td>
+            <td> <a onclick="return confirm('Are you sure you want to delete this rack ?');" href="{{ route('designation.disable', Crypt::encrypt($v->id) ) }}" title="Remove rack"><i class="fa fa-trash-o fa-fw"></i>Remove</a> </td>
         </tr>
         @endforeach
     </tbody>

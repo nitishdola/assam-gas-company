@@ -59,7 +59,7 @@
 			            <td> {{ $v->username }} </td>
 			             <td> <a href="{{ route('account_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
             </td>
-            <td> <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('account_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash"></i>Remove</a> </td>
+            <td> <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('account_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash-o fa-fw"></i>Remove</a> </td>
 			           
 			        </tr>
 			        @endforeach

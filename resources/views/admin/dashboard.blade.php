@@ -19,7 +19,7 @@
 						<i class="fa fa-bolt fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_department}}</div>
+						<div class="number"><a href="{{ route('department.index')}}">{{$total_department}}</a></div>
 						<div class="title">Departments</div>
 				   </div>
 				</div>
@@ -32,7 +32,7 @@
 						<i class="fa fa-money fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_section}}</div>
+						<div class="number"><a href="{{ route('section.index')}}">{{$total_section}}</a></div>
 						<div class="title">Sections</div>
 				   </div>
 				</div>
@@ -46,7 +46,7 @@
 						<i class="fa fa-retweet fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_location}}</div>
+						<div class="number"><a href="{{ route('location.index')}}">{{$total_location}}</a></div>
 						<div class="title">Locations</div>
 				   </div>
 				</div>
@@ -59,7 +59,7 @@
 						<i class="fa fa-money fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_rack}}</div>
+						<div class="number"><a href="{{ route('rack.index')}}">{{$total_rack}}</a></div>
 						<div class="title"> Racks</div>
 				   </div>
 				</div>
@@ -72,7 +72,7 @@
 						<i class="fa fa-bolt fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_department_user}}</div>
+						<div class="number"><a href="{{ route('department_user.index')}}">{{$total_department_user}}</a></div>
 						<div class="title"> Department Users</div>
 				   </div>
 				</div>
@@ -85,8 +85,8 @@
 						<i class="fa fa-bolt fa-3x"></i>
 				   </div>
 				   <div class="panel-right">
-						<div class="number">{{$total_account_user}}</div>
-						<div class="title">Account Users</div>
+						<div class="number"><a href="{{ route('account_user.index')}}">{{$total_account_user}}</div>
+						</a><div class="title">Account Users</div>
 				   </div>
 				</div>
 			 </div>

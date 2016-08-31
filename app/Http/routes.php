@@ -606,6 +606,17 @@ Route::group(['prefix'=>'requisition'], function() {
             'uses' => 'RequisitionsController@approveRequisition'
     ]);
 
+      Route::get('/requisition-issued-view', [
+        'as' => 'requisition.issue_index',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@issue_index'
+    ]);
+      Route::get('/issue-requisition/{num}', [
+            'as' => 'requisition.issue',
+            'middleware' => ['department_user'],
+            'uses' => 'RequisitionsController@issueRequisition'
+    ]);
+
 
 });
 

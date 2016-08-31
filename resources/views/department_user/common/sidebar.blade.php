@@ -52,6 +52,23 @@
 					@endif
 				</ul>
 			</li>
+           
+          <!-- For issued by users -->
+
+
+			@if($user->designation_id == '3')
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Requisition Issue</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('requisition.issue_index') }}"><span class="sub-menu-text">Issue By</span></a>
+					</li>
+					
+				</ul>
+			</li>
+			@endif
 		</ul>
 		<!-- /SIDEBAR MENU -->
 	</div>

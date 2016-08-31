@@ -108,6 +108,8 @@ class RequisitionsController extends Controller
         return view('department_user.requisitions.approve_index', compact('departments','chargeable_accounts', 'results','user'));
     }
 
+   
+
 
       public function approveRequisition($id)
     {
@@ -124,8 +126,36 @@ class RequisitionsController extends Controller
         }
     }
 
+      public function issue_index(Request $request) {
+        $username = Auth::guard('department_user')->user()->username;
+        $user     = DepartmentUser::where('username', $username)->first();
+        $departments      = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+        $where = [];
+       
+        $where['status'] = 1;
+      
+        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+
+        return view('department_user.requisitions.issue_index', compact('departments','chargeable_accounts', 'results','user'));
+    }
 
 
+        public function issueRequisition($id)
+    {
+        $id                 = Crypt::decrypt($id);
+        $requisitions       = Requisition::findOrFail($id);
+        $username           = Auth::guard('department_user')->user()->username;
+        $user               = DepartmentUser::where('username', $username)->first();
+        $requisitions->issued_by  = $user->id;
+        $requisitions->issued_date  = date('Y-m-d H:i:s');
+       if($requisitions->save()){
+            return redirect()->route('requisition.issue_index')->with('message', 'The Requisition has been Issued Successfully');
+        }else{
+            return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
+        }
+    }
 
 
       public function edit( $id ) {

@@ -1,5 +1,5 @@
 @extends('layouts.department_user')
-@section('title') All Items @stop
+@section('title') All Requisition @stop
 @section('pageTitle') All Requisition @stop
 @section('breadcumb') 
 <li>
@@ -43,11 +43,14 @@
 			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
 			            <td> 
 
-			            @if($v->hod)  
-						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="#" title="Approved"><i class="fa fa-thumbs-up-o fa-fw"></i>Approved by HOD</a>
-						@else
+			            @if($v->hod && $v->issued_by)
+			             <a onclick="return confirm(' Requisition already Issued ?');"  style="color:red" href="#" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Issued</a> 
+			             @elseif($v->hod || $v->issued_by)
+                          <a onclick="return confirm('Are you sure you want to Issue this requisition ?');"  style="color:red" href="{{ route('requisition.issue', Crypt::encrypt($v->id) ) }}" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Issue</a>
+                          @else
+                            <a onclick="return confirm('Not Approved By Hod ?');"  style="color:red" href="#" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Pending</a>
 						
-						 <a onclick="return confirm('Are you sure you want to approve this requisition ?');"  style="color:red" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}" title="Approve"><i class="fa fa-check-square-o fa-fw"></i>Approve</a>
+						
 						@endif
 						</td>
 			        </tr>

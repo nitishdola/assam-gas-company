@@ -15,6 +15,7 @@
 @section('content')
 
 
+
 <div class="col-lg-12" style="margin-top:20px;">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
@@ -29,7 +30,7 @@
 			            <th> Job Number </th>
 			            <th> Nature of Work </th>
 			            <th> Issue Date </th>
-			            <th> Actions </th>
+			            <th> Ations </th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -44,11 +45,14 @@
 			            <td> 
 
 			            @if($v->hod && $v->issued_by)
-			             <a onclick="return confirm(' Requisition already Issued ?');"  style="color:red" href="#" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Issued</a> 
+			             <button type="button" class="btn btn-primary disabled">Approved</button>
 			             @elseif($v->hod || $v->issued_by)
-                          <a onclick="return confirm('Are you sure you want to Issue this requisition ?');"  style="color:red" href="{{ route('requisition.issue', Crypt::encrypt($v->id) ) }}" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Issue</a>
+			             <button type="button"  class="btn btn-primary active" href="{{ route('requisition.issue', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
+                         
                           @else
-                            <a onclick="return confirm('Not Approved By Hod ?');"  style="color:red" href="#" title="Issue"><i class="fa fa-check-square-o fa-fw"></i>Pending</a>
+
+                             <button type="button" class="btn btn-primary disabled"> Pending</button>
+
 						
 						
 						@endif

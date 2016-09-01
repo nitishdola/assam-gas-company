@@ -60,9 +60,9 @@ class ItemSubGroupsController extends Controller
 
         $item_sub_group->fill($data);
         if($item_sub_group->save()) {
-            $message .= 'Item sub group edited successfully !';
+            $message .= 'Item sub group updated successfully !';
         }else{
-            $message .= 'Unable to edit  item sub group !';
+            $message .= 'Unable to update item sub group !';
         }
 
         return Redirect::route('item_sub_group.index')->with('message', $message);

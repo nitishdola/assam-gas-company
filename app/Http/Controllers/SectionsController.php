@@ -61,9 +61,9 @@ class SectionsController extends Controller
 
         $section->fill($data);
         if($section->save()) {
-            $message .= 'Section edited successfully !';
+            $message .= 'Section updated successfully !';
         }else{
-            $message .= 'Unable to edit  Section !';
+            $message .= 'Unable to update  Section !';
         }
 
         return Redirect::route('section.index')->with('message', $message);

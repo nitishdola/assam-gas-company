@@ -414,10 +414,26 @@ Route::group(['prefix'=>'admin_requisition'], function() {
         'middleware' => ['admin'],
         'uses' => 'AdminController@view'
     ]);
-
 });
 
-  
+Route::group(['prefix'=>'download'], function() {
+
+     Route::get('/department-download', [
+        'as' => 'department.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@download_department'
+    ]);
+
+      Route::get('/section-download', [
+        'as' => 'section.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@download_section'
+    ]);
+
+   
+});
+
+ 
 
 
 Route::group(['prefix'=>'user'], function() {

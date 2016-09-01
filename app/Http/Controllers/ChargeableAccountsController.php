@@ -69,9 +69,9 @@ class ChargeableAccountsController extends Controller
         //var_dump($data);
         //exit();
         if($ChargeableAccount->save()) {
-            $message .= 'Budget Head edited successfully !';
+            $message .= 'Budget Head updated successfully !';
         }else{
-            $message .= 'Unable to edit  Budget Head !';
+            $message .= 'Unable to update  Budget Head !';
         }
 
         return Redirect::route('chargeable_account.index')->with('message', $message);

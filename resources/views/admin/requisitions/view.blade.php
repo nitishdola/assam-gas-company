@@ -15,10 +15,9 @@
 @section('content')
 <div class="row">
   <div class="col-md-12">
-
   <a class="btn btn-info" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
   <a class="btn btn-danger" href="{{ route('admin.requisition.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
-   <div class="box box-primary">
+  <div class="box box-primary">
         <div class="box-body item-view">
           <h5><b>Requisitions Details</b></h5>
            <div class="row">
@@ -26,12 +25,12 @@
               <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                  <div class="col-md-12 item-field">
                    <div class="col-md-6"><i class="fa fa-gg"></i><b> Requisition Number</b> </div>
-                   <div class="col-md-6"> {{$info->requisition_number}}</div>
+                   <div class="col-md-6">{{$info->requisition_number}}</div>
                  </div>
 
                  <div class="col-md-12 item-field">
                    <div class="col-md-6"><i class="fa fa-gg"></i><b> Department</b> </div>
-                   <div class="col-md-6"> {{$info->department['name']}}</div>
+                   <div class="col-md-6">{{$info->department['name']}}</div>
                  </div>
 
                  <div class="col-md-12 item-field">
@@ -57,119 +56,64 @@
                   <div class="col-md-6 no-padding">{{$info->financial_year}} </div>
                 </div>
               </div>
-              
-               
-              <div class="col-md-10 col-md-offset-1">
-              </div>
+            <div class="col-md-10 col-md-offset-1">
+            </div>
             <hr>
           </div>
         </div>
-
-
-     <div class="box-body item-view">
-          <h5><b>Material(s) Details</b> </h5>
-          @foreach($requisition_items as $k => $v)
-         <hr class="style13">
-         <br>
-
-        <div class="row">
-            <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
-                <div class="col-md-12 item-field">
-                  <div class="col-md-6"><i class="fa fa-gg"></i><b> Store Description</b> </div>
-                  <div class="col-md-6"> {{$v->store_description}}</div>
-                </div>
-
-                <div class="col-md-12 item-field">
-                  <div class="col-md-6"><i class="fa fa-gg"></i><b> Quantity Demanded</b> </div>
-                  <div class="col-md-6"> {{$v->quantity_demanded}}</div>
-                </div>
-                <div class="col-md-12 item-field">
-                  <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Measurement</b> </div>
-                  <div class="col-md-6"> {{$v->measurement_item['item_name']}}</div>
-                </div>
-               </div>
-
-            <div class="col-md-6" style="padding-left:5px; padding-right:5px;">
-              <div class="col-md-12 item-field">
-                  <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Measurement Unit</b> </div>
-                  <div class="col-md-6 no-padding">{{$v->measurement_unit['name']}} </div>
-              </div>
-                <div class="col-md-12 item-field">
-                  <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Rate</b> </div>
-                  <div class="col-md-6 no-padding">{{$v->rate}} </div>
-              </div>
-
-              <div class="col-md-12 item-field">
-                <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Remarks </b></div>
-                  <div class="col-md-6 no-padding">{{$v->remarks}} </div>
-                </div>
-              </div>
-               
-              <div class="col-md-10 col-md-offset-1">
-               
-              </div>
-            <hr>
-        </div>
-        @endforeach
-</div>
 <hr class="style13">
 <br>
 
 
      
-          <div class="box-body item-view">
-          <h5><b>Approval Status</b> </h5>
-         
-     
-        <div class="row">
+    <div class="box-body item-view">
+      <h5><b>Approval Status</b> </h5>
+         <div class="row">
             <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Requisition Approved Date(HOD)</b> </div>
-                  <div class="col-md-6"> {{$info->hod_approve_date}}</div>
+                  <div class="col-md-6">{{$info->hod_approve_date}}</div>
                 </div>
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Requisition Approved by</b> </div>
-                  <div class="col-md-6"> </div>
+                  <div class="col-md-6">{{$info->department_user_hod['name']}} </div>
                 </div>
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Received Date(Good Condition)</b> </div>
-                  <div class="col-md-6"> {{$info->hod_approve_date}}</div>
+                  <div class="col-md-6"></div>
                 </div>
                 <div class="col-md-12 item-field">
                   <div class="col-md-6"><i class="fa fa-gg"></i><b> Received by</b> </div>
                   <div class="col-md-6"></div>
                 </div>
-
-               
-             </div>
+            </div>
 
             <div class="col-md-6" style="padding-left:5px; padding-right:5px;">
               <div class="col-md-12 item-field">
-                <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Requisition Issued Date </b>
-                </div>
-                  <div class="col-md-6 no-padding">{{$info->issued_date}} </div>
-                </div>
+                 <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Requisition Issued Date </b>
+                 </div>
+                 <div class="col-md-6 no-padding">{{$info->issued_date}} </div>
+               </div>
 
-                <div class="col-md-12 item-field">
+              <div class="col-md-12 item-field">
                 <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Requisition Issued By  </b>
                 </div>
-                  <div class="col-md-6 no-padding"> {{$info->department_user['name']}}</div>
-                </div>
+                <div class="col-md-6 no-padding"> {{$info->department_user['name']}}</div>
+               </div>
 
                <div class="col-md-12 item-field">
                 <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Posted Date(kardex)  </b>
                 </div>
-                  <div class="col-md-6 no-padding">{{$info->posted_in_kardex_date}} </div>
+                <div class="col-md-6 no-padding">{{$info->posted_in_kardex_date}} </div>
                 </div>
-                  <div class="col-md-12 item-field">
+                <div class="col-md-12 item-field">
                 <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Posted(kardex) by </b>
-                </div>
+               </div>
                   <div class="col-md-6 no-padding"></div>
                 </div>
               </div>
                
               <div class="col-md-10 col-md-offset-1">
-               
               </div>
             <hr>
         </div>

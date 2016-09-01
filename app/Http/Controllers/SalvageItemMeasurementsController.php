@@ -130,9 +130,9 @@ class SalvageItemMeasurementsController extends Controller
 
         $item_measurement->fill($data);
         if($item_measurement->save()) {
-            $message .= 'Item  Edited successfully !';
+            $message .= 'Item  updated successfully !';
         }else{
-            $message .= 'Unable to edit  item !';
+            $message .= 'Unable to update  item !';
         }
 
         return Redirect::route('salvage_item_measurement.index')->with('message', $message);

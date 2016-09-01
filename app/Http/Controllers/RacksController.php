@@ -60,9 +60,9 @@ class RacksController extends Controller
 
         $rack->fill($data);
         if($rack->save()) {
-            $message .= 'Rack edited successfully !';
+            $message .= 'Rack updated successfully !';
         }else{
-            $message .= 'Unable to edit  rack !';
+            $message .= 'Unable to update rack !';
         }
 
         return Redirect::route('rack.index')->with('message', $message);

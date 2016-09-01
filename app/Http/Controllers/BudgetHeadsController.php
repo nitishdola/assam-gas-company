@@ -31,7 +31,7 @@ class BudgetHeadsController extends Controller
         $data['created_by'] = Auth::guard('accounts_user')->user()->id; 
     	$message = '';
     	if(BudgetHead::create($data)) {
-            $message .= 'budget head added successfully !';
+            $message .= 'Budget head added successfully !';
         }else{
             $message .= 'Unable to add budget head !';
         }
@@ -65,9 +65,9 @@ class BudgetHeadsController extends Controller
         //var_dump($data);
         //exit();
         if($BudgetHead->save()) {
-            $message .= 'Budget Head edited successfully !';
+            $message .= 'Budget Head updated successfully !';
         }else{
-            $message .= 'Unable to edit  Budget Head !';
+            $message .= 'Unable to update  Budget Head !';
         }
 
         return Redirect::route('budget_head.index')->with('message', $message);

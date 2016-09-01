@@ -57,9 +57,9 @@ class DesignationController extends Controller
 
         $designation->fill($data);
         if($designation->save()) {
-            $message .= 'designation edited successfully !';
+            $message .= 'designation updated successfully !';
         }else{
-            $message .= 'Unable to edit  designation !';
+            $message .= 'Unable to update  designation !';
         }
 
         return Redirect::route('designation.index')->with('message', $message);

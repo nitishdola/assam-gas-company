@@ -240,7 +240,7 @@ class RequisitionsController extends Controller
 
        // Commit the queries!
 		DB::commit();
-		$message .= 'Requisition successfully generated !';
+		$message .= 'Requisition successfully updated !';
 		return Redirect::route('requisition.index')->with('message', $message);
     }
 

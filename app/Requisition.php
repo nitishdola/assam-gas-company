@@ -27,6 +27,10 @@ class Requisition extends Model
     {
         return $this->belongsTo('App\DepartmentUser', 'issued_by');
     }
+    public function department_user_hod() 
+    {
+        return $this->belongsTo('App\DepartmentUser', 'hod');
+    }
 
     public function chargeable_account() 
     {

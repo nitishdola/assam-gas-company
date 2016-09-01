@@ -32,7 +32,7 @@
 				</a>
 				<ul class="sub">
 					<li><a class="" href="{{ route('section.create') }}"><span class="sub-menu-text">Add Section</span></a></li>
-					<li><a class="" href="{{ route('section.create') }}"><span class="sub-menu-text">View Sections</span></a></li>
+					<li><a class="" href="{{ route('section.index') }}"><span class="sub-menu-text">View Sections</span></a></li>
 				</ul>
 			</li>
 			<li class="has-sub">

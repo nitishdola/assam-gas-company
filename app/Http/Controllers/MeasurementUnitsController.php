@@ -59,9 +59,9 @@ class MeasurementUnitsController extends Controller
 
         $measurement_unit->fill($data);
         if($measurement_unit->save()) {
-            $message .= 'Unit edited successfully !';
+            $message .= 'Unit updated successfully !';
         }else{
-            $message .= 'Unable to edit  unit !';
+            $message .= 'Unable to update  unit !';
         }
 
         return Redirect::route('measurement_unit.index')->with('message', $message);

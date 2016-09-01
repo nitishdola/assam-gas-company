@@ -58,9 +58,9 @@ class LocationsController extends Controller
 
         $location->fill($data);
         if($location->save()) {
-            $message .= 'Location edited successfully !';
+            $message .= 'Location updated successfully !';
         }else{
-            $message .= 'Unable to edit  location !';
+            $message .= 'Unable to update location !';
         }
 
         return Redirect::route('location.index')->with('message', $message);

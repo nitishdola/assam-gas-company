@@ -54,7 +54,7 @@ class PasswordController  extends Controller
       return Redirect::route('chnage_admin_user_password');
     }
 
-    /*****************For Department ,Change Password**********************/
+  /*******************For Department ,Change Password**********************/
 
   public function change_password_department($id) {
          $id = Crypt::decrypt($id);

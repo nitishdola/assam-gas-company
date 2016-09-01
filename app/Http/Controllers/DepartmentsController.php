@@ -59,9 +59,9 @@ class DepartmentsController extends Controller
 
         $department->fill($data);
         if($department->save()) {
-            $message .= 'Department Edited Successfully !';
+            $message .= 'Department Updated Successfully !';
         }else{
-            $message .= 'Unable to Edit  Department !';
+            $message .= 'Unable to update  Department !';
         }
 
         return Redirect::route('department.index')->with('message', $message);

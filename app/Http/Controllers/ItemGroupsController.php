@@ -59,9 +59,9 @@ class ItemGroupsController extends Controller
 
         $item_group->fill($data);
         if($item_group->save()) {
-            $message .= 'Item Group edited successfully !';
+            $message .= 'Item Group Updated successfully !';
         }else{
-            $message .= 'Unable to edit  Item Group !';
+            $message .= 'Unable to update Item Group !';
         }
         return Redirect::route('item_group.index')->with('message', $message);
     }

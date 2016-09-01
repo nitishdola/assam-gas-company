@@ -103,9 +103,9 @@ class AdminController extends Controller
 
         $department_user->fill($data);
         if($department_user->save()) {
-            $message .= 'Department User Information Edited Successfully !';
+            $message .= 'Department User Information Updated Successfully !';
         }else{
-            $message .= 'Unable to Edit  Department User Information !';
+            $message .= 'Unable to Update  Department User Information !';
         }
 
         return Redirect::route('department_user.index')->with('message', $message);

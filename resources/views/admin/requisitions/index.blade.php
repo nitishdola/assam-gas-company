@@ -21,8 +21,7 @@
 				{!! Form::label('', '', array('class' => 'col-md-4 control-label')) !!}
 			    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
 			</div>
-
-			{!!form::close()!!}
+            {!!form::close()!!}
 		</div>
 	</div>
 </div>

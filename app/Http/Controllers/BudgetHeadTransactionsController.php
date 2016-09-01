@@ -69,7 +69,7 @@ class BudgetHeadTransactionsController extends Controller
         //var_dump($data);
         //exit();
         if($BudgetHeadTransaction->save()) {
-            $message .= 'Budget Head Transaction  Edited successfully !';
+            $message .= 'Budget Head Transaction  Updated successfully !';
         }else{
             $message .= 'Unable to update Budget Head Transaction !';
         }

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title') All Locations @stop
-@section('pageTitle') All Locations @stop
-@section('content')
+@section('pageTitle') All Locations |<a class="btn btn-info" href="{{ route('location.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>@stop
+@section('content')|
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">

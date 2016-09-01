@@ -9,7 +9,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	Designation
+	Designation |<a class="btn btn-info" href="{{ route('designation.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 </li>
 
 @stop

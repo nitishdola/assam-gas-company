@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title') All Racks @stop
-@section('pageTitle') All Racks @stop
+@section('pageTitle') All Racks|<a class="btn btn-info" href="{{ route('rack.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a> @stop
 @section('content')
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">

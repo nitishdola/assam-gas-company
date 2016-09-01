@@ -10,7 +10,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	Sections
+	Sections |<a class="btn btn-info" href="{{ route('section.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 </li>
 
 @stop

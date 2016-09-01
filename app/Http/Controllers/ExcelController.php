@@ -147,6 +147,4 @@ class ExcelController extends Controller
         });
       })->download('xlsx');
     }
-
-
 }

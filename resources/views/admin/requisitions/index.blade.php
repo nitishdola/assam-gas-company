@@ -8,7 +8,7 @@
 </li>
 <li>
 <i class="fa fa-th"></i>
-	Requisitions
+	Requisitions|<a class="btn btn-info" href="{{ route('requisition.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 </li>
 @stop
 @section('content')

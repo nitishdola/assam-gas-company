@@ -459,6 +459,11 @@ Route::group(['prefix'=>'download'], function() {
         'middleware' => ['admin'],
         'uses' => 'ExcelController@accountusers_dowonload'
     ]);
+      Route::get('/requisition-download', [
+        'as' => 'requisition.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@requisition_dowonload'
+    ]);
 
 
    

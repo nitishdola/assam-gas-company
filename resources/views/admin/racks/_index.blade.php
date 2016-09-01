@@ -1,5 +1,4 @@
 <?php $count = 1; ?>
-
 <table class="table table-striped table-bordered table-advance table-hover">
     <thead>
         <tr>

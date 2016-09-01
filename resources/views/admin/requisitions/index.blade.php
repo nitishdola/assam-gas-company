@@ -1,23 +1,22 @@
-@extends('layouts.department_user')
-@section('title') All Items @stop
-@section('pageTitle') All Items @stop
+@extends('layouts.admin')
+@section('title') All Requisition @stop
+@section('pageTitle') All Requisitions @stop
 @section('breadcumb') 
 <li>
 	<i class="fa fa-home"></i>
-	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
+	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
 </li>
 <li>
-	<i class="fa fa-th"></i>
+<i class="fa fa-th"></i>
 	Requisitions
 </li>
 @stop
-
 @section('content')
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-			{!! Form::open(array('route' => 'requisition.index', 'id' => 'requisition.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
-			@include('department_user.requisitions._search_form')
+			{!! Form::open(array('route' => 'admin.requisition.index', 'id' => 'admin.requisition.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
+			@include('admin.requisitions._search_form')
 			<div class="col-md-12"> 
 				{!! Form::label('', '', array('class' => 'col-md-4 control-label')) !!}
 			    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
@@ -43,7 +42,7 @@
 			            <th> Nature of Work </th>
 			            <th> Chargeable Account </th>
 			            <th> Issue Date </th>
-			             <th> Actions </th>
+			            <th> Actions </th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -56,18 +55,7 @@
 			            <td> {{ $v->nature_of_work }} </td>
 			            <td class="hidden-xs"> {{ $v->chargeable_account['name'] }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
-			            <td> <a href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>|
-			            <a href="{{ route('requisition.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
-			            @if($v->status) | 
-						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('requisition.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash-o fa-fw"></i>Remove</a>
-						@endif
-						@if($v->hod) |
-						<a class="btn btn-primary disabled">Approved</a>
-						 
-						 @else|
-						 <a class="btn btn-primary active" a href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</a>
-						
-						  @endif
+			            <td> <a href="{{ route('admin.requisition.view', Crypt::encrypt($v->id) ) }}" title="View More">View More</a>
 						</td>
 			        </tr>
 			        @endforeach

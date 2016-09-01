@@ -5,6 +5,11 @@
 <style>
   .item-field{padding: 6px 0;background: #f6f6f6;margin-bottom: 4px;}
   h5 {text-align: center;padding: 15px 0;text-decoration: underline;}
+hr.style13 {
+  height: 5px;
+  border: 0;
+  box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
 
  
 </style>
@@ -16,9 +21,9 @@
   <a class="btn btn-info" href="{{ route('requisition.edit', Crypt::encrypt($info->id) ) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
   <a class="btn btn-danger" href="{{ route('requisition.index', Crypt::encrypt($info->id) ) }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
   @if($info->hod) 
-  <button type="button" class="btn btn-primary disabled">Approved</button>
+  <a class="btn btn-primary disabled">Approved</a>
   @else
-  <button type="button"  class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($info->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
+  <a class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($info->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</a>
   @endif
 
     <div class="box box-primary">
@@ -74,7 +79,8 @@
                      <div class="box-body item-view">
           <h5><b>Material(s) Details</b> </h5>
           @foreach($requisition_items as $k => $v)
-          <div> <b>{{ $k+1 }}.</b> </div>
+         <hr class="style13">
+         <br>
         <div class="row">
             <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">

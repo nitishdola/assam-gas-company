@@ -21,7 +21,7 @@ class DepartmentUser extends Authenticatable
         //'password'          =>  'required|min:3',
     ];
 
-     public function creator() 
+    public function creator() 
     {
         return $this->belongsTo('App\DepartmentUser', 'created_by');
     }
@@ -35,7 +35,7 @@ class DepartmentUser extends Authenticatable
     {
         return $this->belongsTo('App\Section', 'section_id');
     }
-     public function designation() 
+    public function designation() 
     {
         return $this->belongsTo('App\Designation', 'designation_id');
     }

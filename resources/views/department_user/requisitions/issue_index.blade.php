@@ -43,19 +43,15 @@
 			            <td> {{ $v->nature_of_work }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
 			            <td> 
-
-			            @if($v->hod && $v->issued_by)
-			             <button type="button" class="btn btn-primary disabled">Approved</button>
+                        @if($v->hod && $v->issued_by)
+			             <a type="button" class="btn btn-primary disabled">Approved</a>
 			             @elseif($v->hod || $v->issued_by)
-			             <button type="button"  class="btn btn-primary active" href="{{ route('requisition.issue', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
+			             <a class="btn btn-primary active" href="{{ route('requisition.issue', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</a>
                          
                           @else
 
-                             <button type="button" class="btn btn-primary disabled"> Pending</button>
-
-						
-						
-						@endif
+                          <a class="btn btn-primary disabled"> Pending</a>
+                             @endif
 						</td>
 			        </tr>
 			        @endforeach

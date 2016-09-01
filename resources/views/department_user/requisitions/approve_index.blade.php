@@ -57,7 +57,7 @@
 		    @else
 		    	<div class="alert alert-danger alert-dismissable alert-red">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-                  No Items Found !
+                  No Requisition Found !
                 </div>
 		    @endif
 		</div>

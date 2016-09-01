@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\Department, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
+use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
 
 class AdminController extends Controller
 {
@@ -54,7 +54,7 @@ class AdminController extends Controller
     }
 
 
-     public function view_department_users(Request $request) { 
+    public function view_department_users(Request $request) { 
         $where['status'] = 1;
         if($request->department_id) {
             $where['department_id'] = $request->department_id;
@@ -87,7 +87,7 @@ class AdminController extends Controller
         return view('admin.users.department.edit', compact('departmentuser','departments','sections','designations'));
     }
 
-     public function update( $id, Request $request) { 
+    public function update( $id, Request $request) { 
         $id = Crypt::decrypt($id); 
         $rules = DepartmentUser::$rules;
 
@@ -112,7 +112,7 @@ class AdminController extends Controller
     }
 
      
-      public function disable($id ) {
+    public function disable($id ) {
         $id = Crypt::decrypt($id); 
         $department_user = DepartmentUser::findOrFail($id);
         $message = '';
@@ -130,7 +130,7 @@ class AdminController extends Controller
 
    /*********************creation of account users  CRUD by admin*******************/
 
-   public function create_account_user() {
+    public function create_account_user() {
        
         return view('admin.users.account.create');
     }
@@ -154,7 +154,7 @@ class AdminController extends Controller
         return Redirect::route('account_user.create')->with('message', $message);
     }
 
-public function view_account_users(Request $request) { 
+    public function view_account_users(Request $request) { 
         $where['status'] = 1;
         
 
@@ -168,13 +168,13 @@ public function view_account_users(Request $request) {
     }
 
 
-      public function edit_account_user( $id ) {
+    public function edit_account_user( $id ) {
         $id = Crypt::decrypt($id);
         $accountuser = AccountsUser::findOrFail($id);
         return view('admin.users.account.edit', compact('accountuser'));
     }
 
-     public function update_account_user( $id, Request $request) { 
+    public function update_account_user( $id, Request $request) { 
         $id = Crypt::decrypt($id); 
         $rules = AccountsUser::$rules;
        // $rules['name']              = $rules['name'] . ',id,' . $id;
@@ -196,7 +196,7 @@ public function view_account_users(Request $request) {
     }
 
      
-      public function disable_account_user($id ) {
+    public function disable_account_user($id ) {
         $id = Crypt::decrypt($id); 
         $account_user = AccountsUser::findOrFail($id);
         $message = '';
@@ -210,5 +210,41 @@ public function view_account_users(Request $request) {
 
         return Redirect::route('account_user.index')->with('message', $message);
        } 
+
+
+       //******************manage requisition procss***************//
+       
+    public function requisition_index(Request $request) {
+       
+        $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+        $where = [];
+        if($request->department_id) {
+            $where['department_id'] = $request->department_id;
+        }
+        if($request->chargeable_account_id) {
+            $where['chargeable_account_id'] = $request->chargeable_account_id;
+        }
+         if($request->requisition_number) {
+            $where['requisition_number'] = $request->requisition_number;
+        }
+         if($request->Approval) {
+            $where['hod'] = $request->Approval;
+        }
+        $where['status'] = 1;
+      
+        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+
+        return view('admin.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
+    }
+
+    public function view( $id ) {
+        $id       = Crypt::decrypt($id);
+        $info     = Requisition::where('id', $id)->with('department', 'chargeable_account','department_user')->first();
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
+        return view('admin.requisitions.view',compact('info','requisition_items'));
+    }
+
 
 }

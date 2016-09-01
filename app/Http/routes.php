@@ -400,6 +400,23 @@ Route::group(['prefix'=>'designation'], function() {
     ]);
 });
 
+
+Route::group(['prefix'=>'admin_requisition'], function() {
+
+     Route::get('/view-all', [
+        'as' => 'admin.requisition.index',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@requisition_index'
+    ]);
+
+    Route::get('/admin-view-requisition-details/{num}', [
+        'as' => 'admin.requisition.view',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@view'
+    ]);
+
+});
+
   
 
 
@@ -549,6 +566,8 @@ Route::group(['prefix'=>'admin'], function() {
         'as' => 'update_admin_user_password',
         'uses' => 'PasswordController@update_password_admin']);
 });
+
+
 
 
 /******************Department User*******************/

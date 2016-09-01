@@ -100,7 +100,17 @@
 					<li><a class="" href="{{route('account_user.index')}}"><span class="sub-menu-text">View Account Users</span></a>
 					</li>
 				</ul>
-				
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-location-arrow"></i> <span class="menu-text">Requisition</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					
+					<li><a class="" href="{{ route('admin.requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
+				</ul>
 			</li>
 			
 		</ul>

@@ -28,6 +28,7 @@
 </div>
 
 <div class="col-lg-12" style="margin-top:20px;">
+<a class="btn btn-info" href="{{ route('department_users.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 			@if(count($results))

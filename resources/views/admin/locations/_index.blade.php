@@ -1,4 +1,5 @@
 <?php $count = 1; ?>
+<a class="btn btn-info" href="{{ route('location.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 <table class="table table-striped table-bordered table-advance table-hover">
     <thead>
         <tr>

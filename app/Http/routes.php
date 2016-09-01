@@ -430,6 +430,37 @@ Route::group(['prefix'=>'download'], function() {
         'uses' => 'ExcelController@download_section'
     ]);
 
+       Route::get('/location-download', [
+        'as' => 'location.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@download_location'
+    ]);
+       Route::get('/designation-download', [
+        'as' => 'designation.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@download_designation'
+    ]);
+
+       Route::get('/rack-download', [
+        'as' => 'rack.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@download_rack'
+    ]);
+
+       Route::get('/department_users-download', [
+        'as' => 'department_users.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@departmentusers_dowonload'
+    ]);
+
+
+     Route::get('/account_users-download', [
+        'as' => 'account_users.download',
+        'middleware' => ['admin'],
+        'uses' => 'ExcelController@accountusers_dowonload'
+    ]);
+
+
    
 });
 

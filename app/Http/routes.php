@@ -465,10 +465,22 @@ Route::group(['prefix'=>'download'], function() {
         'uses' => 'ExcelController@requisition_dowonload'
     ]);
 
-
-   
 });
+Route::group(['prefix'=>'account-user-download'], function() {
 
+      Route::get('/budget-head-download', [
+        'as' => 'budget_head.download',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ExcelController@budgethead_dowonload'
+    ]);
+
+       Route::get('/budget-head-transaction-download', [
+        'as' => 'budget_head_transaction.download',
+        'middleware' => ['accounts_user'],
+        'uses' => 'ExcelController@budgetTransaction_dowonload'
+    ]);
+
+});
  
 
 

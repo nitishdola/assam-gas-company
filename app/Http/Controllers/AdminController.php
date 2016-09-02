@@ -138,12 +138,8 @@ class AdminController extends Controller
     public function store_account_user(Request $request) {
         $validator = Validator::make($data = $request->all(), AccountsUser::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-
         $data['created_by'] = Auth::guard('admin')->user()->id; 
         $data['password']   = bcrypt( config('globals.account_user_password') );
-
-        //dd($data);
-
         $message = '';
         if(AccountsUser::create($data)) {
             $message .= 'User add successfully !';
@@ -212,7 +208,7 @@ class AdminController extends Controller
        } 
 
 
-       //******************manage requisition procss***************//
+       //******************Overview of Requisition Process....view,download***************//
        
     public function requisition_index(Request $request) {
        
@@ -245,6 +241,4 @@ class AdminController extends Controller
         $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
         return view('admin.requisitions.view',compact('info','requisition_items'));
     }
-
-
 }

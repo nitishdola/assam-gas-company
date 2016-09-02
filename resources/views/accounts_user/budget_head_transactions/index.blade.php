@@ -9,7 +9,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	Budget Heads
+	Budget Heads |<a class="btn btn-info" href="{{ route('budget_head_transaction.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 </li>
 
 @stop

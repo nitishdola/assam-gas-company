@@ -45,16 +45,11 @@ class DesignationController extends Controller
     public function update( $id, Request $request) { 
         $id = Crypt::decrypt($id); 
         $rules = Designation::$rules;
-
         $rules['name']	= $rules['name'] . ',id,' . $id;
-        
-    	$validator = Validator::make($data = $request->all(), $rules);
+        $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-
         $designation = Designation::findOrFail($id);
-
         $message = '';
-
         $designation->fill($data);
         if($designation->save()) {
             $message .= 'designation updated successfully !';

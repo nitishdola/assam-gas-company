@@ -54,11 +54,8 @@ class DepartmentUsersController extends Controller
       $username = Auth::guard('department_user')->user()->username;
       $message = $class = '';
           $new_password = trim($request->get('password_new'));
-
           $user = DepartmentUser::where('username', $username)->first();
-
           $user->password = bcrypt($new_password);
-
           if($user->save()) {
             $message .= 'Password updated Successfully !';
             $class   .= 'alert-success';

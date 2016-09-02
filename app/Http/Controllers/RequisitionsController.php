@@ -162,7 +162,6 @@ class RequisitionsController extends Controller
         $user     = DepartmentUser::where('username', $username)->first();
         $departments            = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-
         $where = [];
         $where['status'] = 1;
         $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
@@ -178,8 +177,6 @@ class RequisitionsController extends Controller
         $requisitions       = Requisition::findOrFail($id);
         $requisition_id     = $requisitions->id;
         $requisition_items  = RequisitionItem::where('requisition_id', $requisition_id)->get();
-
-
         $chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
     	$item_measurements    = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
@@ -193,9 +190,6 @@ class RequisitionsController extends Controller
     public function update($id , Request $request) {
         $id    = Crypt::decrypt($id); 
         $rules = Requisition::$rules;
-
-       
-        
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
         $requisition    = Requisition::findOrFail($id);
@@ -266,9 +260,7 @@ class RequisitionsController extends Controller
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
         $id       = Crypt::decrypt($id);
-      
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-
         $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
        return view('department_user.requisitions.view',compact('info','requisition_items','user'));
     }

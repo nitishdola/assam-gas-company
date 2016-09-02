@@ -49,29 +49,20 @@ class BudgetHeadTransactionsController extends Controller
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $budget_heads    = [''=> 'Select Budget Head'] + BudgetHead::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();;
        return view('accounts_user.budget_head_transactions.edit', compact('BudgetHeadTransaction', 'departments', 'sections','budget_heads'));
-      
-    }
+      }
 
     public function update( $id, Request $request) { 
         $id = Crypt::decrypt($id); 
         $rules = BudgetHeadTransaction::$rules;
-
-        //$rules['name']  = $rules['name'] . ',id,' . $id;
-        
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-
         $BudgetHeadTransaction = BudgetHeadTransaction::findOrFail($id);
-
         $message = '';
-
         $BudgetHeadTransaction->fill($data);
-        //var_dump($data);
-        //exit();
         if($BudgetHeadTransaction->save()) {
             $message .= 'Budget Head Transaction  Updated successfully !';
         }else{
-            $message .= 'Unable to update Budget Head Transaction !';
+            $message .= 'Unable to Update Budget Head Transaction !';
         }
 
         return Redirect::route('budget_head_transaction.index')->with('message', $message);

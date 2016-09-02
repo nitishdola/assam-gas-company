@@ -76,11 +76,11 @@ hr.style13 {
 
 	</div>
 
-                     <div class="box-body item-view">
+          <div class="box-body item-view">
           <h5><b>Material(s) Details</b> </h5>
           @foreach($requisition_items as $k => $v)
-         <hr class="style13">
-         <br>
+          <hr class="style13">
+          <br>
         <div class="row">
             <div class="col-md-6" style="padding-left:5px; padding-right:0px;">
                 <div class="col-md-12 item-field">

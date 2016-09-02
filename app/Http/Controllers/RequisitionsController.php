@@ -16,7 +16,7 @@ class RequisitionsController extends Controller
 
      $username = Auth::guard('department_user')->user()->username;
      $user     = DepartmentUser::where('username', $username)->first();
-     $id       =$user->id;
+     $id       = $user->id;
      //$this->permission = $permission;  
    
       $this->permission = UserPermission::where('department_user_id', $id)->with('module')
@@ -89,7 +89,7 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
-         $this->isViewAuthorized();
+         //$this->isViewAuthorized();
     
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();

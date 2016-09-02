@@ -7,5 +7,20 @@ permissions - create/update/delete
 user_permissions
 ------------------------
 id	module_id	user_id	permission_id 
-1       1     		1		1
-2		1			1		2		
+1                  1                         5              5
+1                  1                         5              4
+1                  1                         5              3
+
+modules
+----------
+1 requisition
+
+permissions
+---------------
+1 create
+2 edit
+3 delete
+4 view
+5 requisition_issue
+
+	

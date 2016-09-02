@@ -466,6 +466,7 @@ Route::group(['prefix'=>'download'], function() {
     ]);
 
 });
+
 Route::group(['prefix'=>'account-user-download'], function() {
 
       Route::get('/budget-head-download', [
@@ -480,6 +481,27 @@ Route::group(['prefix'=>'account-user-download'], function() {
         'uses' => 'ExcelController@budgetTransaction_dowonload'
     ]);
 
+});
+
+  Route::group(['prefix'=>'department_user-download'], function() {
+
+    Route::get('/department-requisition-download', [
+        'as' => 'department-user-requisition.download',
+        'middleware' => ['department_user'],
+        'uses' => 'ExcelController@requisition_dowonload'
+    ]);
+     Route::get('/measurement-items-download', [
+        'as' => 'measurement-items.download',
+        'middleware' => ['department_user'],
+        'uses' => 'ExcelController@measurementItems_dowonload'
+    ]);
+
+    Route::get('/salvage-measurement-items-download', [
+        'as' => 'salvage-measurement-items.download',
+        'middleware' => ['department_user'],
+        'uses' => 'ExcelController@salvagemeasurementItems_dowonload'
+    ]);
+     
 });
  
 

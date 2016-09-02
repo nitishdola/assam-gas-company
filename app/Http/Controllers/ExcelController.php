@@ -209,4 +209,76 @@ class ExcelController extends Controller
           });
         })->download('xlsx');
     }
+
+     public function measurementItems_dowonload() {
+        Excel::create('item_measurements', function( $excel) {
+          $excel->sheet('Item-Measuement-data', function($sheet) {
+             $sheet->setTitle('AGC Item Measurement Data');
+             $sheet->cells('A1:B1:C1:D1', function($cells) {
+             $cells->setFontWeight('bold');
+            });
+
+            $transaction = DB::table('item_measurements')
+                         ->join('item_groups', 'item_measurements.item_group_id', '=', 'item_groups.id')
+                         ->join('item_sub_groups', 'item_measurements.item_sub_group_id', '=', 'item_sub_groups.id')
+                         ->join('measurement_units', 'item_measurements.measurement_unit_id', '=', 'measurement_units.id')
+                         ->select('item_measurements.item_code as icode','item_measurements.barcode as bcode','item_measurements.item_name as iname','item_measurements.item_description as idescription','item_measurements.part_number as pnumber','item_measurements.manufacturer as imanufacturer','item_measurements.expiry_date as edate','item_measurements.asset_type as atype','item_measurements.product_preference as p_preference','item_groups.name as igroup_name','item_sub_groups.name as isubgroup','measurement_units.name as mname')
+                         ->get();
+
+            $carray = array();
+             foreach($transaction as $k => $v) {
+               $carray[$k]['Item Code']              = $v->icode;
+               $carray[$k]['Bar Code']               = $v->bcode;
+               $carray[$k]['Item Name']              = $v->iname;
+               $carray[$k]['Item Description']       = $v->idescription;
+               $carray[$k]['Part Number']            = $v->pnumber;
+               $carray[$k]['Manufacturer']           = $v->imanufacturer;
+               $carray[$k]['Expiry Date']            = $v->edate;
+               $carray[$k]['Item Group']             = $v->igroup_name;
+               $carray[$k]['Item Sub Group']         = $v->isubgroup;
+               $carray[$k]['Manufacturer Unit']      = $v->mname;
+               $carray[$k]['Asset Type']             = $v->atype;
+               $carray[$k]['Product Preference']     = $v->p_preference;
+             
+           }
+            $sheet->fromArray($carray, null, 'A1', false, true);
+          });
+        })->download('xlsx');
+    }
+
+     public function salvagemeasurementItems_dowonload() {
+        Excel::create('salvage_item_measurements', function( $excel) {
+          $excel->sheet('Salvage-Item-Measuement-data', function($sheet) {
+             $sheet->setTitle('AGC Salvage Measurement Data');
+             $sheet->cells('A1:B1:C1:D1', function($cells) {
+             $cells->setFontWeight('bold');
+            });
+
+            $transaction = DB::table('salvage_item_measurements')
+                         ->join('item_groups', 'salvage_item_measurements.item_group_id', '=', 'item_groups.id')
+                         ->join('item_sub_groups', 'salvage_item_measurements.item_sub_group_id', '=', 'item_sub_groups.id')
+                         ->join('measurement_units', 'salvage_item_measurements.measurement_unit_id', '=', 'measurement_units.id')
+                         ->select('salvage_item_measurements.item_code as icode','salvage_item_measurements.barcode as bcode','salvage_item_measurements.item_name as iname','salvage_item_measurements.item_description as idescription','salvage_item_measurements.part_number as pnumber','salvage_item_measurements.manufacturer as imanufacturer','salvage_item_measurements.expiry_date as edate','salvage_item_measurements.asset_type as atype','salvage_item_measurements.product_preference as p_preference','item_groups.name as igroup_name','item_sub_groups.name as isubgroup','measurement_units.name as mname')
+                         ->get();
+
+            $carray = array();
+             foreach($transaction as $k => $v) {
+               $carray[$k]['Item Code']              = $v->icode;
+               $carray[$k]['Bar Code']               = $v->bcode;
+               $carray[$k]['Item Name']              = $v->iname;
+               $carray[$k]['Item Description']       = $v->idescription;
+               $carray[$k]['Part Number']            = $v->pnumber;
+               $carray[$k]['Manufacturer']           = $v->imanufacturer;
+               $carray[$k]['Expiry Date']            = $v->edate;
+               $carray[$k]['Item Group']             = $v->igroup_name;
+               $carray[$k]['Item Sub Group']         = $v->isubgroup;
+               $carray[$k]['Manufacturer Unit']      = $v->mname;
+               $carray[$k]['Asset Type']             = $v->atype;
+               $carray[$k]['Product Preference']     = $v->p_preference;
+             
+           }
+            $sheet->fromArray($carray, null, 'A1', false, true);
+          });
+        })->download('xlsx');
+    }
 }

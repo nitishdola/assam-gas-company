@@ -7,21 +7,39 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
-use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit, App\Department,App\DepartmentUser;
+use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit, App\Department,App\DepartmentUser,App\UserPermission;
 
 class RequisitionsController extends Controller
 {
+
+     public function __construct(UserPermission $permission) {
+
+     $username = Auth::guard('department_user')->user()->username;
+     $user     = DepartmentUser::where('username', $username)->first();
+     $id       =$user->id;
+     //$this->permission = $permission;  
+   
+      $this->permission = UserPermission::where('department_user_id', $id)->with('module')
+      ->with('permission')->with('department')->get();
+      foreach ($this->permission as $k => $v) {
+             $permissions[] = $v->permission['name'];          
+      }
+
+         
+ }
+     
+  
 
 
     public function create() {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
 
-    	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	$chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-    	$item_measurements      = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+    	$item_measurements  = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
 
-    	$units    = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	$units  = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
     	return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units','user'));
     }
@@ -71,8 +89,10 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
+         $this->isViewAuthorized();
+    
         $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
+        $user     = DepartmentUser::where('username', $username)->first();
     	$departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -94,18 +114,19 @@ class RequisitionsController extends Controller
        	$results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
     	return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
-    }
+    
 
+}
    //requisition approve process by hod of the departments
     public function approve_index(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
+        $user     = DepartmentUser::where('username', $username)->first();
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
         $where = [];
        
-        $where['hod'] = NULL;
+        $where['hod']    = NULL;
         $where['status'] = 1;
       
         $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);

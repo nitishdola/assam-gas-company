@@ -16,9 +16,9 @@ class AccountsUsersController extends Controller
     	$this->middleware('accounts_user');
     }
    public function index(){
-      $total_head         = BudgetHead::count();
-      $total_transaction  = BudgetHeadTransaction::count();
-      $total_account      = ChargeableAccount::count();
+      $total_head        = BudgetHead::count();
+      $total_transaction = BudgetHeadTransaction::count();
+      $total_account     = ChargeableAccount::count();
       return view('accounts_user.dashboard',compact('total_head','total_transaction','total_account'));
     	//return view('accounts_user.dashboard');
     }
@@ -46,7 +46,7 @@ class AccountsUsersController extends Controller
     // if (Auth::attempt(['username' => $username, 'password' => $password])) {
           $new_password = trim($request->get('password_new'));
 
-          $user = AccountsUser::where('username', $username)->first();
+          $user =AccountsUser::where('username', $username)->first();
 
           $user->password = bcrypt($new_password);
 

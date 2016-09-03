@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use DB, Validator, Redirect, Auth, Crypt;
-
 use App\BudgetHead, App\Section, App\Department;
 
 class BudgetHeadsController extends Controller
@@ -82,7 +79,7 @@ class BudgetHeadsController extends Controller
         if($BudgetHead->save()) {
             $message .= 'Budget Head removed successfully !';
         }else{
-            $message .= 'Unable to remove  Budget Head !';
+            $message .= 'Unable to remove Budget Head !';
         }
 
         return Redirect::route('budget_head.index')->with('message', $message);

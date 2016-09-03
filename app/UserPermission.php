@@ -12,9 +12,9 @@ class UserPermission extends Model
 
     public static $rules = [
     	
-    	'module_id'  		    =>  'required|exists:modules,id',
-    	'department_user_id'    =>  'required|exists:department_users,id',
-    	'permission_id'         =>  'required|exists:permissions,id',
+    	'module_id'  		  =>  'required|exists:modules,id',
+    	'department_user_id'  =>  'required|exists:department_users,id',
+    	'permission_id'       =>  'required|exists:permissions,id',
     ];
 
     public function module() 

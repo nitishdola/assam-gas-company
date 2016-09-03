@@ -45,7 +45,7 @@ class SalvageItemMeasurementsController extends Controller
 
     public function index(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
+        $user     = DepartmentUser::where('username', $username)->first();
 
         $where = [];
         if($request->item_group_id) {

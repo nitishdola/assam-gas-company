@@ -447,7 +447,7 @@ Route::group(['prefix'=>'download'], function() {
         'uses' => 'ExcelController@download_rack'
     ]);
 
-       Route::get('/department_users-download', [
+       Route::get('/department_users-download/', [
         'as' => 'department_users.download',
         'middleware' => ['admin'],
         'uses' => 'ExcelController@departmentusers_dowonload'

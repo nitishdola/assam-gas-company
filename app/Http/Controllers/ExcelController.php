@@ -31,11 +31,11 @@ class ExcelController extends Controller
             $sheet->cells('A1:B1', function($cells) {
               $cells->setFontWeight('bold');
             });
-            $d_sections = DB::table('sections')
-                          ->join('departments', 'sections.department_id', '=', 'departments.id')
-                          ->select('departments.name as dname','sections.name as name','sections.section_code as scode')
-                          ->get();
-             $carray     = array();
+            $d_sections    = DB::table('sections')
+                           ->join('departments', 'sections.department_id', '=', 'departments.id')
+                           ->select('departments.name as dname','sections.name as name','sections.section_code as scode')
+                           ->get();
+             $carray       = array();
              foreach($d_sections as $k => $v) {
                $carray[$k]['Section']      = $v->name;
                $carray[$k]['Department']   = $v->dname;
@@ -76,7 +76,7 @@ class ExcelController extends Controller
 
     public function download_rack() {
         Excel::create('Rack', function( $excel) {
-         $excel->sheet('Rack-data', function($sheet) {
+           $excel->sheet('Rack-data', function($sheet) {
            $sheet->setTitle('AGC Rack Data');
            $sheet->cells('A1:B1', function($cells) {
            $cells->setFontWeight('bold');
@@ -96,19 +96,39 @@ class ExcelController extends Controller
         })->download('xlsx');
      }
     
-    public function departmentusers_dowonload() {
-        Excel::create('department_users', function( $excel) {
-         $excel->sheet('Department-user-data', function($sheet) {
+    public function departmentusers_dowonload($username = null,$designation_id = null,$department_id = null,$section_id = null) {
+
+
+        Excel::create('department_users', function( $excel) use($username,$designation_id,$department_id,$section_id) {
+         $excel->sheet('Department-user-data', function($sheet) use($username,$designation_id,$department_id,$section_id) {
+           
+           $matchThese['department_users.status'] = 1;
+           if($username != null) {
+              $matchThese['department_users.username'] = $username;
+            }
+           if($designation_id != null) {
+              $matchThese['department_users.designation_id'] = $designation_id;
+            }
+           if($department_id != null) {
+              $matchThese['department_users.department_id'] = $department_id;
+            }
+           if($section_id != null) {
+              $matchThese['department_users.section_id'] = $section_id;
+            }
+             dd($matchThese);
+              exit();
            $sheet->setTitle('AGC Department Users Data');
-           $sheet->cells('A1:B1:C1:D1', function($cells) {
+           $sheet->cells('A1:B1:C1:D1', function($cells){
            $cells->setFontWeight('bold');
             });
-           $department_users = DB::table('department_users')
+           $department_users  = DB::table('department_users')
                              ->join('departments', 'department_users.department_id', '=', 'departments.id')
-                             ->join('designations', 'department_users.designation_id', '=', 'designations.id')
-                             ->join('sections', 'department_users.section_id', '=', 'sections.id')
+                             ->join('designations','department_users.designation_id', '=', 'designations.id')
+                             ->join('sections','department_users.section_id', '=', 'sections.id')
                              ->select('department_users.name as dname','designations.name as desig_name','sections.name as section_name','departments.name as department_name')
+                             ->where($matchThese)
                              ->get();
+             
            $carray = array();
            foreach($department_users as $k => $v) {
                $carray[$k]['Name']        = $v->dname;
@@ -124,7 +144,7 @@ class ExcelController extends Controller
 
     public function accountusers_dowonload() {
         Excel::create('Account Users', function( $excel) {
-          $excel->sheet('Account-User-data', function($sheet) {
+           $excel->sheet('Account-User-data', function($sheet) {
            $sheet->setTitle('AGC Account User');
            $sheet->cells('A1:B1', function($cells) {
            $cells->setFontWeight('bold');
@@ -144,7 +164,7 @@ class ExcelController extends Controller
              $cells->setFontWeight('bold');
             });
 
-            $requisition = DB::table('requisitions')
+            $requisition  = DB::table('requisitions')
                          ->join('department_users', 'requisitions.issued_by', '=', 'department_users.id')
                          ->select('requisitions.requisition_number as rnumber','department_users.name as lname','requisitions.job_number as jnumber','requisitions.nature_of_work as work','requisitions.financial_year as fyear')
                          ->get();
@@ -227,18 +247,18 @@ class ExcelController extends Controller
 
             $carray = array();
              foreach($transaction as $k => $v) {
-               $carray[$k]['Item Code']              = $v->icode;
-               $carray[$k]['Bar Code']               = $v->bcode;
-               $carray[$k]['Item Name']              = $v->iname;
-               $carray[$k]['Item Description']       = $v->idescription;
-               $carray[$k]['Part Number']            = $v->pnumber;
-               $carray[$k]['Manufacturer']           = $v->imanufacturer;
-               $carray[$k]['Expiry Date']            = $v->edate;
-               $carray[$k]['Item Group']             = $v->igroup_name;
-               $carray[$k]['Item Sub Group']         = $v->isubgroup;
-               $carray[$k]['Manufacturer Unit']      = $v->mname;
-               $carray[$k]['Asset Type']             = $v->atype;
-               $carray[$k]['Product Preference']     = $v->p_preference;
+               $carray[$k]['Item Code']            = $v->icode;
+               $carray[$k]['Bar Code']             = $v->bcode;
+               $carray[$k]['Item Name']            = $v->iname;
+               $carray[$k]['Item Description']     = $v->idescription;
+               $carray[$k]['Part Number']          = $v->pnumber;
+               $carray[$k]['Manufacturer']         = $v->imanufacturer;
+               $carray[$k]['Expiry Date']          = $v->edate;
+               $carray[$k]['Item Group']           = $v->igroup_name;
+               $carray[$k]['Item Sub Group']       = $v->isubgroup;
+               $carray[$k]['Manufacturer Unit']    = $v->mname;
+               $carray[$k]['Asset Type']           = $v->atype;
+               $carray[$k]['Product Preference']   = $v->p_preference;
              
            }
             $sheet->fromArray($carray, null, 'A1', false, true);

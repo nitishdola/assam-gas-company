@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-
 use App\Designation;
 
 class DesignationController extends Controller
@@ -29,7 +27,7 @@ class DesignationController extends Controller
     	if(Designation::create($data)) {
             $message .= 'Designation added successfully !';
         }else{
-            $message .= 'Unable to add Designation !';
+            $message .= 'Unable to add designation !';
         }
 
         return Redirect::route('designation.index')->with('message', $message);
@@ -52,9 +50,9 @@ class DesignationController extends Controller
         $message = '';
         $designation->fill($data);
         if($designation->save()) {
-            $message .= 'designation updated successfully !';
+            $message .= 'Designation updated successfully !';
         }else{
-            $message .= 'Unable to update  designation !';
+            $message .= 'Unable to update designation !';
         }
 
         return Redirect::route('designation.index')->with('message', $message);
@@ -67,9 +65,9 @@ class DesignationController extends Controller
         //change the status of department to 0
         $designation->status = 0;
         if($designation->save()) {
-            $message .= 'designation removed successfully !';
+            $message .= 'Designation removed successfully !';
         }else{
-            $message .= 'Unable to remove  designation !';
+            $message .= 'Unable to remove successfully !';
         }
 
         return Redirect::route('designation.index')->with('message', $message);

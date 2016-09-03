@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use DB, Validator, Redirect, Auth, Crypt;
-
 use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
 
 class AdminController extends Controller
@@ -77,6 +74,7 @@ class AdminController extends Controller
         $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
         return view('admin.users.department.index', compact('results', 'departments','designations', 'sections'));
     }
+  
 
     public function edit( $id ) {
         $id = Crypt::decrypt($id);

@@ -14,30 +14,25 @@ class RequisitionsController extends Controller
 
      public function __construct(UserPermission $permission) {
 
-     $username = Auth::guard('department_user')->user()->username;
-     $user     = DepartmentUser::where('username', $username)->first();
-     $id       = $user->id;
-     //$this->permission = $permission;  
-   
-      $this->permission = UserPermission::where('department_user_id', $id)->with('module')
-      ->with('permission')->with('department')->get();
-      foreach ($this->permission as $k => $v) {
-             $permissions[] = $v->permission['name'];          
-      }
 
-         
- }
-     
-  
+       $this->isAuthorized();
+     }
+
+   private function isAuthorized() {
+    if (!Session::get('userId')) {
+        echo "inside check"; // checking for debug purpose
+        return Redirect::to('login');
+    }
+}
 
 
     public function create() {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
 
-    	$chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	$chargeable_accounts = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-    	$item_measurements  = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+    	$item_measurements = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
 
     	$units  = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -53,9 +48,9 @@ class RequisitionsController extends Controller
 		    // Validate, then create if valid
 		    $validator = Validator::make($data = $request->all(), Requisition::$rules);
         	if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
-        	$data['department_id'] 	= Auth::guard('department_user')->user()->department_id;
-        	$data['issue_date'] 	= date('Y-m-d'); 
-        	$data['raised_by'] 		= Auth::guard('department_user')->user()->id;
+        	$data['department_id'] = Auth::guard('department_user')->user()->department_id;
+        	$data['issue_date']    = date('Y-m-d'); 
+        	$data['raised_by'] 	   = Auth::guard('department_user')->user()->id;
 		    $requisition = Requisition::create( $data );
 		}catch(ValidationException $e)
 		{
@@ -89,7 +84,7 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
-         //$this->isViewAuthorized();
+        if (in_array("view", $permissions)) {
     
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
@@ -98,13 +93,13 @@ class RequisitionsController extends Controller
 
     	$where = [];
         if($request->department_id) {
-            $where['department_id'] = $request->department_id;
+            $where['department_id']   = $request->department_id;
         }
         if($request->chargeable_account_id) {
             $where['chargeable_account_id'] = $request->chargeable_account_id;
         }
          if($request->requisition_number) {
-            $where['requisition_number'] = $request->requisition_number;
+            $where['requisition_number']    = $request->requisition_number;
         }
          if($request->Approval) {
             $where['hod'] = $request->Approval;
@@ -114,7 +109,9 @@ class RequisitionsController extends Controller
        	$results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
     	return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
-    
+    }else{
+       return "hi";
+    }
 
 }
    //requisition approve process by hod of the departments

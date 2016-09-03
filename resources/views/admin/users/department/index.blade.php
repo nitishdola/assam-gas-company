@@ -9,7 +9,7 @@
 
 <li>
 	<i class="fa fa-th"></i>
-	Department Users |<a class="btn btn-info" href="{{ route('department_users.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+	Department Users 
 </li>
 
 @stop
@@ -21,8 +21,7 @@
 			@include('admin.users.department._search_form')
 			{!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
 		    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
-
-			{!!form::close()!!}
+            {!!form::close()!!}
 		</div>
 	</div>
 </div>
@@ -30,6 +29,7 @@
 <div class="col-lg-12" style="margin-top:20px;">
 
 	<div class="widget-container fluid-height clearfix">
+|<a class="btn btn-info" href="{{ route('department_users.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
 		<div class="widget-content padded">
 			@if(count($results))
 			<?php $count = 1; ?>
@@ -45,14 +45,10 @@
 			            <th>
 			                Section
 			            </th>
-
-			            <th> Name </th>
+                        <th> Name </th>
 			            <th> Username (CPF Number )</th>
-			            <th>Actions</th>
-                        
-
-			           
-			        </tr>
+			            <th> Actions</th>
+                      </tr>
 			    </thead>
 			    <tbody>
 			        @foreach($results as $k => $v)
@@ -62,7 +58,7 @@
 			            <td class="hidden-xs"> {{ $v->section['name'] }} </td>
 			            <td> {{ $v->name }} </td>
 			            <td> {{ $v->username }} </td>
-			             <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>|
+			            <td> <a href="{{ route('department_user.edit', Crypt::encrypt($v->id) ) }}" title="Edit Location"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>|
             <a onclick="return confirm('Are you sure you want to delete this Department ?');" href="{{ route('department_user.disable', Crypt::encrypt($v->id) ) }}" title="Remove Department"><i class="fa fa-trash-o fa-fw"></i>Remove</a> | <a href="{{ route('chnage_department_user_password_admin', Crypt::encrypt($v->id) ) }}" title="Edit Location">Change Password</a></td>
 			            
 			        </tr>
@@ -75,7 +71,7 @@
 		    @else
 		    	<div class="alert alert-danger alert-dismissable alert-red">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-                  No Users Found !
+                  No Users Found!
                 </div>
 		    @endif
 		</div>

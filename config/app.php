@@ -159,7 +159,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Collective\Bus\BusServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -210,7 +210,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
-
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];

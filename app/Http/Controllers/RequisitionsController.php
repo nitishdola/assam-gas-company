@@ -15,22 +15,7 @@ class RequisitionsController extends Controller
         $this->_department_user = Auth::guard('department_user')->user();
     }
 
-     public function __construct(UserPermission $permission) {
-
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
-        $id       = $user->id;
-        //$this->permission = $permission;  
-
-        $this->permission = UserPermission::where('department_user_id', $id)->with('module')
-        ->with('permission')->with('department')->get();
-        foreach ($this->permission as $k => $v) {
-             $permissions[] = $v->permission['name'];          
-        } 
-    }
-
     public function create() {
-        
         if($this->_department_user->can(['create_requisition'])) {
             $chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -123,26 +108,27 @@ class RequisitionsController extends Controller
             return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
          //$this->isViewAuthorized();
     
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
-        $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+            $username = Auth::guard('department_user')->user()->username;
+            $user     = DepartmentUser::where('username', $username)->first();
+            $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+            $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-        $where = [];
-        if($request->department_id) {
-            $where['department_id'] = $request->department_id;
-        }
-        if($request->chargeable_account_id) {
-            $where['chargeable_account_id'] = $request->chargeable_account_id;
-        }
-         if($request->requisition_number) {
-            $where['requisition_number'] = $request->requisition_number;
-        }
-         if($request->Approval) {
-            $where['hod'] = $request->Approval;
+            $where = [];
+            if($request->department_id) {
+                $where['department_id'] = $request->department_id;
+            }
+            if($request->chargeable_account_id) {
+                $where['chargeable_account_id'] = $request->chargeable_account_id;
+            }
+             if($request->requisition_number) {
+                $where['requisition_number'] = $request->requisition_number;
+            }
+             if($request->Approval) {
+                $where['hod'] = $request->Approval;
+            }
         }
     }
-    
+
    //requisition approve process by hod of the departments
     public function approve_index(Request $request) {
         $username = Auth::guard('department_user')->user()->username;

@@ -131,7 +131,7 @@ class RequisitionsController extends Controller
     }
 
    //requisition approve process by hod of the departments
-    public function approve_index(Request $request) {
+    public function view_all_requisitions(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -142,9 +142,9 @@ class RequisitionsController extends Controller
         $where['hod']    = NULL;
         $where['status'] = 1;
       
-        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+        $results = Requisition::where($where)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-        return view('department_user.requisitions.approve_index', compact('departments','chargeable_accounts', 'results','user'));
+        return view('department_user.requisitions.approve_requisitions', compact('departments','chargeable_accounts', 'results','user'));
     }
 
     public function approveRequisition($id)
@@ -156,41 +156,11 @@ class RequisitionsController extends Controller
         $requisitions->hod  = $user->id;
         $requisitions->hod_approve_date  = date('Y-m-d H:i:s');
        if($requisitions->save()){
-            return redirect()->route('requisition.approve_index')->with('message', 'The Requisition has been Approved Successfully');
+            return redirect()->route('requisition.approve.view_all')->with(['message', 'The Requisition has been Approved Successfully', 'alert-class' => 'alert-success']);
         }else{
             return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
         }
     }
-   //requisition issued procsss by issued department
-    public function view_all_hod_approved_requisitions(Request $request) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
-        $departments      = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-
-        $where = [];
-        $where['status'] = 1;
-        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
-
-        return view('department_user.requisitions.view_all_hod_approved_requisitions', compact('departments','chargeable_accounts', 'results','user'));
-    }
-
-
-    public function issueRequisition($id)
-     {
-        $id                 = Crypt::decrypt($id);
-        $requisitions       = Requisition::findOrFail($id);
-        $username           = Auth::guard('department_user')->user()->username;
-        $user               = DepartmentUser::where('username', $username)->first();
-        $requisitions->issued_by  = $user->id;
-        $requisitions->issued_date  = date('Y-m-d H:i:s');
-       if($requisitions->save()){
-            return redirect()->route('requisition.issue_index')->with('message', 'The Requisition has been Issued Successfully');
-        }else{
-            return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
-        }
-    }
-
     public function view_approved(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
@@ -198,7 +168,7 @@ class RequisitionsController extends Controller
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $where = [];
         $where['status'] = 1;
-        $results = Requisition::where($where)->where('issued_by', '!=', NULL)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+        $results = Requisition::where($where)->where('hod', '!=', NULL)->where('receive_date', NULL)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
         return view('department_user.requisitions.view_approved', compact('departments','chargeable_accounts', 'results','user'));
     }
@@ -296,6 +266,22 @@ class RequisitionsController extends Controller
         $id       = Crypt::decrypt($id);
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
         $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
-       return view('department_user.requisitions.view',compact('info','requisition_items','user'));
+        return view('department_user.requisitions.view',compact('info','requisition_items','user'));
+    }
+
+    public function receiveRequisition( $id ) {
+        $id       = Crypt::decrypt($id);
+        $info     = Requisition::findOrFail($id);
+        $info->receive_date = date('Y-m-d H:i:s');
+        
+        $message = '';
+
+        if($info->save()) {
+            $message .= 'Requisition received successfully !';
+        }else{
+            $message .= 'Unable to received Requisition !';
+        }
+
+        return Redirect::route('requisition.view_approved')->with('message', $message);
     }
 }

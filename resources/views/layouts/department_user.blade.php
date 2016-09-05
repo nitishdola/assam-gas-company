@@ -28,7 +28,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/js/select2/select2.min.css') }}">
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/zebra/css/default.css') }}">
-
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/agcl.css') }}">
 	@yield('pageCss')
 </head>
 <body>
@@ -43,9 +43,6 @@
 						<div class="row">
 						  <div class="col-sm-12">
 						    <div class="page-header">
-						      <!-- STYLER -->
-						      
-						      <!-- /STYLER -->
 						      <!-- BREADCRUMBS -->
 						      <ul class="breadcrumb">
 						        @yield('breadcumb')

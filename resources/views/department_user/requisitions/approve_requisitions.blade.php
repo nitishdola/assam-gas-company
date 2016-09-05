@@ -1,6 +1,6 @@
 @extends('layouts.department_user')
-@section('title') All Items @stop
-@section('pageTitle') All Requisition @stop
+@section('title') All Requisitions for Approve @stop
+@section('pageTitle') Approve Requisition @stop
 @section('breadcumb') 
 <li>
 	<i class="fa fa-home"></i>
@@ -8,7 +8,7 @@
 </li>
 <li>
 	<i class="fa fa-th"></i>
-	Requisitions
+	Approve Requisitions (HOD)
 </li>
 @stop
 
@@ -28,7 +28,8 @@
 			            <th> Requisition Number </th>
 			            <th> Job Number </th>
 			            <th> Nature of Work </th>
-			            <th> Issue Date </th>
+			            <th> Raised By </th>
+			            <th> Creation Date </th>
 			            <th> Actions </th>
 			        </tr>
 			    </thead>
@@ -40,11 +41,14 @@
 			            <td> {{ $v->requisition_number }} </td>
 			            <td class="hidden-xs"> {{ $v->job_number }} </td>
 			            <td> {{ $v->nature_of_work }} </td>
-			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
+			            <td> {{ $v->department_user['name'] }} </td>
+			            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
 			            <td>
 			            
-						
-						<button type="button"  class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</button>
+			            <a class="btn btn-info" href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>
+
+						<a class="btn btn-warning active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></i>Approve</a>
+
 					
 						</td>
 			        </tr>

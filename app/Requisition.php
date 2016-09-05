@@ -25,7 +25,7 @@ class Requisition extends Model
     }
      public function department_user() 
     {
-        return $this->belongsTo('App\DepartmentUser', 'issued_by');
+        return $this->belongsTo('App\DepartmentUser', 'raised_by');
     }
     public function department_user_hod() 
     {

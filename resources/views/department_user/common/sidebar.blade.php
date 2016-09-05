@@ -46,20 +46,19 @@
 					<li><a class="" href="{{ route('requisition.create') }}"><span class="sub-menu-text">Add Requisition</span></a>
 					</li>
 					<li><a class="" href="{{ route('requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
-					
-					<li><a class="" href="{{ route('requisition.approve_index') }}"><span class="sub-menu-text">Approve Requisition</span></a></li>
 				</ul>
 			</li>
-           
-			<li class="has-sub">
-				<a href="{{ route('requisitions.issue.view_all') }}" class="">
-				<i class="fa fa-newspaper-o"></i> <span class="menu-text">Issue Requisition</span>
+           	
+           	<li class="has-sub">
+				<a title="View all requisitions which are issued and ready to be approved by HOD of department"  href="{{ route('requisition.approve.view_all') }}" class="">
+				<i class="fa fa-newspaper-o"></i> <span class="menu-text">Approve Requisition (HOD)</span>
 				</a>
 			</li>
 
 			<li class="has-sub">
-				<a href="{{ route('requisition.view_approved') }}" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">View Approved Requisitions( Material Department )</span>
+				<a title="View all requisitions which are approved by department HOD and ready to be accepted by Material Department" href="{{ route('requisition.view_approved') }}" class="">
+				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">
+				Receive Requisitions </span> <br><span class="heper-menu-text">View Approved Requisitions by Material Department</span>
 				</a>
 			</li>
 

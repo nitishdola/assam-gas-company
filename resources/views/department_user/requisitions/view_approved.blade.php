@@ -28,7 +28,8 @@ Received Condition
 			            <th> Requisition Number </th>
 			            <th> Job Number </th>
 			            <th> Nature of Work </th>
-			            <th> Issue Date </th>
+			            <th> HOD </th>
+			            <th> Approve Date </th>
 			            <th> Actions </th>
 			        </tr>
 			    </thead>
@@ -40,15 +41,10 @@ Received Condition
 			            <td> {{ $v->requisition_number }} </td>
 			            <td class="hidden-xs"> {{ $v->job_number }} </td>
 			            <td> {{ $v->nature_of_work }} </td>
-			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
-			            <td> 
-
-			            @if($v->hod)  
-						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="#" title="Approved"><i class="fa fa-thumbs-up-o fa-fw"></i>Approved by HOD</a>
-						@else
-						
-						 <a onclick="return confirm('Are you sure you want to approve this requisition ?');"  style="color:red" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}" title="Approve"><i class="fa fa-check-square-o fa-fw"></i>Approve</a>
-						@endif
+			            <td> {{ $v->department_user['name']}} </td>
+			            <td> {{ date('d-m-Y h:i A', strtotime($v->hod_approve_date)) }} </td>
+			            <td>
+						 <a onclick="return confirm('Are you sure you want to receive this requisition ?');" href="{{ route('requisition.receive', Crypt::encrypt($v->id) ) }}" class="btn btn-danger" title="Receive"><i class="fa fa-check-square" aria-hidden="true"></i>Receive</a>
 						</td>
 			        </tr>
 			        @endforeach

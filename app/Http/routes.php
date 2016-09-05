@@ -694,16 +694,16 @@ Route::group(['prefix'=>'requisition'], function() {
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@disable'
     ]);
-     Route::get('/view-requisition-details/{num}', [
+     Route::get('/view-details/{num}', [
         'as' => 'requisition.view',
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@view'
     ]);
 
     Route::get('/approve-view', [
-        'as' => 'requisition.approve_index',
+        'as' => 'requisition.approve.view_all',
         'middleware' => ['department_user'],
-        'uses' => 'RequisitionsController@approve_index'
+        'uses' => 'RequisitionsController@view_all_requisitions'
     ]);
       Route::get('/approve-requisition/{num}', [
             'as' => 'requisition.approve',
@@ -711,27 +711,16 @@ Route::group(['prefix'=>'requisition'], function() {
             'uses' => 'RequisitionsController@approveRequisition'
     ]);
 
-      Route::get('/issue', [
-        'as' => 'requisitions.issue.view_all',
-        'middleware' => ['department_user'],
-        'uses' => 'RequisitionsController@view_all_hod_approved_requisitions'
-    ]);
-    Route::get('/issue/{num}', [
-            'as' => 'requisition.issue',
-            'middleware' => ['department_user'],
-            'uses' => 'RequisitionsController@issueRequisition'
-    ]);
-    Route::get('/requisition/view-approved', [
+    Route::get('/requisition/approved/list-all', [
         'as' => 'requisition.view_approved',
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@view_approved'
     ]);
-      Route::get('/receive-requisition/{num}', [
+    Route::get('/receive/{num}', [
             'as' => 'requisition.receive',
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@receiveRequisition'
     ]);
-
 
 });
 

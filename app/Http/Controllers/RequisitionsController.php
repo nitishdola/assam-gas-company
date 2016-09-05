@@ -42,8 +42,9 @@ class RequisitionsController extends Controller
                 $validator = Validator::make($data = $request->all(), Requisition::$rules);
                 if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
                 $data['department_id']  = Auth::guard('department_user')->user()->department_id;
-                $data['issue_date']     = date('Y-m-d'); 
-                $data['raised_by']      = Auth::guard('department_user')->user()->id;
+                $data['raised_by']     = Auth::guard('department_user')->user()->id;
+                // $data['issued_date']     = Auth::guard('department_user')->user()->id;
+                // $data['raised_by']       = Auth::guard('department_user')->user()->id;
                 $requisition = Requisition::create( $data );
             }catch(ValidationException $e)
             {
@@ -161,7 +162,7 @@ class RequisitionsController extends Controller
         }
     }
    //requisition issued procsss by issued department
-    public function issue_index(Request $request) {
+    public function view_all_hod_approved_requisitions(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
         $departments      = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -171,7 +172,7 @@ class RequisitionsController extends Controller
         $where['status'] = 1;
         $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-        return view('department_user.requisitions.issue_index', compact('departments','chargeable_accounts', 'results','user'));
+        return view('department_user.requisitions.view_all_hod_approved_requisitions', compact('departments','chargeable_accounts', 'results','user'));
     }
 
 
@@ -190,16 +191,16 @@ class RequisitionsController extends Controller
         }
     }
 
-    public function receive_index(Request $request) {
+    public function view_approved(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
         $departments            = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $where = [];
         $where['status'] = 1;
-        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+        $results = Requisition::where($where)->where('issued_by', '!=', NULL)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-        return view('department_user.requisitions.receive_index', compact('departments','chargeable_accounts', 'results','user'));
+        return view('department_user.requisitions.view_approved', compact('departments','chargeable_accounts', 'results','user'));
     }
 
 

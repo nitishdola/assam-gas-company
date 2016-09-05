@@ -16,7 +16,7 @@
 			</li>
 			<li class="has-sub">
 				<a href="javascript:;" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Measurement of Item</span>
+				<i class="fa fa-puzzle-piece" aria-hidden="true"></i> <span class="menu-text">Measurement of Item</span>
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
@@ -28,7 +28,7 @@
 
 			<li class="has-sub">
 				<a href="javascript:;" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Measurement of Salvage Item</span>
+				<i class="fa fa-cogs" aria-hidden="true"></i> <span class="menu-text">Measurement of Salvage Item</span>
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
@@ -47,40 +47,23 @@
 					</li>
 					<li><a class="" href="{{ route('requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
 					
-					 @if($user->is_hod == '1')
 					<li><a class="" href="{{ route('requisition.approve_index') }}"><span class="sub-menu-text">Approve Requisition</span></a></li>
-					@endif
 				</ul>
 			</li>
            
-          <!-- For issued by users -->
-        @if($user->designation_id == '3')
 			<li class="has-sub">
-				<a href="javascript:;" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Requisition Issue</span>
-				<span class="arrow"></span>
+				<a href="{{ route('requisitions.issue.view_all') }}" class="">
+				<i class="fa fa-newspaper-o"></i> <span class="menu-text">Issue Requisition</span>
 				</a>
-				<ul class="sub">
-					<li><a class="" href="{{ route('requisition.issue_index') }}"><span class="sub-menu-text">Issue By</span></a>
-					</li>
-					
-				</ul>
 			</li>
-			@endif
 
-		@if($user->designation_id == '4')
 			<li class="has-sub">
-				<a href="javascript:;" class="">
-				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">Received Condition</span>
-				<span class="arrow"></span>
+				<a href="{{ route('requisition.view_approved') }}" class="">
+				<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">View Approved Requisitions( Material Department )</span>
 				</a>
-				<ul class="sub">
-					<li><a class="" href="{{ route('requisition.Receivedindex') }}"><span class="sub-menu-text">Receive Condition</span></a>
-					</li>
-					
-				</ul>
 			</li>
-			@endif
+
+			
 		</ul>
 		<!-- /SIDEBAR MENU -->
 	</div>

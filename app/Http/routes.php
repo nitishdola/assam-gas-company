@@ -711,20 +711,20 @@ Route::group(['prefix'=>'requisition'], function() {
             'uses' => 'RequisitionsController@approveRequisition'
     ]);
 
-      Route::get('/requisition-issued-view', [
-        'as' => 'requisition.issue_index',
+      Route::get('/issue', [
+        'as' => 'requisitions.issue.view_all',
         'middleware' => ['department_user'],
-        'uses' => 'RequisitionsController@issue_index'
+        'uses' => 'RequisitionsController@view_all_hod_approved_requisitions'
     ]);
-      Route::get('/issue-requisition/{num}', [
+    Route::get('/issue/{num}', [
             'as' => 'requisition.issue',
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@issueRequisition'
     ]);
-    Route::get('/requisition-received-view', [
-        'as' => 'requisition.Receivedindex',
+    Route::get('/requisition/view-approved', [
+        'as' => 'requisition.view_approved',
         'middleware' => ['department_user'],
-        'uses' => 'RequisitionsController@receive_index'
+        'uses' => 'RequisitionsController@view_approved'
     ]);
       Route::get('/receive-requisition/{num}', [
             'as' => 'requisition.receive',

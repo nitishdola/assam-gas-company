@@ -432,25 +432,25 @@ Route::group(['prefix'=>'role'], function() {
     Route::get('/view-all', [
         'as' => 'role.index',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@index_role'
     ]);
 
     Route::get('/edit/{num}', [
         'as' => 'role.edit',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@edit'
+        'uses' => 'AdminController@edit_role'
     ]);
 
     Route::post('/update/{num}', [
         'as' => 'role.update',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@update'
+        'uses' => 'AdminController@update_role'
     ]);
 
     Route::get('/disable/{num}', [
         'as' => 'role.disable',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@disable'
+        'uses' => 'AdminController@disable_role'
     ]);
 });
 Route::group(['prefix'=>'permission'], function() {
@@ -466,28 +466,28 @@ Route::group(['prefix'=>'permission'], function() {
         'uses' => 'AdminController@store_permission'
     ]);
 
-    Route::get('/view-all', [
+   Route::get('/view-all', [
         'as' => 'permission.index',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@index_permission'
     ]);
 
     Route::get('/edit/{num}', [
         'as' => 'permission.edit',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@edit'
+        'uses' => 'AdminController@edit_permission'
     ]);
 
     Route::post('/update/{num}', [
         'as' => 'permission.update',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@update'
+        'uses' => 'AdminController@update_permission'
     ]);
 
     Route::get('/disable/{num}', [
         'as' => 'permission.disable',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@disable'
+        'uses' => 'AdminController@disable_permission'
     ]);
 });
 
@@ -504,10 +504,27 @@ Route::group(['prefix'=>'permission/assign/'], function() {
         'uses' => 'AdminController@store_permission_assigned'
     ]);
 
-    Route::get('/view-all', [
+     Route::get('/view-all', [
         'as' => 'assign_permission.index',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@index_assign_permission'
+    ]);
+     Route::get('/edit/{num}', [
+        'as' => 'assign_permission.edit',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@edit_assign_permission'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'assign_permission.update',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@update_assign_permission'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'assign_permission.disable',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@disable_assign_permission'
     ]);
 });
 
@@ -525,10 +542,10 @@ Route::group(['prefix'=>'assign_role'], function() {
         'uses' => 'AdminController@store_role_assigned'
     ]);
 
-    Route::get('/view-all', [
+     Route::get('/view-all', [
         'as' => 'assign_role.index',
         'middleware' => ['admin'],
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@index_assign_role'
     ]);
 });
 

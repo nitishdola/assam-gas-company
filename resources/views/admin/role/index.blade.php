@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title') All Account Users @stop
+@section('title') All Roles @stop
 
 @section('breadcumb') 
 <li>
@@ -7,25 +7,11 @@
 	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
 </li>
 
-<li>
-	<i class="fa fa-th"></i>
-	Accounts Users |<a class="btn btn-info" href="{{ route('account_users.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
-</li>
+
 
 @stop
 @section('content')
-<div class="col-lg-12">
-	<div class="widget-container fluid-height clearfix">
-		<div class="widget-content padded">
-			{!! Form::open(array('route' => 'role.index', 'id' => 'role.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
-			@include('admin.role._search_form')
-			{!! Form::label('', '', array('class' => 'col-md-2 control-label')) !!}
-		    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
 
-			{!!form::close()!!}
-		</div>
-	</div>
-</div>
 
 <div class="col-lg-12" style="margin-top:20px;">
 

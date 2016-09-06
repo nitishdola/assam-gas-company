@@ -257,6 +257,49 @@ class AdminController extends Controller
 
         return Redirect::route('role.create')->with('message', $message);
     }
+
+     public function index_role(Request $request) { 
+        $results = Role::orderBy('name', 'DESC')->paginate(20);
+        return view('admin.role.index', compact('results'));
+    }
+
+    public function edit_role( $id ) {
+        $id    = Crypt::decrypt($id);
+        $roles = Role::findOrFail($id);
+        return view('admin.role.edit', compact('roles'));
+    }
+
+    public function update_role( $id, Request $request) { 
+        $id = Crypt::decrypt($id); 
+        $rules = Role::$rules;
+        $rules['name']              = $rules['name'] . ',id,' . $id;
+        $validator = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+        $roles = Role::findOrFail($id);
+
+        $message = '';
+
+        $roles->fill($data);
+        if($roles->save()) {
+            $message .= 'Roll Information Updated Successfully !';
+        }else{
+            $message .= 'Unable to update  Roll Information !';
+        }
+
+        return Redirect::route('roll.index')->with('message', $message);
+    }
+
+    public function disable_role($id ) {
+        $id          = Crypt::decrypt($id); 
+        $message = '';
+        $roles = Role::findOrFail($id)->forceDelete();
+        $message .= 'Role Removed Successfully !';
+        
+
+        return Redirect::route('role.index')->with('message', $message);
+    } 
+
    
     public function create_permission() {
        
@@ -276,6 +319,48 @@ class AdminController extends Controller
 
         return Redirect::route('permission.create')->with('message', $message);
     }
+
+
+     public function index_permission(Request $request) { 
+        $results = Permission::orderBy('name', 'DESC')->paginate(20);
+        return view('admin.permission.index', compact('results'));
+       }
+
+     public function edit_permission( $id ) {
+        $id    = Crypt::decrypt($id);
+        $permissiones = Permission::findOrFail($id);
+        return view('admin.permission.edit', compact('permissiones'));
+    }
+
+    public function update_permission( $id, Request $request) { 
+        $id    = Crypt::decrypt($id); 
+        $rules = Permission::$rules;
+        $rules['name']  = $rules['name'] . ',id,' . $id;
+        $validator      = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+        $permissions = Permission::findOrFail($id);
+        $message = '';
+        $permissions->fill($data);
+        if($permissions->save()) {
+            $message .= 'permission Updated Successfully !';
+        }else{
+            $message .= 'Unable to update  permission !';
+        }
+        return Redirect::route('permission.index')->with('message', $message);
+    }
+
+     public function disable_permission($id ) {
+        $id          = Crypt::decrypt($id); 
+        $message = '';
+        $permissions = Permission::findOrFail($id)->forceDelete();
+        if($permissions>0) {
+            $message .= 'Permission Removed Successfully !';
+        }else{
+            $message .= 'Unable to Remove Permission !';
+        }
+        return Redirect::route('permission.index')->with('message', $message);
+    } 
 
     /***************assign permissions to roles************************/ 
 
@@ -300,6 +385,52 @@ class AdminController extends Controller
 
         return Redirect::route('assign_permission.create')->with('message', $message);
     }
+
+     public function index_assign_permission(Request $request) { 
+       /* $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $sections    = [''=> 'Select Permission'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();*/
+        $results = PermissionRole::with(['role', 'permission'])->paginate(20);
+        return view('admin.assign_permission.index', compact('results'));
+       }
+
+     public function edit_assign_permission( $id ) {
+
+        $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $permissions = [''=> 'Select Permission'] + Permission::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $id    = Crypt::decrypt($id);
+        dd($id);
+        $results = PermissionRole::findOrFail($id);
+        return view('admin.assign_permission.edit', compact('results','roles','permissions'));
+    }
+
+    public function update_assign_permission( $id, Request $request) { 
+        $id    = Crypt::decrypt($id); 
+        $rules = PermissionRole::$rules;
+        $rules['name']  = $rules['name'] . ',id,' . $id;
+        $validator      = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+        $permissions = PermissionRole::findOrFail($id);
+        $message = '';
+        $permissions->fill($data);
+        if($permissions->save()) {
+            $message .= 'permission Updated Successfully !';
+        }else{
+            $message .= 'Unable to update  permission !';
+        }
+        return Redirect::route('permission.index')->with('message', $message);
+    }
+
+     public function disable_assign_permission($id ) {
+        $id          = Crypt::decrypt($id); 
+        $message = '';
+        $permissions = PermissionRole::findOrFail($id)->forceDelete();
+        if($permissions>0) {
+            $message .= ' Assigned Permission Removed Successfully !';
+        }else{
+            $message .= 'Unable to Remove Assigned Permission !';
+        }
+        return Redirect::route('assign_permission.index')->with('message', $message);
+    } 
     
     /*************************assign role to users******************************/
 
@@ -324,4 +455,50 @@ class AdminController extends Controller
         $message .= 'Roled assigned successfully !';
         return Redirect::route('assign_role.create')->with('message', $message);
     }
+
+     public function index_assign_role(Request $request) { 
+       /* $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $sections    = [''=> 'Select Permission'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();*/
+        $results = RoleDepartmentUser::with(['role', 'department_users'])->paginate(20);
+        return view('admin.assign_role.index', compact('results'));
+       }
+
+     public function edit_assign_role( $id ) {
+
+        $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $department_users = [''=> 'Select a User'] + DepartmentUser::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $id  = Crypt::decrypt($id);
+        $results = RoleDepartmentUser::findOrFail($id);
+        return view('admin.assign_permission.edit', compact('results','roles','department_users'));
+    }
+
+    public function update_assigned_permission( $id, Request $request) { 
+        $id    = Crypt::decrypt($id); 
+        $rules = RoleDepartmentUser::$rules;
+        $rules['name']  = $rules['name'] . ',id,' . $id;
+        $validator      = Validator::make($data = $request->all(), $rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+        $results = RoleDepartmentUser::findOrFail($id);
+        $message = '';
+        $results->fill($data);
+        if($results->save()) {
+            $message .= ' Your Request is Successfully Updated !';
+        }else{
+            $message .= 'Unable to update  request !';
+        }
+        return Redirect::route('assign_role.index')->with('message', $message);
+    }
+
+
+     public function disable_assigned_permission($id ) {
+        $id      = Crypt::decrypt($id); 
+        $message = '';
+        $results = RoleDepartmentUser::findOrFail($id)->forceDelete();
+        if($results>0) {
+            $message .= ' Assigned Role Removed Successfully !';
+        }else{
+            $message .= 'Unable to Remove Assigned Role!';
+        }
+        return Redirect::route('assign_role.index')->with('message', $message);
+    } 
 }

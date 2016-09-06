@@ -1,5 +1,3 @@
-
-
 <div class="col-lg-6">
   <div class="form-group {{ $errors->has('username') ? 'has-error' : ''}}">
     {!! Form::label('name', 'Name', array('class' => 'col-md-3 control-label')) !!}
@@ -8,6 +6,5 @@
     </div>
     {!! $errors->first('name', '<span class="help-inline">:message</span>') !!}
   </div>
-
 </div>
 

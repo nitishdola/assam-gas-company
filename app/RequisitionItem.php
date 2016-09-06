@@ -20,6 +20,7 @@ class RequisitionItem extends Model
 
     ];
 
+    
     public function measurement_unit() 
     {
         return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');

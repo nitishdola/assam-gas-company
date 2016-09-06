@@ -281,7 +281,6 @@ class RequisitionsController extends Controller
         }else{
             $message .= 'Unable to received Requisition !';
         }
-
         return Redirect::route('requisition.view_approved')->with('message', $message);
     }
 }

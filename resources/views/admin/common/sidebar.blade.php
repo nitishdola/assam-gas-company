@@ -113,6 +113,51 @@
 				</ul>
 			</li>
 			
+			<!--Permission and roles-->
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-location-arrow"></i> <span class="menu-text">Role</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('role.create') }}"><span class="sub-menu-text">Add Role</span></a></li>
+					<li><a class="" href="{{ route('role.index') }}"><span class="sub-menu-text">View Role</span></a></li>
+
+				</ul>
+			</li>
+
+			 <li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-users"></i> <span class="menu-text">Permission</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('permission.create') }}"><span class="sub-menu-text">Add Permission</span></a></li>
+					<li><a class="" href="{{ route('permission.index') }}"><span class="sub-menu-text">View Permissions</span></a></li>
+                </ul>
+			</li>
+
+			 <li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-location-arrow"></i> <span class="menu-text">Assign Permissions</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('assign_permission.create') }}"><span class="sub-menu-text">Assign Permission</span></a></li>
+					<li><a class="" href="{{ route('assign_permission.index') }}"><span class="sub-menu-text">View Assigned Permission</span></a></li>
+                </ul>
+			</li>
+
+			  <li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-user"></i> <span class="menu-text">Assign Role </span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('assign_role.create') }}"><span class="sub-menu-text">Assign Role </span></a></li>
+					<li><a class="" href="{{ route('assign_role.index') }}"><span class="sub-menu-text">View Assigned Role</span></a></li>
+                </ul>
+			</li>
 		</ul>
 		<!-- /SIDEBAR MENU -->
 	</div>

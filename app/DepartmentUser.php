@@ -18,7 +18,7 @@ class DepartmentUser extends Authenticatable
         'section_id'        =>  'required|exists:sections,id',
         'department_id'     =>  'required|exists:departments,id',
         'designation_id'    =>  'required|exists:designations,id',
-        'is_hod'            =>  'required|in:1,0',
+        //'is_hod'            =>  'required|in:1,0',
         //'password'          =>  'required|min:3',
     ];
 

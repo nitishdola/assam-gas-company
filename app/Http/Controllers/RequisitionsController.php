@@ -132,19 +132,25 @@ class RequisitionsController extends Controller
 
    //requisition approve process by hod of the departments
     public function view_all_requisitions(Request $request) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
-        $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        if($this->_department_user->can(['requisition_check_user'])) {
+            $username = Auth::guard('department_user')->user()->username;
+            $user     = DepartmentUser::where('username', $username)->first();
+            $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+            $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-        $where = [];
-       
-        $where['hod']    = NULL;
-        $where['status'] = 1;
-      
-        $results = Requisition::where($where)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+            $where = [];
+           
+            $where['hod']    = NULL;
+            $where['status'] = 1;
+          
+            $results = Requisition::where($where)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-        return view('department_user.requisitions.approve_requisitions', compact('departments','chargeable_accounts', 'results','user'));
+            return view('department_user.requisitions.approve_requisitions', compact('departments','chargeable_accounts', 'results','user'));
+        }else{
+            $message = '';
+            $message .= 'Unauthorize Aceess !';
+            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        }
     }
 
     public function approveRequisition($id)
@@ -270,17 +276,23 @@ class RequisitionsController extends Controller
     }
 
     public function receiveRequisition( $id ) {
-        $id       = Crypt::decrypt($id);
-        $info     = Requisition::findOrFail($id);
-        $info->receive_date = date('Y-m-d H:i:s');
-        
-        $message = '';
+        if($this->_department_user->can(['receive_requisition'])) {  
+            $id       = Crypt::decrypt($id);
+            $info     = Requisition::findOrFail($id);
+            $info->receive_date = date('Y-m-d H:i:s');
+            
+            $message = '';
 
-        if($info->save()) {
-            $message .= 'Requisition received successfully !';
+            if($info->save()) {
+                $message .= 'Requisition received successfully !';
+            }else{
+                $message .= 'Unable to received Requisition !';
+            }
+            return Redirect::route('requisition.view_approved')->with('message', $message);
         }else{
-            $message .= 'Unable to received Requisition !';
+            $message = '';
+            $message .= 'Unauthorize Aceess !';
+            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
         }
-        return Redirect::route('requisition.view_approved')->with('message', $message);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser;
+use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser,App\Role,App\Permission,App\PermissionRole,App\RoleDepartmentUser;
 
 class AdminController extends Controller
 {
@@ -14,7 +14,6 @@ class AdminController extends Controller
     }
 
     public function index(){
-    	// return Auth::guard('admin')->user();
         $total_department   = Department::count();
         $total_designation  = Designation::count();
         $total_section      = Section::count();
@@ -206,7 +205,7 @@ class AdminController extends Controller
        } 
 
 
-       //******************Overview of Requisition Process....view,download***************//
+    //******************Overview of Requisition Process....view,download***************//
        
     public function requisition_index(Request $request) {
        
@@ -238,5 +237,91 @@ class AdminController extends Controller
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account','department_user')->first();
         $requisition_items  = RequisitionItem::where('requisition_id', $id)->get();
         return view('admin.requisitions.view',compact('info','requisition_items'));
+    }
+
+    /*********************Creation of Role & Permission*******************/
+    public function create_role() {
+        return view('admin.role.create');
+    }
+
+    public function store_role(Request $request) {
+        $validator = Validator::make($data = $request->all(), Role::$rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+        
+        $message = '';
+        if(Role::create($data)) {
+            $message .= 'Role added successfully !';
+        }else{
+            $message .= 'Unable to add role!';
+        }
+
+        return Redirect::route('role.create')->with('message', $message);
+    }
+   
+    public function create_permission() {
+       
+        return view('admin.permission.create');
+    }
+
+    public function store_permission(Request $request) {
+        $validator = Validator::make($data = $request->all(), Permission::$rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+        
+        $message = '';
+        if(Permission::create($data)) {
+            $message .= 'Permission added successfully !';
+        }else{
+            $message .= 'Unable to add Permission !';
+        }
+
+        return Redirect::route('permission.create')->with('message', $message);
+    }
+
+    /***************assign permissions to roles************************/ 
+
+    public function assign_permission() {
+
+        $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('display_name', 'id')->toArray();
+        $permissions = [''=> 'Select Permission'] + Permission::orderBy('name', 'DESC')->lists('display_name', 'id')->toArray();
+
+        return view('admin.assign_permission.create',compact('roles','permissions'));
+    }
+
+    public function store_permission_assigned(Request $request) {
+        $validator = Validator::make($data = $request->all(), PermissionRole::$rules);
+        if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+        
+        $message = '';
+        if(PermissionRole::create($data)) {
+            $message .= 'Permission assigned successfully !';
+        }else{
+            $message .= 'Unable to assigned Permission !';
+        }
+
+        return Redirect::route('assign_permission.create')->with('message', $message);
+    }
+    
+    /*************************assign role to users******************************/
+
+    public function assign_role() {
+        $department_users = [''=> 'Select a User'] + DepartmentUser::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+        $roles =  Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        
+        return view('admin.assign_role.create',compact('roles','department_users'));
+    }
+
+    public function store_role_assigned(Request $request) {
+
+       foreach ($request->roles as $role){
+            $data['department_user_id'] = $request->department_user_id;
+            $data['role_id'] = $role;
+            $validator = Validator::make($data, RoleDepartmentUser::$rules);
+            if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+                RoleDepartmentUser::create($data);
+            } 
+        $message = '';
+        $message .= 'Roled assigned successfully !';
+        return Redirect::route('assign_role.create')->with('message', $message);
     }
 }

@@ -416,6 +416,122 @@ Route::group(['prefix'=>'admin_requisition'], function() {
     ]);
 });
 
+Route::group(['prefix'=>'role'], function() {
+    Route::get('/create', [
+        'as' => 'role.create',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@create_role'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'role.store',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@store_role'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'role.index',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'role.edit',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'role.update',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'role.disable',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@disable'
+    ]);
+});
+Route::group(['prefix'=>'permission'], function() {
+    Route::get('/create', [
+        'as' => 'permission.create',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@create_permission'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'permission.store',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@store_permission'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'permission.index',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@index'
+    ]);
+
+    Route::get('/edit/{num}', [
+        'as' => 'permission.edit',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@edit'
+    ]);
+
+    Route::post('/update/{num}', [
+        'as' => 'permission.update',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@update'
+    ]);
+
+    Route::get('/disable/{num}', [
+        'as' => 'permission.disable',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@disable'
+    ]);
+});
+
+Route::group(['prefix'=>'permission/assign/'], function() {
+    Route::get('/add', [
+        'as' => 'assign_permission.create',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@assign_permission'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'assign_permission.store',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@store_permission_assigned'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'assign_permission.index',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@index'
+    ]);
+});
+
+
+Route::group(['prefix'=>'assign_role'], function() {
+    Route::get('/create', [
+        'as' => 'assign_role.create',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@assign_role'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'assign_role.store',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@store_role_assigned'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'assign_role.index',
+        'middleware' => ['admin'],
+        'uses' => 'AdminController@index'
+    ]);
+});
+
 Route::group(['prefix'=>'download'], function() {
 
      Route::get('/department-download', [

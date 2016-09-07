@@ -44,7 +44,7 @@ Received Condition
 			            <td> {{ $v->department_user['name']}} </td>
 			            <td> {{ date('d-m-Y h:i A', strtotime($v->hod_approve_date)) }} </td>
 			            <td>
-						 <a onclick="return confirm('Are you sure you want to receive this requisition ?');" href="{{ route('requisition.receive', Crypt::encrypt($v->id) ) }}" class="btn btn-danger" title="Receive"><i class="fa fa-check-square" aria-hidden="true"></i>Receive</a>
+						 <a onclick="return confirm('Are you sure you want to receive this requisition ?');" href="{{ route('requisition.receive', Crypt::encrypt($v->id) ) }}" class="btn btn-danger" title="Receive">View/Issue/Create Tender</a>
 						</td>
 			        </tr>
 			        @endforeach

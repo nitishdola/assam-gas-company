@@ -268,28 +268,30 @@ class RequisitionsController extends Controller
         $user     = DepartmentUser::where('username', $username)->first();
         $id       = Crypt::decrypt($id);
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'measurement_item'])->get(); dump($requisition_items);
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'measurement_item'])->get();// dump($requisition_items);
         return view('department_user.requisitions.view',compact('info','requisition_items','user'));
     }
 
     public function receiveRequisition( $id ) {
         if($this->_department_user->can(['receive_requisition'])) {  
             $id       = Crypt::decrypt($id);
-            $info     = Requisition::findOrFail($id);
-            $info->receive_date = date('Y-m-d H:i:s');
-            
-            $message = '';
-
-            if($info->save()) {
-                $message .= 'Requisition received successfully !';
-            }else{
-                $message .= 'Unable to received Requisition !';
-            }
+            $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
+            $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'measurement_item'])->get();
+                return view('department_user.requisitions.receive',compact('info','requisition_items','user'));
             return Redirect::route('requisition.view_approved')->with('message', $message);
         }else{
             $message = '';
             $message .= 'Unauthorize Aceess !';
             return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
         }
+    }
+
+    public function requisition_issue_view( $requisition_id = NULL, $item_id = NULL) {
+        $requisition_id = Crypt::decrypt($requisition_id);
+        $item_id        = Crypt::decrypt($item_id);
+
+        $requisition    = Requisition::findOrFail($requisition_id);
+        $item           = ItemMeasurement::findOrFail($item_id);
+        return view('department_user.requisitions.requisition_issue_view',compact('item', 'requisition'));
     }
 }

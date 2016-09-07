@@ -20,7 +20,7 @@ class AdminController extends Controller
         $total_rack         = Rack::count();
         $total_location     = Location::count();
         $total_department_user = DepartmentUser::count();
-        $total_account_user  = AccountsUser::count();
+        $total_account_user = AccountsUser::count();
     	return view('admin.dashboard',compact('total_rack','total_location','total_section','total_designation','total_department','total_section','total_account_user','total_department_user'));
     }
 
@@ -291,13 +291,17 @@ class AdminController extends Controller
     }
 
     public function disable_role($id ) {
-        $id          = Crypt::decrypt($id); 
-        $message = '';
-        $roles = Role::findOrFail($id)->forceDelete();
-        $message .= 'Role Removed Successfully !';
-        
+        $id      = Crypt::decrypt($id); 
+        $roles   = Role::findOrFail($id);
 
-        return Redirect::route('role.index')->with('message', $message);
+        $message = '';
+        if($roles->delete()){
+
+            $message .= 'Role Deleted Successfully !';
+        }else{
+            $message .= 'Unable to Delete Role!';
+        }
+         return Redirect::route('role.index')->with('message', $message);
     } 
 
    
@@ -312,7 +316,7 @@ class AdminController extends Controller
         
         $message = '';
         if(Permission::create($data)) {
-            $message .= 'Permission added successfully !';
+            $message .= 'Permission added Successfully !';
         }else{
             $message .= 'Unable to add Permission !';
         }
@@ -443,18 +447,25 @@ class AdminController extends Controller
     }
 
     public function store_role_assigned(Request $request) {
-
-       foreach ($request->roles as $role){
+            foreach ($request->roles as $role){
             $data['department_user_id'] = $request->department_user_id;
             $data['role_id'] = $role;
-            $validator = Validator::make($data, RoleDepartmentUser::$rules);
-            if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+            $results = RoleDepartmentUser::where('department_user_id', '=', $data['department_user_id'])->where('role_id', '=', $data['role_id'])->first();
+            if ($results === null) {
+                $validator = Validator::make($data, RoleDepartmentUser::$rules);
+                if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
                 RoleDepartmentUser::create($data);
-            } 
-        $message = '';
-        $message .= 'Roled assigned successfully !';
-        return Redirect::route('assign_role.create')->with('message', $message);
-    }
+                 $message = '';
+                    $message .= 'Your Request is Successfully Updated ';
+                    return Redirect::route('assign_role.create')->with('message', $message);
+                }else{
+                    $message = '';
+                    $message .= 'Oops..Role already assigned !';
+                    return Redirect::route('assign_role.create')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+                   
+                     }
+               } 
+        }
 
      public function index_assign_role(Request $request) { 
        /* $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();

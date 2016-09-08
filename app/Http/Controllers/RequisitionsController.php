@@ -286,12 +286,36 @@ class RequisitionsController extends Controller
         }
     }
 
-    public function requisition_issue_view( $requisition_id = NULL, $item_id = NULL) {
+    public function requisition_issue_view( $requisition_id = NULL, $requisition_item_id = NULL) {
         $requisition_id = Crypt::decrypt($requisition_id);
-        $item_id        = Crypt::decrypt($item_id);
+        $requisition_item_id = Crypt::decrypt($requisition_item_id);
+
+        $requisition_item = RequisitionItem::findOrFail($requisition_item_id );
+        $item_measurement_id = $requisition_item->item_measurement_id;
 
         $requisition    = Requisition::findOrFail($requisition_id);
-        $item           = ItemMeasurement::findOrFail($item_id);
-        return view('department_user.requisitions.requisition_issue_view',compact('item', 'requisition'));
+        $item           = ItemMeasurement::where(['id' => $item_measurement_id])->with(['item_group', 'item_sub_group', 'measurement_unit', 'location', 'rack'])->first();
+        return view('department_user.requisitions.requisition_issue_view',compact('item', 'requisition', 'requisition_item'));
+    }
+
+    public function requisition_issue(Request $request) {
+        $requisition_item_id = $request->requisition_item_id;
+        $requisition_item = RequisitionItem::findOrFail($requisition_item_id );
+        $data = $request->all();
+        
+        $data['issued_by']      = Auth::guard('department_user')->user()->id;
+        $data['issued_date']    = date('Y-m-d');
+        
+        $requisition_item->fill($data); dd($data);
+        if($requisition_item->save()) {
+            $message = '';
+            $message .= 'Successfully Issued !';
+            return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-success']);    
+        }else{
+            $message = '';
+            $message .= 'Issue was not successfull !';
+            return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        }
+        
     }
 }

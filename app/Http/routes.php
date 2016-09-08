@@ -861,6 +861,12 @@ Route::group(['prefix'=>'requisition'], function() {
         'uses' => 'RequisitionsController@requisition_issue_view'
     ]);
 
+    Route::post('/issue', [
+        'as' => 'requisition.issue',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@requisition_issue'
+    ]);
+
 });
 
 Route::group(['prefix'=>'measurement-of-item'], function() {

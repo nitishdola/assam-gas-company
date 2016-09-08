@@ -107,7 +107,7 @@ span.step {
           	
 			<div class="col-md-12">
 				<h4>Stock in Hand : <strong>{{$v->measurement_item['stock_in_hand']}}</strong> </h4>
-				<a class="btn btn-success" href=" {{ route('requisition.issue.view', [Crypt::encrypt($info->id), Crypt::encrypt($v->measurement_item['id'])]) }}"> <i class="fa fa-check-square-o" aria-hidden="true"></i> ISSUE ITEM </a>
+				<a class="btn btn-success" href=" {{ route('requisition.issue.view', [Crypt::encrypt($info->id), Crypt::encrypt($v->id)]) }}"> <i class="fa fa-check-square-o" aria-hidden="true"></i> ISSUE ITEM </a>
 				<a class="btn btn-info"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> CREATE NIT </a>
 				<a class="btn btn-danger"> <i class="fa fa-arrows-alt" aria-hidden="true"></i> REJECT </a>
 			</div>	

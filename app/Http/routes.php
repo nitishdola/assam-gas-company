@@ -869,6 +869,16 @@ Route::group(['prefix'=>'requisition'], function() {
 
 });
 
+//Tender Management
+
+Route::group(['prefix'=>'nit'], function() {
+    Route::get('/create', [
+        'as' => 'nit.create',
+        'middleware' => ['department_user'],
+        'uses' => 'NitsController@create'
+    ]);
+});
+
 Route::group(['prefix'=>'measurement-of-item'], function() {
     Route::get('/create', [
         'as' => 'item_measurement.create',

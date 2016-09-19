@@ -43,8 +43,6 @@ class RequisitionsController extends Controller
                 if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
                 $data['department_id']  = Auth::guard('department_user')->user()->department_id;
                 $data['raised_by']     = Auth::guard('department_user')->user()->id;
-                // $data['issued_date']     = Auth::guard('department_user')->user()->id;
-                // $data['raised_by']       = Auth::guard('department_user')->user()->id;
                 $requisition = Requisition::create( $data );
             }catch(ValidationException $e)
             {
@@ -315,7 +313,6 @@ class RequisitionsController extends Controller
             $message = '';
             $message .= 'Issue was not successfull !';
             return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        }
-        
+        }       
     }
 }

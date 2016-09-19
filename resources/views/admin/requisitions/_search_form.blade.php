@@ -32,7 +32,7 @@
  <div class="form-group {{ $errors->has('Approval') ? 'has-error' : ''}}">
   {!! Form::label('Approval', '', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
-    {!!Form::select('Approval', array('1' => 'Approved', 'NULL' => 'Not Approved')) !!}
+    {!!Form::select('Approval',  array('1' => 'Approved', 'NULL' => 'Not Approved'), 1, ['class' => 'form-control']) !!}
   </div>
   {!! $errors->first('Approval', '<span class="help-inline">:message</span>') !!}
 </div>

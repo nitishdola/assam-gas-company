@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title') Permission@stop
+@section('title') Permission @stop
 
 @section('breadcumb') 
 <li>
@@ -7,12 +7,8 @@
 	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
 </li>
 
-
-
 @stop
 @section('content')
-
-
 <div class="col-lg-12" style="margin-top:20px;">
 
 	<div class="widget-container fluid-height clearfix">

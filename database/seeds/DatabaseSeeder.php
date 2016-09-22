@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
 
          DB::table('admins')->insert(['username' => 'admin', 'password' => bcrypt('mmsAdmin#')]);
 
-         DB::table('admins')->insert(['username' => 'admin', 'password' => bcrypt('mmsAdmin#')]);
-
 
         $this->command->info('Admin Added !');
         // $faker = Faker::create();

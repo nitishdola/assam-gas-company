@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('login_name') AGCL Accounts @stop
 @section('content')
 <div class="col-md-6 col-md-offset-3">
     <div class="login-box-plain">

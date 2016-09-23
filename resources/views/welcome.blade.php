@@ -1,55 +1,40 @@
-@extends('layouts.app')
-
+@extends('layouts.auth')
+@section('login_name') AGCL Department @stop
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Department Login</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/department/login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Username</label>
-
-                            <div class="col-md-6">
-                                <input type="username" class="form-control" name="username" value="{{ old('username') }}">
-
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="col-md-6 col-md-offset-3">
+    <div class="login-box-plain">
+        <h2 class="bigintro">Login as Department</h2>
+        <div class="divide-40"></div>
+        <form role="form" method="POST" action="{{ url('/user/department/login') }}">
+        {{ csrf_field() }}
+          <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <i class="fa fa-user"></i>
+            <input type="username" class="form-control" name="username" value="{{ old('username') }}">
+          </div>
+          <div class="form-group"> 
+            <label for="exampleInputPassword1">Password</label>
+            <i class="fa fa-lock"></i>
+            <input type="password" class="form-control" name="password">
+          </div>
+          <div class="form-actions">
+            
+            <button type="submit" class="btn btn-danger">Login</button>
+          </div>
+        </form>
+        <!-- SOCIAL LOGIN -->
+        <div class="divide-20"></div>
+        <div class="center">
+            <strong>Or login as</strong>
+        </div>
+        <div class="divide-20"></div>
+        <div class=" center">
+            <a class="btn btn-primary btn-lg" href="{{ url('/admin/login') }}">
+                Admin
+            </a>
+            <a class="btn btn-info btn-lg" href="{{ url('/user/accounts/login') }}">
+                Account User
+            </a>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
 			<div class="navbar-brand">
 				<!-- COMPANY LOGO -->
 				<a href=" {{ route('admin.dashboard') }}">
-					<img src="{{ asset('assets/img/logo/assam-gas-company-logo.JPG') }}" alt="Assam Gas Company Logo" class="img-responsive" height="30" width="180">
+					<img src="{{ asset('public/assets/img/logo/assam-gas-company-logo.JPG') }}" alt="Assam Gas Company Logo" class="img-responsive" height="30" width="180">
 				</a>
 				<!-- /COMPANY LOGO -->
 				<!-- TEAM STATUS FOR MOBILE -->

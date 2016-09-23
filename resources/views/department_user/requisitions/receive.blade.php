@@ -46,6 +46,12 @@ span.step {
     <hr class="style13">
     <div class="row">
       <div class="col-md-6">
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6"><i class="fa fa-gg"></i><b> Department</b> </div>
+          <div class="col-md-6"> {{$info->department['name']}}</div>
+        </div>
+
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Requisition Number</b> </div>
           <div class="col-md-6"> {{$info->requisition_number}}</div>
@@ -55,19 +61,19 @@ span.step {
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Department</b> </div>
           <div class="col-md-6"> {{$info->department['name']}}</div>
         </div>
-
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i> <b>Job Number </b></div>
           <div class="col-md-6">{{$info->job_number}} </div>
         </div>
+        
+      </div>
 
+      <div class="col-md-6">
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b>Nature of Work</b> </div>
           <div class="col-md-6">{{$info->nature_of_work}} </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
         <div class="col-md-12 item-field">
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Chargeable Account</b> </div>
           <div class="col-md-6 no-padding">{{$info->chargeable_account['name']}} </div>
@@ -77,6 +83,10 @@ span.step {
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Financial Year </b></div>
           <div class="col-md-6 no-padding">{{$info->financial_year}} </div>
         </div>
+      </div>
+
+      <div class="col-md-4 col-md-offset-4">
+          <a href="{{ route('purchase_indent.create', Crypt::encrypt($info->id)) }}" class="btn btn-info"><i class="fa fa-paper-plane" aria-hidden="true"></i>MAKE MATERIAL PURCHASE INDENT</a>
       </div>
     </div>
   </div>
@@ -100,15 +110,15 @@ span.step {
 
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Measurement</b> </div>
-          <div class="col-md-6"> {{$v->measurement_item['item_name']}}</div>
+          <div class="col-md-6"> {{$v->item_measurement['item_name']}}</div>
         </div>
         <div class="col-md-3">&nbsp;</div>
         <div class="col-md-9"> 
           	
 			<div class="col-md-12">
-				<h4>Stock in Hand : <strong>{{$v->measurement_item['stock_in_hand']}}</strong> </h4>
+				<h4>Stock in Hand : <strong>{{$v->item_measurement['stock_in_hand']}}</strong> </h4>
 				<a class="btn btn-success" href=" {{ route('requisition.issue.view', [Crypt::encrypt($info->id), Crypt::encrypt($v->id)]) }}"> <i class="fa fa-check-square-o" aria-hidden="true"></i> ISSUE ITEM </a>
-				<a class="btn btn-info"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> CREATE NIT </a>
+				<!-- <a class="btn btn-info"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> CREATE NIT </a> -->
 				<a class="btn btn-danger"> <i class="fa fa-arrows-alt" aria-hidden="true"></i> REJECT </a>
 			</div>	
         </div>

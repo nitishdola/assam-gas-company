@@ -51,6 +51,18 @@
 
 			<li class="has-sub">
 				<a href="javascript:;" class="">
+				<i class="fa fa-arrows"></i> <span class="menu-text">Measurement Unit</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('measurement_unit.create') }}"><span class="sub-menu-text">Add Measurement Unit</span></a></li>
+					
+					<li><a class="" href="{{ route('measurement_unit.index') }}"><span class="sub-menu-text">View All Item Sub Group</span></a></li>
+				</ul>
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
 				<i class="fa fa-location-arrow"></i> <span class="menu-text">Location</span>
 				<span class="arrow"></span>
 				</a>

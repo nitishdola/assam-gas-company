@@ -25,7 +25,7 @@ class RequisitionItem extends Model
     {
         return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');
     }
-    public function measurement_item() 
+    public function item_measurement() 
     {
         return $this->belongsTo('App\ItemMeasurement', 'item_measurement_id');
     }

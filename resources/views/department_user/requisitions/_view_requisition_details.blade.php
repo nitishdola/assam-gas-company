@@ -98,12 +98,12 @@ span.step {
 
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Measurement</b> </div>
-          <div class="col-md-6"> {{$v->measurement_item['item_name']}}</div>
+          <div class="col-md-6"> {{$v->item_measurement['item_name']}}</div>
         </div>
 
         <div class="col-md-3">&nbsp;</div>
         <div class="col-md-9"> 
-          <h4>Stock in Hand : {{$v->measurement_item['stock_in_hand']}} </h4>
+          <h4>Stock in Hand : {{$v->item_measurement['stock_in_hand']}} </h4>
         </div>
       </div>
 

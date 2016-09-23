@@ -869,6 +869,28 @@ Route::group(['prefix'=>'requisition'], function() {
 
 });
 
+//Purchase Indent
+Route::group(['prefix'=>'purchase-indent'], function() {
+    Route::get('/create/{num}', [
+        'as' => 'purchase_indent.create',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'purchase_indent.store',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'purchase_indent.index',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@index'
+    ]);
+});
+
+
 //Tender Management
 
 Route::group(['prefix'=>'nit'], function() {

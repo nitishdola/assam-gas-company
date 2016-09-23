@@ -79,7 +79,7 @@ class ItemMeasurementsController extends Controller
         $measurement_units = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $locations  = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $racks      = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
-       $results     = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
+       $results     = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location', 'rack', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
 		return view('department_user.item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results','user'));
 	}
 

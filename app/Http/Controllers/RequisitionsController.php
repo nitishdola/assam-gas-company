@@ -266,7 +266,7 @@ class RequisitionsController extends Controller
         $user     = DepartmentUser::where('username', $username)->first();
         $id       = Crypt::decrypt($id);
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'measurement_item'])->get();// dump($requisition_items);
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'item_measurement'])->get();// dump($requisition_items);
         return view('department_user.requisitions.view',compact('info','requisition_items','user'));
     }
 
@@ -274,7 +274,7 @@ class RequisitionsController extends Controller
         if($this->_department_user->can(['receive_requisition'])) {  
             $id       = Crypt::decrypt($id);
             $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-            $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'measurement_item'])->get();
+            $requisition_items  = RequisitionItem::where('requisition_id', $id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->with(['measurement_unit', 'item_measurement'])->where('status',1)->get();
                 return view('department_user.requisitions.receive',compact('info','requisition_items','user'));
             return Redirect::route('requisition.view_approved')->with('message', $message);
         }else{
@@ -299,12 +299,12 @@ class RequisitionsController extends Controller
     public function requisition_issue(Request $request) {
         $requisition_item_id = $request->requisition_item_id;
         $requisition_item = RequisitionItem::findOrFail($requisition_item_id );
-        $data = $request->all();
-        
-        $data['issued_by']      = Auth::guard('department_user')->user()->id;
-        $data['issued_date']    = date('Y-m-d');
-        
-        $requisition_item->fill($data); dd($data);
+
+        $requisition_item->quantity_issued  = $request->quantity_issued;
+        $requisition_item->remarks          = $request->remarks;
+        $requisition_item->issued_by        = Auth::guard('department_user')->user()->id;
+        $requisition_item->issued_date      = date('Y-m-d');
+    
         if($requisition_item->save()) {
             $message = '';
             $message .= 'Successfully Issued !';

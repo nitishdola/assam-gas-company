@@ -13,12 +13,12 @@ class PurchaseIndent extends Model
     public static $rules = [
     	'requisition_id' 		=>  'required|exists:requisitions,id',
     	'purchase_indent_number'=>  'required',
-    	'purchase_indent_date' 	=>  'required|date_format:d-m-Y',
+    	'purchase_indent_date' 	=>  'required|date_format:Y-m-d',
     	'reference_number' 		=>  'required',
-    	'reference_date' 		=>  'required|date_format:d-m-Y',
+    	'reference_date' 		=>  'required|date_format:Y-m-d',
     	'budget_head_id' 		=>  'required|exists:budget_heads,id',
     	'created_by' 			=>  'required|exists:department_users,id',
-    	'created_on' 			=>  'required|date_format:d-m-Y',
+    	'created_on' 			=>  'required|date_format:Y-m-d',
     	'justification_of_the_purchase' 		=>  'required|min:7',
     ];
 

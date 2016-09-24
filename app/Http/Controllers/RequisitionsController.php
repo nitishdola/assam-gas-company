@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB, Validator, Redirect, Auth, Crypt;
-use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit, App\Department,App\DepartmentUser;
+use App\Requisition, App\RequisitionItem, App\ChargeableAccount, App\ItemMeasurement, App\MeasurementUnit, App\Department,App\DepartmentUser,App\PurchaseIndent;
 
 class RequisitionsController extends Controller
 {
@@ -173,6 +173,11 @@ class RequisitionsController extends Controller
         $where = [];
         $where['status'] = 1;
         $results = Requisition::where($where)->where('hod', '!=', NULL)->where('receive_date', NULL)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
+
+        foreach($results as $k => $v) {
+            $check_if_indent_prepared = PurchaseIndent::where('requisition_id', $v->id)->count();
+            if($check_if_indent_prepared) unset($results[$k]);
+        }
 
         return view('department_user.requisitions.view_approved', compact('departments','chargeable_accounts', 'results','user'));
     }

@@ -28,7 +28,6 @@ Received Condition
 			            <th> Requisition Number </th>
 			            <th> Job Number </th>
 			            <th> Nature of Work </th>
-			            <th> HOD </th>
 			            <th> Approve Date </th>
 			            <th> Actions </th>
 			        </tr>
@@ -41,10 +40,9 @@ Received Condition
 			            <td> {{ $v->requisition_number }} </td>
 			            <td class="hidden-xs"> {{ $v->job_number }} </td>
 			            <td> {{ $v->nature_of_work }} </td>
-			            <td> {{ $v->department_user['name']}} </td>
 			            <td> {{ date('d-m-Y h:i A', strtotime($v->hod_approve_date)) }} </td>
 			            <td>
-						 <a onclick="return confirm('Are you sure you want to receive this requisition ?');" href="{{ route('requisition.receive', Crypt::encrypt($v->id) ) }}" class="btn btn-danger" title="Receive">View/Issue/Create Tender</a>
+						 <a onclick="return confirm('Are you sure you want to receive this requisition ?');" href="{{ route('requisition.receive', Crypt::encrypt($v->id) ) }}" class="btn btn-danger" title="Receive">View/Issue/Make Purchase Indent</a>
 						</td>
 			        </tr>
 			        @endforeach

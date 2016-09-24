@@ -31,9 +31,9 @@
 </div>
 
 <div class="form-group {{ $errors->has('budget_head_id') ? 'has-error' : ''}}">
-  {!! Form::label('budget_head_id', 'Budget Head', array('class' => 'col-md-3 control-label')) !!}
+  {!! Form::label('budget_head_id', 'Budget Head', array('class' => ' required col-md-3 control-label')) !!}
   <div class="col-md-9">
-    {!! Form::select('budget_head_id', $budget_heads, null, ['class' => 'select2 col-md-12', 'id' => 'budget_head_id', 'placeholder' => 'Select Budget Head', 'autocomplete' => 'off']) !!}
+    {!! Form::select('budget_head_id', $budget_heads, null, ['class' => 'select2 col-md-12', 'id' => 'budget_head_id', 'placeholder' => 'Select Budget Head',  'autocomplete' => 'off']) !!}
   </div>
   {!! $errors->first('budget_head_id', '<span class="help-inline">:message</span>') !!}
 </div>

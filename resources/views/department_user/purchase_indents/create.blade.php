@@ -30,7 +30,7 @@
 			        @foreach($requisition_items as $k => $v)
 			        <input type="hidden" name="requisition_item_ids[]" value="{{ $v->id }}">
 			        @endforeach
-
+			        <input type="hidden" name="requisition_id" value="{{ $requisition_id }} ">
 			        <div class="col-md-12"> 
 			        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}
 			        	{!! Form:: submit('Submit', ['class' => 'btn btn-success']) !!}
@@ -38,7 +38,7 @@
 			    {!!form::close()!!}
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-4" style="height: 500px; overflow: scroll;">
 				<h3> Description of Goods </h3>
 				<ul>
 					@foreach($requisition_items as $k => $v)

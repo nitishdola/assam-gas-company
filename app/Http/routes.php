@@ -850,9 +850,9 @@ Route::group(['prefix'=>'requisition'], function() {
         'uses' => 'RequisitionsController@view_approved'
     ]);
     Route::get('/receive/{num}', [
-            'as' => 'requisition.receive',
-            'middleware' => ['department_user'],
-            'uses' => 'RequisitionsController@receiveRequisition'
+        'as' => 'requisition.receive',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@receiveRequisition'
     ]);
 
     Route::get('/issue/view/{requisition_id}/{item_id}', [
@@ -887,6 +887,12 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'as' => 'purchase_indent.index',
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@index'
+    ]);
+
+    Route::get('/details/{num}', [
+        'as' => 'purchase_indent.details',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@details'
     ]);
 });
 

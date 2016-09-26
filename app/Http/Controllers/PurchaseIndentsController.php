@@ -69,7 +69,7 @@ class PurchaseIndentsController extends Controller
             // Commit the queries!
             DB::commit();
             $message .= 'Indent successfully generated !';
-            return Redirect::route('purchase_indent.create')->with('message', $message);
+            return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
         //}
     }
 
@@ -81,9 +81,35 @@ class PurchaseIndentsController extends Controller
 
     public function details($id = null) {
         $id = Crypt::decrypt($id);
-        $info = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department', 'requisition.chargeable_account'])->whereId($id)->first();
+        $info = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department', 'requisition.chargeable_account', 'requisition.department_user'])->whereId($id)->first();
 
-        $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $id)->get();
+        $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $id)->with('purchase_indent', 'requisition_item')->get();
         return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items'));
+    }
+
+    public function check($id = null) {
+        $id = Crypt::decrypt($id);
+        $info = PurchaseIndent::findOrFail($id);
+
+        $info->checked_by = Auth::guard('department_user')->user()->id;
+        $info->checked_on = date('Y-m-d');
+
+        $info->save();
+
+        $message .= 'Indent is checked by user '.Auth::guard('department_user')->user()->username;
+            return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
+    }
+
+    public function approve($id = null) {
+        $id = Crypt::decrypt($id);
+        $info = PurchaseIndent::findOrFail($id);
+
+        $info->approval_hod_id      = Auth::guard('department_user')->user()->id;
+        $info->approval_hod_date    = date('Y-m-d');
+
+        $info->save();
+
+        $message .= 'Indent is checked by user '.Auth::guard('department_user')->user()->username;
+            return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
     }
 }

@@ -39,8 +39,49 @@ span.step {
 </style>
 
 <div class="box box-primary">
+
   <div class="box-body item-view">
-    <h3>Purchase Indent</h3>
+    <h3>Purchase Indent Details</h3>
+    <hr class="style13">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-12 item-field">
+          <div class="col-md-6"><i class="fa fa-gg"></i><b> Purchase Indent Number</b> </div>
+          <div class="col-md-6"> {{$info->purchase_indent_number}}</div>
+        </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6"><i class="fa fa-gg"></i><b> Purchase Indent Date</b> </div>
+          <div class="col-md-6"> {{ date('d-m-Y', strtotime($info->purchase_indent_date)) }}</div>
+        </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6"><i class="fa fa-gg"></i> <b>Reference Number </b></div>
+          <div class="col-md-6">{{$info->reference_number}} </div>
+        </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6"><i class="fa fa-gg"></i><b>Reference Date</b> </div>
+          <div class="col-md-6">{{ date('d-m-Y', strtotime($info->reference_date)) }} </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Budget Head</b> </div>
+          <div class="col-md-6 no-padding">{{$info->budget_head['name']}} </div>
+        </div>
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Prepared By </b></div>
+          <div class="col-md-6 no-padding">{{$info->creator['name']}} </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="box-body item-view">
+    <h3>Requisition Details</h3>
     <hr class="style13">
     <div class="row">
       <div class="col-md-6">
@@ -66,15 +107,23 @@ span.step {
       </div>
 
       <div class="col-md-6">
-        <div class="col-md-12 item-field">
-          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Chargeable Account</b> </div>
-          <div class="col-md-6 no-padding">{{$info->requisition->chargeable_account['name']}} </div>
-        </div>
+        
 
         <div class="col-md-12 item-field">
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Financial Year </b></div>
           <div class="col-md-6 no-padding">{{$info->requisition['financial_year']}} </div>
         </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Raised By </b></div>
+          <div class="col-md-6 no-padding">{{$info->requisition->department_user['name']}} </div>
+        </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Issued By </b></div>
+          <div class="col-md-6 no-padding">{{$info->requisition->department_user_hod['name']}} </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -88,22 +137,22 @@ span.step {
       <div class="col-md-6">
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Store Description</b> </div>
-          <div class="col-md-6"> {{$v->store_description}}</div>
+          <div class="col-md-6"> {{$v->requisition_item['store_description']}}</div>
         </div>
 
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Quantity Demanded</b> </div>
-          <div class="col-md-6"> {{$v->quantity_demanded}}</div>
+          <div class="col-md-6"> {{$v->requisition_item['quantity_demanded']}}</div>
         </div>
 
         <div class="col-md-12 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Measurement</b> </div>
-          <div class="col-md-6"> {{$v->item_measurement['item_name']}}</div>
+          <div class="col-md-6"> {{ $v->requisition_item->item_measurement['item_name'] }}</div>
         </div>
 
         <div class="col-md-3">&nbsp;</div>
         <div class="col-md-9"> 
-          <h4>Stock in Hand : {{$v->item_measurement['stock_in_hand']}} </h4>
+          <h4>Stock in Hand : {{$v->requisition_item->item_measurement['stock_in_hand']}} </h4>
         </div>
       </div>
 
@@ -112,15 +161,15 @@ span.step {
             <div class="col-md-6 no-padding"><i class="fa fa-gg"></i>
               <b> Measurement Unit</b> 
             </div>
-            <div class="col-md-6 no-padding"> {{$v->measurement_unit['name']}} </div>
+            <div class="col-md-6 no-padding"> {{$v->requisition_item->measurement_unit['name']}} </div>
         </div>
         <div class="col-md-12 item-field">
             <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Rate</b> </div>
-            <div class="col-md-6 no-padding"> {{$v->rate}} </div>
+            <div class="col-md-6 no-padding"> {{$v->requisition_item['rate']}} </div>
         </div>
         <div class="col-md-12 item-field">
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Remarks </b></div>
-            <div class="col-md-6 no-padding">@if($v->remarks != '') {{$v->remarks}} @else -- @endif</div>
+            <div class="col-md-6 no-padding">@if($v->requisition_item['remarks'] != '') {{$v->requisition_item['remarks']}} @else -- @endif</div>
         </div>
       </div>
     </div>

@@ -894,6 +894,12 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@details'
     ]);
+
+    Route::get('/check/{num}', [
+        'as' => 'purchase_indent.check',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@check'
+    ]);
 });
 
 

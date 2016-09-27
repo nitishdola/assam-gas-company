@@ -30,6 +30,14 @@
   {!! $errors->first('reference_date', '<span class="help-inline">:message</span>') !!}
 </div>
 
+<div class="form-group {{ $errors->has('store_control_number') ? 'has-error' : ''}}">
+  {!! Form::label('store_control_number', '', array('class' => 'col-md-3 control-label')) !!}
+  <div class="col-md-4">
+    {!! Form::text('store_control_number', null, ['class' => 'form-control', 'id' => 'store_control_number', 'placeholder' => 'Store Control Number', 'autocomplete' => 'off']) !!}
+  </div>
+  {!! $errors->first('store_control_number', '<span class="help-inline">:message</span>') !!}
+</div>
+
 <div class="form-group {{ $errors->has('budget_head_id') ? 'has-error' : ''}}">
   {!! Form::label('budget_head_id', 'Budget Head', array('class' => ' required col-md-3 control-label')) !!}
   <div class="col-md-9">
@@ -53,4 +61,3 @@
   </div>
   {!! $errors->first('remarks', '<span class="help-inline">:message</span>') !!}
 </div>
-

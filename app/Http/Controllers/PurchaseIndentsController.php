@@ -25,11 +25,11 @@ class PurchaseIndentsController extends Controller
         //     $message = '';
         //     $message .= 'Unauthorize Aceess !';
         //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        // } 
+        // }
     }
 
     public function store(Request $request) {
-        //if($this->_department_user->can(['create_requisition'])) {  
+        //if($this->_department_user->can(['create_requisition'])) {
             $message = '';
             DB::beginTransaction();
             /* Insert data to requisitions table */
@@ -95,9 +95,9 @@ class PurchaseIndentsController extends Controller
         $info->checked_on = date('Y-m-d');
 
         $info->save();
-
+        $message = '';
         $message .= 'Indent is checked by user '.Auth::guard('department_user')->user()->username;
-            return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
+            return Redirect::route('purchase_indent.details', Crypt::encrypt($info->id))->with('message', $message);
     }
 
     public function approve($id = null) {
@@ -108,8 +108,8 @@ class PurchaseIndentsController extends Controller
         $info->approval_hod_date    = date('Y-m-d');
 
         $info->save();
-
-        $message .= 'Indent is checked by user '.Auth::guard('department_user')->user()->username;
-            return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
+        $message = '';
+        $message .= 'Indent is verified by HOD with username '.Auth::guard('department_user')->user()->username;
+            return Redirect::route('purchase_indent.details', Crypt::encrypt($info->id))->with('message', $message);
     }
 }

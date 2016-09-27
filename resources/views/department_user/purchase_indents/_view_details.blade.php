@@ -11,7 +11,7 @@ span.step {
   line-height: 1.6em;
   margin-right: 5px;
   text-align: center;
-  width: 1.6em; 
+  width: 1.6em;
   font-size: 2.3em;
 }
 .item-list {
@@ -23,7 +23,7 @@ span.step {
 <style>
   .item-field{
     padding: 6px 0;
-    background: #f6f6f6; 
+    background: #f6f6f6;
     margin-bottom: 4px;
   }
   h5 {
@@ -71,12 +71,61 @@ span.step {
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Budget Head</b> </div>
           <div class="col-md-6 no-padding">{{$info->budget_head['name']}} </div>
         </div>
+
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Store Control No</b> </div>
+          <div class="col-md-6 no-padding">{{$info->store_control_number }} </div>
+        </div>
+
         <div class="col-md-12 item-field">
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Prepared By </b></div>
           <div class="col-md-6 no-padding">{{$info->creator['name']}} </div>
         </div>
-        
+
+        @if($info->checker['name'])
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Checked By </b></div>
+          <div class="col-md-6 no-padding">{{$info->checker['name']}} </div>
+        </div>
+        @endif
+
+        @if($info->approved_by['name'])
+        <div class="col-md-12 item-field">
+          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Approved By HOD </b></div>
+          <div class="col-md-6 no-padding">{{$info->approved_by['name']}} </div>
+        </div>
+        @endif
+
       </div>
+
+      <div class="col-xs-12">
+        <strong> Justification for Purchase</strong>
+        <p>
+          {{ $info->justification_of_the_purchase }}
+        </p>
+      </div>
+
+      @if($info->remarks)
+      <div class="col-xs-12">
+        <strong> Justification for Purchase</strong>
+        <p>
+          {{ $info->remarks }}
+        </p>
+      </div>
+      @endif
+
+      <div class="col-xs-4 col-md-offset-4">
+          @if($info->approval_hod_id == NULL && $info->approval_hod_date == NULL)
+            @if($info->checked_by != NULL && $info->checked_on != NULL)
+            <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify by HOD</a>
+            @else if($info->checked_by == NULL && $info->checked_on == NULL)
+            <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger">Check</a>
+            @endif
+          @else
+            INDENT READY FOR NIT
+          @endif
+        </div>
+
     </div>
   </div>
 
@@ -104,10 +153,12 @@ span.step {
           <div class="col-md-6"><i class="fa fa-gg"></i><b>Nature of Work</b> </div>
           <div class="col-md-6">{{$info->requisition['nature_of_work']}} </div>
         </div>
+
+
       </div>
 
       <div class="col-md-6">
-        
+
 
         <div class="col-md-12 item-field">
           <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Financial Year </b></div>
@@ -151,20 +202,20 @@ span.step {
         </div>
 
         <div class="col-md-3">&nbsp;</div>
-        <div class="col-md-9"> 
-          <h4>Stock in Hand : {{$v->requisition_item->item_measurement['stock_in_hand']}} </h4>
+        <div class="col-md-9">
+          <h4>Stock Position : {{$v->requisition_item->item_measurement['stock_in_hand']}} </h4>
         </div>
       </div>
 
       <div class="col-md-5">
         <div class="col-md-12 item-field">
             <div class="col-md-6 no-padding"><i class="fa fa-gg"></i>
-              <b> Measurement Unit</b> 
+              <b> Measurement Unit</b>
             </div>
             <div class="col-md-6 no-padding"> {{$v->requisition_item->measurement_unit['name']}} </div>
         </div>
         <div class="col-md-12 item-field">
-            <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Rate</b> </div>
+            <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Approx Rate</b> </div>
             <div class="col-md-6 no-padding"> {{$v->requisition_item['rate']}} </div>
         </div>
         <div class="col-md-12 item-field">
@@ -175,4 +226,6 @@ span.step {
     </div>
   </div>
   @endforeach
+
+
 </div>

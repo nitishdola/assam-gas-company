@@ -900,6 +900,12 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@check'
     ]);
+
+    Route::get('/approve/{num}', [
+        'as' => 'purchase_indent.approve',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@approve'
+    ]);
 });
 
 

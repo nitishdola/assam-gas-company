@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/user/accounts/logout',['as' => 'accounts_user.logout', 'uses' =>'AccountsUserAuth\AuthController@logout']);
     Route::get('/accounts/dashboard', ['as' => 'accounts_user.dashboard', 'uses' => 'AccountsUsersController@index']);
 
-});  
+});
 
 
 Route::group(['prefix'=>'user'], function() {
@@ -634,9 +634,9 @@ Route::group(['prefix'=>'account-user-download'], function() {
         'middleware' => ['department_user'],
         'uses' => 'ExcelController@salvagemeasurementItems_dowonload'
     ]);
-     
+
 });
- 
+
 
 
 Route::group(['prefix'=>'user'], function() {
@@ -652,14 +652,14 @@ Route::group(['prefix'=>'user'], function() {
             'middleware' => ['admin'],
             'uses' => 'AdminController@store_department_user'
         ]);
-       
+
 
         Route::get('/view-all', [
             'as' => 'department_user.index',
             'middleware' => ['admin'],
             'uses' => 'AdminController@view_department_users'
         ]);
-       
+
 
         Route::get('/change-password', [
             'as' => 'department_user.change_password',
@@ -764,12 +764,12 @@ Route::group(['prefix'=>'admin'], function() {
         ]);
     });
     Route::get('chnage-password/department/{num}',[
-      'as' => 'chnage_department_user_password_admin', 
+      'as' => 'chnage_department_user_password_admin',
       'middleware' => ['admin'],
       'uses' => 'PasswordController@change_password_department']
     );
 
-    Route::post('chnage-password/department/{num}', [ 
+    Route::post('chnage-password/department/{num}', [
         'as' => 'update_department_user_password_admin',
         'middleware' => ['admin'],
         'uses' => 'PasswordController@update_password_department']
@@ -778,10 +778,10 @@ Route::group(['prefix'=>'admin'], function() {
     /********Change password route for admin*******/
     /******************************************************/
     Route::get('chnage-password/admin',[
-      'as' => 'chnage_admin_user_password', 
+      'as' => 'chnage_admin_user_password',
       'uses' => 'PasswordController@change_password_admin']);
 
-    Route::post('chnage-password/admin', [ 
+    Route::post('chnage-password/admin', [
         'as' => 'update_admin_user_password',
         'uses' => 'PasswordController@update_password_admin']);
 });
@@ -791,7 +791,7 @@ Route::group(['prefix'=>'admin'], function() {
 
 /******************Department User*******************/
 
-//requisition 
+//requisition
 Route::group(['prefix'=>'requisition'], function() {
     Route::get('/create', [
         'as' => 'requisition.create',
@@ -910,12 +910,29 @@ Route::group(['prefix'=>'purchase-indent'], function() {
 
 
 //Tender Management
-
 Route::group(['prefix'=>'nit'], function() {
     Route::get('/create', [
         'as' => 'nit.create',
         'middleware' => ['department_user'],
         'uses' => 'NitsController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'nit.store',
+        'middleware' => ['department_user'],
+        'uses' => 'NitsController@store'
+    ]);
+
+    Route::get('/view-all', [
+        'as' => 'nit.index',
+        'middleware' => ['department_user'],
+        'uses' => 'NitsController@index'
+    ]);
+
+    Route::get('/details/{num}', [
+        'as' => 'nit.details',
+        'middleware' => ['department_user'],
+        'uses' => 'NitsController@details'
     ]);
 });
 
@@ -1010,11 +1027,11 @@ Route::group(['prefix'=>'measurement-of-salvage-item'], function() {
 Route::group(['prefix'=>'change_password_department_user'], function() {
  /********Change password route for department*******/
     Route::get('chnage-password/department',[
-      'as' => 'chnage_department_user_password', 
+      'as' => 'chnage_department_user_password',
       'middleware' => ['department_user'],
       'uses' => 'DepartmentUsersController@change_password_department']);
 
-    Route::post('chnage-password/department', [ 
+    Route::post('chnage-password/department', [
         'as' => 'update_department_user_password',
         'middleware' => ['department_user'],
         'uses' => 'DepartmentUsersController@update_password_department']);
@@ -1027,8 +1044,8 @@ Route::group(['prefix'=>'chargeable-accounts'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'ChargeableAccountsController@create'
     ]);
-    
-   
+
+
 
     Route::post('/store', [
         'as' => 'chargeable_account.store',
@@ -1133,18 +1150,18 @@ Route::group(['prefix'=>'budget-head-transactions'], function() {
         'middleware' => ['accounts_user'],
         'uses' => 'BudgetHeadTransactionsController@index'
     ]);
-    
+
 });
 
 Route::group(['prefix'=>'budget-head-transactions'], function() {
 /********Change password route for account users*******/
-   
+
     Route::get('chnage-password/accountusers',[
-      'as' => 'chnage_accounts_user_password', 
+      'as' => 'chnage_accounts_user_password',
       'middleware' => ['accounts_user'],
       'uses' => 'AccountsUsersController@change_password']);
 
-    Route::post('chnage-password/accountusers', [ 
+    Route::post('chnage-password/accountusers', [
         'as' => 'update_accounts_user_password',
         'middleware' => ['accounts_user'],
         'uses' => 'AccountsUsersController@update_password']);

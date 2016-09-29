@@ -2,7 +2,7 @@
 @section('title') Material Requisition Form @stop
 @section('pageTitle') Material Requisition Form @stop
 
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
@@ -29,7 +29,6 @@
 			        <div style="height:30px;"></div>
 			        <h4> Requisition Material(s) </h4>
 			        @include('department_user.requisitions._item_form')
-
 			        <div class="col-xs-12" style="margin-top:30px;">
 			        {!! Form::label('', '', array('class' => 'col-md-5 control-label')) !!}
 			        {!! Form:: submit('Create Requisition', ['class' => 'btn btn-success']) !!}
@@ -40,15 +39,15 @@
 	</div>
 </div>
 @endsection
-@section('pageJs') 
-<script> 
+@section('pageJs')
+<script>
 //load_sections();
 var item = 1;
 $('.add_more_item').click(function(e) {
 	item++;
 	e.preventDefault();
 	var $item = $('.item');
-	var $clone = $item.clone(true).removeClass('item'); // Clone item 
+	var $clone = $item.clone(true).removeClass('item'); // Clone item
 	$clone.appendTo("#items_block");
 	show_hide_item(item);
 });
@@ -100,4 +99,3 @@ $('.item_measurement').change(function(e) {
 });
 </script>
 @stop
-

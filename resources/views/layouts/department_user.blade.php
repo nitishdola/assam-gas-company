@@ -29,13 +29,15 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/zebra/css/default.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/agcl.css') }}">
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/datetimepicker-master/jquery.datetimepicker.css') }}"/ >
 	@yield('pageCss')
 </head>
 <body>
 	@include('department_user.common.header')
 	<!-- PAGE -->
 	<section id="page">
-		@include('department_user.common.sidebar')		
+		@include('department_user.common.sidebar')
 		<div id="main-content">
 			<div class="container">
 				<div class="row">
@@ -73,7 +75,7 @@
 						</div>
 
 						@yield('content')
-						
+
 					</div><!-- /CONTENT-->
 				</div>
 			</div>
@@ -88,11 +90,11 @@
 	<script src="{{ asset('public/assets/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}"></script>
 	<!-- BOOTSTRAP -->
 	<script src="{{ asset('public/assets/bootstrap-dist/js/bootstrap.min.js') }}"></script>
-	
-		
+
+
 	<!-- DATE RANGE PICKER -->
 	<script src="{{ asset('public/assets/js/bootstrap-daterangepicker/moment.min.js') }}"></script>
-	
+
 	<script src="{{ asset('public/assets/js/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
 	<!-- SLIMSCROLL -->
 	<script type="text/javascript" src="{{ asset('public/assets/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js') }}"></script>
@@ -129,23 +131,25 @@
 
 	<script src="{{ asset('public/assets/zebra/javascript/zebra_datepicker.js') }}"></script>
 
+	<script src="{{ asset('public/assets/datetimepicker-master/build/jquery.datetimepicker.full.min.js') }}"></script>
 	<!-- CUSTOM SCRIPT -->
 	<script src="{{ asset('public/assets/js/script.js') }}"></script>
 	<script>
-		jQuery(document).ready(function() {		
+		jQuery(document).ready(function() {
 			App.setPage("index");  //Set current page
 			App.init(); //Initialise plugins and elements
 			$(".select2").select2();
 			$('input.datepicker').Zebra_DatePicker({ format: 'd-m-Y'});
+			jQuery('.datetimepicker').datetimepicker( { format:'Y-m-d H:i:s'});
 		});
 	</script>
 	<script type="text/javascript">
 	/****************************************Restcontroller*********************/
     /*****************************casecading drop down,block ui etc*************/
-    
+
      function load_racks() {
         $('#location_id').on('change', function() {
-          
+
             var locationID = $(this).val();
             var data = '';
             data += '&location_id='+locationID;
@@ -157,14 +161,14 @@
                     type : "GET",
                     data : data,
                     dataType : "json",
-                    
+
                     error : function(resp) {
                         console.log(resp);
                     },
                     success:function(data) {
                         $.blockUI();
-                        
-                        setTimeout($.unblockUI, 500); 
+
+                        setTimeout($.unblockUI, 500);
                         $('select[name="rack_id"]').empty();
                         $.each(data, function(key, value) {
                             $('select[name="rack_id"]').append('<option value="'+ key +'">'+ value +'</option>');
@@ -173,7 +177,7 @@
                      }
                 });
             }else{
-                
+
                 $('select[name="rack_id"]').empty();
             }
         });
@@ -181,7 +185,7 @@
 // for load sub groups
 function load_subgroups() {
         $('#item_group_id').on('change', function() {
-         
+
             var groupID = $(this).val();
             var data = '';
             data += '&item_group_id='+groupID;
@@ -193,13 +197,13 @@ function load_subgroups() {
                     type : "GET",
                     data : data,
                     dataType : "json",
-                    
+
                     error : function(resp) {
                         console.log(resp);
                     },
                     success:function(data) {
                         $.blockUI();
-                        setTimeout($.unblockUI, 500); 
+                        setTimeout($.unblockUI, 500);
                         $('select[name="item_sub_group_id"]').empty();
                         $.each(data, function(key, value) {
                             $('select[name="item_sub_group_id"]').append('<option value="'+ key +'">'+ value +'</option>');
@@ -208,21 +212,21 @@ function load_subgroups() {
                      }
                 });
             }else{
-                
+
                 $('select[name="item_sub_group_id"]').empty();
             }
         });
     }
 
     $(document).ready(function() {
-   
-    $('#edit').click(function() { 
-        $.blockUI(); 
- 
-        setTimeout($.unblockUI, 2000); 
-    }); 
-}); 
-   
+
+    $('#edit').click(function() {
+        $.blockUI();
+
+        setTimeout($.unblockUI, 2000);
+    });
+});
+
 	</script>
 
 

@@ -107,7 +107,7 @@ span.step {
 
       @if($info->remarks)
       <div class="col-xs-12">
-        <strong> Justification for Purchase</strong>
+        <strong> Remarks</strong>
         <p>
           {{ $info->remarks }}
         </p>

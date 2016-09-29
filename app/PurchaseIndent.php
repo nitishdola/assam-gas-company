@@ -17,32 +17,33 @@ class PurchaseIndent extends Model
     	'reference_number' 		=>  'required|unique:purchase_indents',
     	'reference_date' 		=>  'required|date_format:Y-m-d',
     	'budget_head_id' 		=>  'required|exists:budget_heads,id',
+      'store_control_number' 		=>  'required',
     	'created_by' 			=>  'required|exists:department_users,id',
     	'created_on' 			=>  'required|date_format:Y-m-d',
     	'justification_of_the_purchase' 		=>  'required|min:7',
     ];
 
-    public function creator() 
+    public function creator()
 	{
 		return $this->belongsTo('App\DepartmentUser', 'created_by');
 	}
 
-	public function requisition() 
+	public function requisition()
 	{
 		return $this->belongsTo('App\Requisition', 'requisition_id');
 	}
 
-	public function budget_head() 
+	public function budget_head()
 	{
 		return $this->belongsTo('App\BudgetHead', 'budget_head_id');
 	}
 
-	public function checker() 
+	public function checker()
 	{
 		return $this->belongsTo('App\DepartmentUser', 'checked_by');
 	}
 
-	public function approved_by() 
+	public function approved_by()
 	{
 		return $this->belongsTo('App\DepartmentUser', 'approval_hod_id');
 	}

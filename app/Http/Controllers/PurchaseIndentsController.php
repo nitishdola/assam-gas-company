@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem;
+use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem, App\Vendor, App\QuotationValue;
 class PurchaseIndentsController extends Controller
 {
     public function __construct() {
@@ -84,11 +84,15 @@ class PurchaseIndentsController extends Controller
         $info = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department', 'requisition.chargeable_account', 'requisition.department_user'])->whereId($id)->first();
 
         $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $id)->with('purchase_indent', 'requisition_item')->get();
-        return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items'));
+        $add_quotation_values = false;
+        if($info->approval_hod_id != NULL && $info->approval_hod_date) {
+          $add_quotation_values = true;
+        }
+        return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items', 'add_quotation_values'));
     }
 
     public function check($id = null) {
-        $id = Crypt::decrypt($id);
+        $id   = Crypt::decrypt($id);
         $info = PurchaseIndent::findOrFail($id);
 
         $info->checked_by = Auth::guard('department_user')->user()->id;
@@ -111,5 +115,40 @@ class PurchaseIndentsController extends Controller
         $message = '';
         $message .= 'Indent is verified by HOD with username '.Auth::guard('department_user')->user()->username;
             return Redirect::route('purchase_indent.details', Crypt::encrypt($info->id))->with('message', $message);
+    }
+
+    //add qoutation values
+    public function add_qoutation_value( $id = NULL ) {
+        $id   = Crypt::decrypt($id);
+        $info = PurchaseIndentItem::whereId($id)->with('requisition_item', 'requisition_item.item_measurement')->first();
+
+        $vendors  	= Vendor::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        return view('department_user.purchase_indents.qoutation.add_qoutation_value', compact('info', 'id', 'vendors'));
+    }
+    //store qoutation values
+    public function store_qoutation_value(Request $request) {
+      $message = '';
+      $class   = '';
+
+      if( count($request->vendor_id) == count($request->value)) {
+        for($i = 0; $i < count($request->vendor_id); $i++) {
+            $item_data['purchase_indent_item_id']     = $request->purchase_indent_item_id;
+            $item_data['vendor_id']                   = $request->vendor_id[$i];
+            $item_data['value']                       = $request->value[$i];
+            $validator = Validator::make($item_data, QuotationValue::$rules);
+            if ($validator->fails()) return Redirect::back();
+            $requisition_item = QuotationValue::create( $item_data );
+        }
+        $class   .= 'alert-success';
+        $message .= '<b>'. count($request->vendor_id).'</b> Vendor values added !';
+      }else{
+        $class   = 'alert-danger';
+        $message .= 'Token mismatch !';
+      }
+      return Redirect::route('quotation_values.create', Crypt::encrypt( $request->purchase_indent_item_id ))->with(['message' => $message, 'alert-class' => $class]);
+    }
+
+    public function view_qoutation_valus( $purchase_indent_item_id = NULL ) {
+
     }
 }

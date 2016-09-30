@@ -34,7 +34,7 @@ class AddFieldsToNitsTable extends Migration
             $table->integer('checked_by', false, true)->nullable();
             $table->date('approved_on')->nullable();
             $table->integer('approved_by', false, true)->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
         });
     }
 

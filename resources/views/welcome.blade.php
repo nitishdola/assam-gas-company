@@ -10,15 +10,15 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
             <i class="fa fa-user"></i>
-            <input type="username" class="form-control" name="username" value="{{ old('username') }}">
+            <input type="username" class="form-control" required="required" name="username" value="{{ old('username') }}">
           </div>
-          <div class="form-group"> 
+          <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <i class="fa fa-lock"></i>
-            <input type="password" class="form-control" name="password">
+            <input type="password" required="required" class="form-control" name="password">
           </div>
           <div class="form-actions">
-            
+
             <button type="submit" class="btn btn-danger">Login</button>
           </div>
         </form>

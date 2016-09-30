@@ -49,7 +49,6 @@ class NitsController extends Controller
         }else{
             $message .= 'NIT unable to add unit !';
         }
-
         return Redirect::route('nit.index')->with('message', $message);
     }
 
@@ -57,7 +56,7 @@ class NitsController extends Controller
       $id   = Crypt::decrypt($id);
       $info = Nit::whereId($id)->with(['creator', 'purchase_indent', 'purchase_indent.budget_head',  'purchase_indent.checker',  'purchase_indent.approved_by', 'purchase_indent.creator', 'purchase_indent.requisition.department', 'purchase_indent.requisition'])->first();
       $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $info->purchase_indent['id'])->with('purchase_indent', 'requisition_item')->get();
-  
+
       return view('department_user.nits.details', compact('info', 'purchase_indent_items'));
     }
 }

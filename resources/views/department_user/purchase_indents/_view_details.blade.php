@@ -117,12 +117,12 @@ span.step {
       <div class="col-xs-4 col-md-offset-4">
           @if($info->approval_hod_id == NULL && $info->approval_hod_date == NULL)
             @if($info->checked_by != NULL && $info->checked_on != NULL)
-            <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify by HOD</a>
+              <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify by HOD</a>
             @else if($info->checked_by == NULL && $info->checked_on == NULL)
-            <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger">Check</a>
+              <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger">Check</a>
             @endif
           @else
-            INDENT READY FOR NIT
+            <!-- INDENT READY FOR NIT -->
           @endif
         </div>
 
@@ -180,7 +180,7 @@ span.step {
   </div>
 
   <div class="box-body item-view">
-    <h3>Material(s) Details</h3>
+    <h3>Material Item(s) Details</h3>
     @foreach($purchase_indent_items as $k => $v)
     <hr class="style13">
     <div class="row item-list">
@@ -223,6 +223,11 @@ span.step {
             <div class="col-md-6 no-padding">@if($v->requisition_item['remarks'] != '') {{$v->requisition_item['remarks']}} @else -- @endif</div>
         </div>
       </div>
+
+      <div class="col-md-8">
+        <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+      </div>
+
     </div>
   </div>
   @endforeach

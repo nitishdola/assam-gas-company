@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title') Search view suppliers/vendors @stop
 @section('pageTitle') Search view suppliers/vendors @stop
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -19,7 +19,7 @@
 		<div class="widget-content padded">
 			{!! Form::open(array('route' => 'admin.vendor.index', 'id' => 'admin.vendor.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
 			@include('vendors._search_form')
-			<div class="col-md-12"> 
+			<div class="col-md-12">
 				{!! Form::label('', '', array('class' => 'col-md-4 control-label')) !!}
 			    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
 			</div>
@@ -58,7 +58,7 @@
 			            <td> {{ $v->contact_person }} </td>
 			            <td> <a href="#"> Details </a> </td>
 			            <td> <a href="{{ route('admin.vendor.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
-			            @if($v->status) | 
+			            @if($v->status) |
 						<a onclick="return confirm('Are you sure you want to delete this vendor ?');"  style="color:red" href="{{ route('admin.vendor.disable', Crypt::encrypt($v->id) ) }}" title="Remove vendor"><i class="fa fa-trash" aria-hidden="true"></i>Remove</a>
 						@endif
 						</td>

@@ -910,6 +910,21 @@ Route::group(['prefix'=>'purchase-indent'], function() {
 
 
 //Tender Management
+Route::group(['prefix'=>'quotation-values'], function() {
+    Route::get('/add/{purchase_indent_id}', [
+        'as' => 'quotation_values.create',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@add_qoutation_value'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'quotation_values.store',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@store_qoutation_value'
+    ]);
+});
+
+//Tender Management
 Route::group(['prefix'=>'nit'], function() {
     Route::get('/create', [
         'as' => 'nit.create',

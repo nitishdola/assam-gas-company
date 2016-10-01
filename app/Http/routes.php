@@ -922,6 +922,12 @@ Route::group(['prefix'=>'quotation-values'], function() {
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@store_qoutation_value'
     ]);
+
+    Route::get('/view/{purchase_indent_item_id}', [
+        'as' => 'quotation_values.view',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@view_qoutation_valus'
+    ]);
 });
 
 //Tender Management

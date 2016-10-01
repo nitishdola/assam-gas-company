@@ -226,6 +226,7 @@ span.step {
 
       <div class="col-md-8">
         <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+        <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
       </div>
 
     </div>

@@ -148,8 +148,9 @@ class PurchaseIndentsController extends Controller
     }
 
     public function view_qoutation_valus( $purchase_indent_item_id = NULL ) {
-      $id   = Crypt::decrypt($purchase_indent_item_id);
-      $info = QuotationValue::whereId( $id )->with(['purchase_indent_item', 'vendor', 'purchase_indent_item.purchase_indent', 'purchase_indent_item.requisition_item', 'purchase_indent_item.requisition_item.item_measurement'])->first();
-      return view('department_user.purchase_indents.qoutation.view', compact('info'));
+      $purchase_indent_item_id   = Crypt::decrypt($purchase_indent_item_id);
+      $info = PurchaseIndentItem::with('purchase_indent', 'requisition_item', 'requisition_item.item_measurement')->first();
+      $values = QuotationValue::whereId( $purchase_indent_item_id )->with(['purchase_indent_item', 'vendor'])->get();
+      return view('department_user.purchase_indents.qoutation.view', compact('values', 'info'));
     }
 }

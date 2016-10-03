@@ -41,23 +41,52 @@ span.step {
 <div class="box box-primary">
 
   <div class="box-body item-view">
-    <h3>Purchase Indent Details</h3>
+    <h3>Purchase Indent Details</h3> {{ dump($values)}}
     <hr class="style13">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
 
-        <div class="col-md-12 item-field">
+        <div class="col-md-6 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Purchase Indent Number</b> </div>
-          <div class="col-md-6"> {{$info->purchase_indent_item->purchase_indent['purchase_indent_number']}}</div>
+          <div class="col-md-6"> {{$info->purchase_indent['purchase_indent_number']}}</div>
         </div>
 
-        <div class="col-md-12 item-field">
+        <div class="col-md-6 item-field">
           <div class="col-md-6"><i class="fa fa-gg"></i><b> Purchase Indent Date</b> </div>
-          <div class="col-md-6"> {{ date('d-m-Y', strtotime($info->purchase_indent_item->purchase_indent['purchase_indent_date'] )) }}</div>
+          <div class="col-md-6"> {{ date('d-m-Y', strtotime($info->purchase_indent['purchase_indent_date'] )) }}</div>
         </div>
 
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#<th>
+                <th> Vendor Name </th>
+                <td> Vendor Code </th>
+                <th>Value</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @foreach($values as $k => $v)
+              <tr>
+                <td> {{ $k+1 }} </td>
+                <td> {{ $v->vendor['vendor_name'] }} </td>
+                <td> {{ $v->vendor['vendor_code'] }} </td>
+                <td> {{ $v->value }} </td>
+                <td> Remove </td>
+              <tr>
+              @endforeach
+            </tbody>
+          </table>
+      </div>
+    </div>
+
   </div>
 
 </div>

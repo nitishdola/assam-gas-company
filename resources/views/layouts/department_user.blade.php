@@ -22,8 +22,6 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/fullcalendar/fullcalendar.min.css') }}" />
 	<!-- GRITTER -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/gritter/css/jquery.gritter.css') }}" />
-	<!-- FONTS -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/select2/select2.min.css') }}">
 
@@ -65,13 +63,13 @@
 
 						<div class="row">
 							<div class="col-lg-12">
-								@if(Session::has('message'))
-	                            <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
-	                                <button type="button" class="close" data-dismiss="alert">×</button>
-	                                {!! Session::get('message') !!}
-	                            </div>
-	                            @endif
-	                        </div>
+									@if(Session::has('message'))
+                  <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                      <button type="button" class="close" data-dismiss="alert">×</button>
+                      {!! Session::get('message') !!}
+                  </div>
+                  @endif
+              </div>
 						</div>
 
 						@yield('content')

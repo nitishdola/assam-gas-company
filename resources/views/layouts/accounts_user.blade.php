@@ -22,8 +22,6 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/fullcalendar/fullcalendar.min.css') }}" />
 	<!-- GRITTER -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/gritter/css/jquery.gritter.css') }}" />
-	<!-- FONTS -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/select2/select2.min.css') }}">
 
@@ -35,7 +33,7 @@
 	@include('accounts_user.common.header')
 	<!-- PAGE -->
 	<section id="page">
-		@include('accounts_user.common.sidebar')		
+		@include('accounts_user.common.sidebar')
 		<div id="main-content">
 			<div class="container">
 				<div class="row">
@@ -44,7 +42,7 @@
 						  <div class="col-sm-12">
 						    <div class="page-header">
 						      <!-- STYLER -->
-						      
+
 						      <!-- /STYLER -->
 						      <!-- BREADCRUMBS -->
 						      <ul class="breadcrumb">
@@ -76,7 +74,7 @@
 						</div>
 
 						@yield('content')
-						
+
 					</div><!-- /CONTENT-->
 				</div>
 			</div>
@@ -91,11 +89,11 @@
 	<script src="{{ asset('public/assets/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}"></script>
 	<!-- BOOTSTRAP -->
 	<script src="{{ asset('public/assets/bootstrap-dist/js/bootstrap.min.js') }}"></script>
-	
-		
+
+
 	<!-- DATE RANGE PICKER -->
 	<script src="{{ asset('public/assets/js/bootstrap-daterangepicker/moment.min.js') }}"></script>
-	
+
 	<script src="{{ asset('public/assets/js/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
 	<!-- SLIMSCROLL -->
 	<script type="text/javascript" src="{{ asset('public/assets/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js') }}"></script>
@@ -136,7 +134,7 @@
 	<script src="{{ asset('public/assets/js/script.js') }}"></script>
 
 	<script>
-		jQuery(document).ready(function() {		
+		jQuery(document).ready(function() {
 			App.setPage("index");  //Set current page
 			App.init(); //Initialise plugins and elements
 			$(".select2").select2();
@@ -149,7 +147,7 @@
     /*****************************casecading drop down,block ui etc*************/
     function load_sections() {
         $('#department_id').on('change', function() {
-            
+
             var departmentID = $(this).val();
             var data = '';
             data += '&department_id='+departmentID;
@@ -161,13 +159,13 @@
                     type : "GET",
                     data : data,
                     dataType: "json",
-                    
+
                     error : function(resp) {
                         console.log(resp);
                     },
                     success:function(data) {
                         $.blockUI();
-                        setTimeout($.unblockUI, 500); 
+                        setTimeout($.unblockUI, 500);
                         $('select[name="section_id"]').empty();
                         $.each(data, function(key, value) {
                             $('select[name="section_id"]').append('<option value="'+ key +'">'+ value +'</option>');
@@ -176,21 +174,21 @@
                      }
                 });
             }else{
-                
+
                 $('select[name="section_id"]').empty();
             }
         });
     }
 
     $(document).ready(function() {
-   
-    $('#edit').click(function() { 
-        $.blockUI(); 
- 
-        setTimeout($.unblockUI, 2000); 
-    }); 
-}); 
-   
+
+    $('#edit').click(function() {
+        $.blockUI();
+
+        setTimeout($.unblockUI, 2000);
+    });
+});
+
 	</script>
 
 	@yield('pageJs')

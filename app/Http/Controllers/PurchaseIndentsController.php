@@ -14,22 +14,22 @@ class PurchaseIndentsController extends Controller
     }
 
     public function create($requisition_id = null) {
-        //if($this->_department_user->can(['create_purchase_indent'])) {
+        if($this->_department_user->can(['create_purchase_indent'])) {
         	$requisition_id = Crypt::decrypt($requisition_id);
         	$requisition_items = RequisitionItem::with(['measurement_unit', 'item_measurement'])->where('requisition_id', $requisition_id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->get();
 
             $budget_heads  	= BudgetHead::whereStatus(1)->orderBy('name', 'DESC')->lists('budget_head_code', 'id')->toArray();
 
             return view('department_user.purchase_indents.create', compact('budget_heads', 'requisition_items', 'requisition_id'));
-        // }else{
-        //     $message = '';
-        //     $message .= 'Unauthorize Aceess !';
-        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        // }
+        }else{
+            $message = '';
+            $message .= 'Unauthorize Aceess !';
+            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        }
     }
 
     public function store(Request $request) {
-        //if($this->_department_user->can(['create_requisition'])) {
+        if($this->_department_user->can(['create_requisition'])) {
             $message = '';
             DB::beginTransaction();
             /* Insert data to requisitions table */
@@ -70,12 +70,11 @@ class PurchaseIndentsController extends Controller
             DB::commit();
             $message .= 'Indent successfully generated !';
             return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
-        //}
+        }
     }
 
     public function index() {
         $results = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department'])->paginate(20);
-
         return view('department_user.purchase_indents.index', compact('results'));
     }
 
@@ -130,7 +129,7 @@ class PurchaseIndentsController extends Controller
       $message = '';
       $class   = '';
 
-      if( count($request->vendor_id) == count($request->value)) {
+      if( count($request->vendor_id) == count($request->value) ) {
         for($i = 0; $i < count($request->vendor_id); $i++) {
             $item_data['purchase_indent_item_id']     = $request->purchase_indent_item_id;
             $item_data['vendor_id']                   = $request->vendor_id[$i];

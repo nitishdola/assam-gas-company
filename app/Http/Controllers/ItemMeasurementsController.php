@@ -11,15 +11,13 @@ use App\ItemMeasurement;
 class ItemMeasurementsController extends Controller
 {
     public function create() {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
-    	$item_groups	      = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	$item_sub_groups	  = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	$measurement_units	  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	$locations	          = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	$racks	              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      	$item_groups	        = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      	$item_sub_groups	    = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      	$measurement_units	  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      	$locations	          = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      	$racks	              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-    	return view('department_user.item_measurements.create', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
+    	   return view('admin.item_measurements.create', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
     }
 
     public function store(Request $request) {
@@ -28,7 +26,7 @@ class ItemMeasurementsController extends Controller
 
         $data['expiry_date'] 	= date('Y-m-d', strtotime( $data['expiry_date'] ));
         $data['wef'] 			= date('Y-m-d', strtotime( $data['wef'] ));
-        $data['created_by'] 	= Auth::guard('department_user')->user()->id; 
+        $data['created_by'] 	= Auth::guard('admin')->user()->id;
 
     	$message = '';
     	if(ItemMeasurement::create($data)) {
@@ -41,9 +39,6 @@ class ItemMeasurementsController extends Controller
     }
 
     public function index(Request $request) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
-
         $where = [];
         if($request->item_group_id) {
             $where['item_group_id'] = $request->item_group_id;
@@ -78,15 +73,14 @@ class ItemMeasurementsController extends Controller
         $item_sub_groups   = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $measurement_units = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $locations  = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $racks      = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
-       $results     = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location', 'rack', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
-		return view('department_user.item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results','user'));
+        $racks      = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        $results     = ItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location', 'rack', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
+		    return view('admin.item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results','user'));
 	}
 
 
     public function edit( $id ) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
+
         $id = Crypt::decrypt($id);
         $item_measurement = ItemMeasurement::findOrFail($id);
 
@@ -99,24 +93,22 @@ class ItemMeasurementsController extends Controller
         $item_measurement['expiry_date']    = date('d-m-Y', strtotime( $item_measurement['expiry_date'] ));
         $item_measurement['wef']            = date('d-m-Y', strtotime( $item_measurement['wef'] ));
 
-        return view('department_user.item_measurements.edit', compact('item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
+        return view('admin.item_measurements.edit', compact('item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
     }
 
      public function view( $id ) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
         $id   = Crypt::decrypt($id);
-      
+
        $info  = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
-       return view('department_user.item_measurements.view', compact('info','user'));
+       return view('admin.item_measurements.view', compact('info','user'));
     }
 
     public function update($id , Request $request) {
-        $id    = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id);
         $rules = ItemMeasurement::$rules;
 
         $rules['item_code']  = $rules['item_code'] . ',id,' . $id;
-        
+
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
@@ -138,7 +130,7 @@ class ItemMeasurementsController extends Controller
     }
 
     public function disable($id ) {
-        $id      = Crypt::decrypt($id); 
+        $id      = Crypt::decrypt($id);
         $item_measurement = ItemMeasurement::findOrFail($id);
         $message = '';
         //change the status of department to 0

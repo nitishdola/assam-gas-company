@@ -2,7 +2,7 @@
 @section('title') Measurement of Item @stop
 @section('pageTitle') Measurement of Item @stop
 
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
@@ -25,9 +25,9 @@
 		<div class="widget-content padded">
 		    <div class="col-xs-12">
 			    {!! Form::open(array('route' => 'item_measurement.store', 'id' => 'item_measurement.store', 'class' => 'form-horizontal row-border')) !!}
-			        @include('department_user.item_measurements._form')
+			        @include('admin.item_measurements._form')
 
-			        <div class="col-md-12"> 
+			        <div class="col-md-12">
 			        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}
 			        	{!! Form:: submit('Submit', ['class' => 'btn btn-success']) !!}
 			        </div>

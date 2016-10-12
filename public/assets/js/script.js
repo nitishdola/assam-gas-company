@@ -1,12 +1,12 @@
 var App = function () {
 
     var currentPage = ''; // current page
-    var collapsed = false; //sidebar collapsed
+    var collapsed = true; //sidebar collapsed
     var is_mobile = false; //is screen mobile?
     var is_mini_menu = false; //is mini-menu activated
     var is_fixed_header = false; //is fixed header activated
     var responsiveFunctions = []; //responsive function holder
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Runs callback functions set by App.addResponsiveFunction()
     /*-----------------------------------------------------------------------------------*/
@@ -67,11 +67,11 @@ var App = function () {
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
             jQuery('.sub', last).slideUp(200);
-            
+
             var thisElement = $(this);
             var slideOffeset = -200;
             var slideSpeed = 200;
-            
+
             var sub = jQuery(this).next();
             if (sub.is(":visible")) {
                 jQuery('.arrow', jQuery(this)).removeClass("open");
@@ -93,14 +93,14 @@ var App = function () {
                 });
             }
         });
-        
+
     // Handle sub-sub menus
     jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a').click(function () {
             var last = jQuery('.has-sub-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
             jQuery('.sub', last).slideUp(200);
-                
+
             var sub = jQuery(this).next();
             if (sub.is(":visible")) {
                 jQuery('.arrow', jQuery(this)).removeClass("open");
@@ -113,7 +113,7 @@ var App = function () {
             }
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Collapse Sidebar Programatically
     /*-----------------------------------------------------------------------------------*/
@@ -216,7 +216,7 @@ var App = function () {
                     jQuery('.sidebar-collapse i').addClass(iconLeft);
                     /* Add placeholder from Search Bar */
                     jQuery('.search').attr('placeholder', "Search");
-                    collapsed = false;
+                    collapsed = true;
                     $.cookie('mini_sidebar', '0');
                 }
                 else {
@@ -303,7 +303,7 @@ var App = function () {
             responsiveSidebar();
             handleFixedSidebar();
             handleNavbarFixedTop();
-            runResponsiveFunctions(); 
+            runResponsiveFunctions();
         }, 50); // wait 50ms until window resize finishes.
     });
     /*-----------------------------------------------------------------------------------*/
@@ -352,7 +352,7 @@ var App = function () {
          //Set the initial state of the picker label
          $('#reportrange span').html('Custom');
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Team View
     /*-----------------------------------------------------------------------------------*/
@@ -421,7 +421,7 @@ var App = function () {
             $("ul", this).width(w)
         })
     };
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Homepage tooltips
     /*-----------------------------------------------------------------------------------*/
@@ -447,7 +447,7 @@ var App = function () {
             trigger: 'focus'
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /* Box tools
     /*-----------------------------------------------------------------------------------*/
@@ -467,7 +467,7 @@ var App = function () {
                 el.slideDown(200);
             }
         });
-        
+
         /* Close */
         jQuery('.box .tools a.remove').click(function () {
             var removable = jQuery(this).parents(".box");
@@ -477,7 +477,7 @@ var App = function () {
                 jQuery(this).parents(".box").parent().remove();
             }
         });
-        
+
         /* Reload */
         jQuery('.box .tools a.reload').click(function () {
             var el = jQuery(this).parents(".box");
@@ -507,7 +507,7 @@ var App = function () {
             });
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Bootbox alerts
     /*-----------------------------------------------------------------------------------*/
@@ -570,7 +570,7 @@ var App = function () {
                         bootbox.alert("Oops, we're sorry to hear that!", function(){
                             $(".bootbox").modal("hide");
                         });
-                        
+
                     }
                 },
                 main: {
@@ -592,7 +592,7 @@ var App = function () {
                 $(".bootbox").modal("hide");
             }, 3000);
         });
-        
+
     }
     /*-----------------------------------------------------------------------------------*/
     /*  Popovers
@@ -600,29 +600,29 @@ var App = function () {
     var handlePopovers = function () {
         //Default (Right)
         $('.pop').popover();
-        //Bottom 
+        //Bottom
         $('.pop-bottom').popover({
             placement : 'bottom'
         });
-        //Left 
+        //Left
         $('.pop-left').popover({
             placement : 'left'
         });
-        //Top 
+        //Top
         $('.pop-top').popover({
             placement : 'top'
         });
-        //Trigger hover 
+        //Trigger hover
         $('.pop-hover').popover({
             trigger: 'hover'
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Hubspot messenger
     /*-----------------------------------------------------------------------------------*/
     var handleMessenger = function () {
-        
+
         //Normal
         $("#normal").click(function(){
             var mytheme = $('input[name=theme]:checked').val();
@@ -719,7 +719,7 @@ var App = function () {
     var handleAlerts = function () {
         $(".alert").alert();
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Magic Suggest
     /*-----------------------------------------------------------------------------------*/
@@ -902,34 +902,34 @@ var App = function () {
         var pos = $.extend({}, $(ui.handle).offset(), { width: $(ui.handle).get(0).offsetWidth,
                                                         height: $(ui.handle).get(0).offsetHeight
                   });
-        
+
         var actualWidth = div.offsetWidth;
-        
-        tp = {left: pos.left + pos.width / 2 - actualWidth / 2}            
+
+        tp = {left: pos.left + pos.width / 2 - actualWidth / 2}
         $(div).offset(tp);
-        
-        $(div).find(".tooltip-inner").text( ui.value );     
+
+        $(div).find(".tooltip-inner").text( ui.value );
     }
-    
+
       $("#slider").slider({ value: 15, slide: repositionTooltip, stop: repositionTooltip });
       $("#slider .ui-slider-handle:first").tooltip( {title: $("#slider").slider("value"), trigger: "manual"}).tooltip("show");
-      
+
       $("#slider-default").slider();
-      
+
       $("#slider-range").slider({
         range:true,min:0,max:500,values:[75,300]
       });
-      
+
       $("#slider-range-min").slider({
         range:"min",value:37,min:1,max:700,slide:function(a,b){
           $("#slider-range-min-amount").text("$"+b.value)}
       });
-      
+
       $("#slider-range-max").slider({
         range:"max",min:1,max:700,value:300,slide:function(a,b){
           $("#slider-range-max-amount").text("$"+b.value)}
       });
-      
+
       $("#slider-vertical-multiple > span").each(function(){
         var a=parseInt($(this).text(),10);
         $(this).empty().slider({
@@ -1073,7 +1073,7 @@ var App = function () {
                     }
                 });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Custom tabs
     /*-----------------------------------------------------------------------------------*/
@@ -1129,12 +1129,12 @@ var App = function () {
             'selected-icon' : null,
             'unselected-icon' : null
         });
-        
-        
+
+
         //To add font awesome support
         $('.tree').find('[class*="fa-"]').addClass("fa");
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Nestable Lists
     /*-----------------------------------------------------------------------------------*/
@@ -1155,7 +1155,7 @@ var App = function () {
             group: 1
         })
         .on('change', updateOutput);
-        
+
         // activate Nestable for list 2
         $('#nestable2').nestable({
             group: 1
@@ -1184,7 +1184,7 @@ var App = function () {
     /*  Table Cloth
     /*-----------------------------------------------------------------------------------*/
     var handleTablecloth = function () {
-        $("#example-dark").tablecloth({ 
+        $("#example-dark").tablecloth({
             theme: "dark"
         });
         $("#example-paper").tablecloth({
@@ -1229,8 +1229,8 @@ var App = function () {
     /*  jqGrid
     /*-----------------------------------------------------------------------------------*/
     var handleJqgrid = function () {
-        var grid_data = 
-            [ 
+        var grid_data =
+            [
                 {id:"1",invdate:"2007-12-03",name:"Client1",amount:"1000.00",tax:"140.00",total:"1000.00", note:"This is a note"},
                 {id:"2",invdate:"2007-12-03",name:"Client1",amount:"1000.00",tax:"140.00",total:"1000.00", note:"This is a note"},
                 {id:"3",invdate:"2007-12-03",name:"Client1",amount:"1000.00",tax:"140.00",total:"1000.00", note:"This is a note"},
@@ -1320,7 +1320,7 @@ var App = function () {
             /* Add tooltips */
             $('.navtable .ui-pg-button').tooltip({container:'body'});
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Typeahead
     /*-----------------------------------------------------------------------------------*/
@@ -1450,7 +1450,7 @@ var App = function () {
     var handleWysiwyg = function () {
         /* Init Bootstrap WYSIWYG */
         function initToolbarBootstrapBindings() {
-          var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
+          var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
                 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
                 'Times New Roman', 'Verdana'],
                 fontTarget = $('[title=Font]').siblings('.dropdown-menu');
@@ -1462,8 +1462,8 @@ var App = function () {
                 .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
             .keydown('esc', function () {this.value='';$(this).change();});
 
-          $('[data-role=magic-overlay]').each(function () { 
-            var overlay = $(this), target = $(overlay.data('target')); 
+          $('[data-role=magic-overlay]').each(function () {
+            var overlay = $(this), target = $(overlay.data('target'));
             overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
           });
           if ("onwebkitspeechchange"  in document.createElement("input")) {
@@ -1479,10 +1479,10 @@ var App = function () {
             else {
                 console.log("error uploading file", reason, detail);
             }
-            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+
              '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
         };
-        initToolbarBootstrapBindings();  
+        initToolbarBootstrapBindings();
         $('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
         /* Disable auto-inline */
         CKEDITOR.disableAutoInline = true;
@@ -1495,10 +1495,10 @@ var App = function () {
               $(".dropzone").dropzone({
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 0.5, // MB
-              
+
                 addRemoveLinks : true,
                 dictResponseError: 'Error while uploading file!',
-                
+
                 //change the previewTemplate to use Bootstrap progress bars
                 previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
               });
@@ -1510,7 +1510,7 @@ var App = function () {
     /*  XCharts
     /*-----------------------------------------------------------------------------------*/
     var handleXcharts = function () {
-        
+
         //Dynamic Chart
         function chart1() {
             var data = [{"xScale":"ordinal","comp":[],"main":[{"className":".main.l1","data":[{"y":15,"x":"2012-11-19T00:00:00"},{"y":11,"x":"2012-11-20T00:00:00"},{"y":8,"x":"2012-11-21T00:00:00"},{"y":10,"x":"2012-11-22T00:00:00"},{"y":1,"x":"2012-11-23T00:00:00"},{"y":6,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]},{"className":".main.l2","data":[{"y":29,"x":"2012-11-19T00:00:00"},{"y":33,"x":"2012-11-20T00:00:00"},{"y":13,"x":"2012-11-21T00:00:00"},{"y":16,"x":"2012-11-22T00:00:00"},{"y":7,"x":"2012-11-23T00:00:00"},{"y":18,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]}],"type":"line-dotted","yScale":"linear"},{"xScale":"ordinal","comp":[],"main":[{"className":".main.l1","data":[{"y":12,"x":"2012-11-19T00:00:00"},{"y":18,"x":"2012-11-20T00:00:00"},{"y":8,"x":"2012-11-21T00:00:00"},{"y":7,"x":"2012-11-22T00:00:00"},{"y":6,"x":"2012-11-23T00:00:00"},{"y":12,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]},{"className":".main.l2","data":[{"y":29,"x":"2012-11-19T00:00:00"},{"y":33,"x":"2012-11-20T00:00:00"},{"y":13,"x":"2012-11-21T00:00:00"},{"y":16,"x":"2012-11-22T00:00:00"},{"y":7,"x":"2012-11-23T00:00:00"},{"y":18,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]}],"type":"cumulative","yScale":"linear"},{"xScale":"ordinal","comp":[],"main":[{"className":".main.l1","data":[{"y":12,"x":"2012-11-19T00:00:00"},{"y":18,"x":"2012-11-20T00:00:00"},{"y":8,"x":"2012-11-21T00:00:00"},{"y":7,"x":"2012-11-22T00:00:00"},{"y":6,"x":"2012-11-23T00:00:00"},{"y":12,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]},{"className":".main.l2","data":[{"y":29,"x":"2012-11-19T00:00:00"},{"y":33,"x":"2012-11-20T00:00:00"},{"y":13,"x":"2012-11-21T00:00:00"},{"y":16,"x":"2012-11-22T00:00:00"},{"y":7,"x":"2012-11-23T00:00:00"},{"y":18,"x":"2012-11-24T00:00:00"},{"y":8,"x":"2012-11-25T00:00:00"}]}],"type":"bar","yScale":"linear"}];
@@ -1553,7 +1553,7 @@ var App = function () {
             }
             rotateTimer = setTimeout(rotateChart, t);
         }
-        
+
         //Time-Series Line
         function chart2() {
             var data = {
@@ -1602,7 +1602,7 @@ var App = function () {
             };
             var myChart = new xChart('line', data, '#chart2', opts);
         }
-        
+
         function chart3() {
             var tt = document.createElement('div'),
               leftOffset = -(~~$('html').css('padding-left').replace('px', '') + ~~$('body').css('margin-left').replace('px', '')),
@@ -1664,7 +1664,7 @@ var App = function () {
             };
             var myChart = new xChart('line-dotted', data, '#chart3', opts);
         }
-        
+
         function chart4() {
             var data = {
               "xScale": "ordinal",
@@ -1687,7 +1687,7 @@ var App = function () {
             };
             var myChart = new xChart('bar', data, '#chart4');
         }
-        
+
         function chart5() {
             var data = {
               "xScale": "ordinal",
@@ -1723,7 +1723,7 @@ var App = function () {
             };
             var myChart = new xChart('bar', data, '#chart5');
         }
-        
+
         function chart6() {
             var errorBar = {
               enter: function (self, storage, className, data, callbacks) {
@@ -1800,9 +1800,9 @@ var App = function () {
                   .remove();
               }
             };
-            
+
             xChart.setVis('error', errorBar);
-            
+
             var data = [{
                   "xScale": "ordinal",
                   "yScale": "linear",
@@ -1896,7 +1896,7 @@ var App = function () {
                   ]
                 }
               ];
-              
+
              var myChart = new xChart('bar', data[0], '#chart6'), i = 0;
 
               function timer() {
@@ -1908,7 +1908,7 @@ var App = function () {
               }
               timer();
         }
-        
+
         //Run all charts
         chart1();
         chart2();
@@ -1922,86 +1922,86 @@ var App = function () {
     /*-----------------------------------------------------------------------------------*/
     var handleGage = function () {
         var g1, g2, g3, g4, g5, g6;
-      
+
       window.onload = function(){
       var g1 = new JustGage({
-        id: "g1", 
-        value: getRandomInt(0, 100), 
+        id: "g1",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Custom Width",
-        label: "",    
+        label: "",
         gaugeWidthScale: 0.2
       });
-      
+
       var g2 = new JustGage({
-        id: "g2", 
-        value: getRandomInt(0, 100), 
+        id: "g2",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Custom Shadow",
-        label: "",    
+        label: "",
         shadowOpacity: 1,
         shadowSize: 0,
-        shadowVerticalOffset: 4 
+        shadowVerticalOffset: 4
       });
-      
+
       var g3 = new JustGage({
-        id: "g3", 
-        value: getRandomInt(0, 100), 
+        id: "g3",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Custom Colors",
-        label: "",  
+        label: "",
         levelColors: [Theme.colors.red, Theme.colors.yellow, Theme.colors.green]
       });
-      
+
       var g4 = new JustGage({
-        id: "g4", 
-        value: getRandomInt(0, 100), 
+        id: "g4",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Hide Labels",
-        showMinMax: false       
+        showMinMax: false
       });
-     
-      
+
+
       var g5 = new JustGage({
-        id: "g5", 
-        value: getRandomInt(0, 100), 
+        id: "g5",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Animation Type",
-        label: "",  
+        label: "",
         startAnimationTime: 2000,
         startAnimationType: ">",
         refreshAnimationTime: 1000,
-        refreshAnimationType: "bounce"          
+        refreshAnimationType: "bounce"
       });
-      
+
       var g6 = new JustGage({
-        id: "g6", 
-        value: getRandomInt(0, 100), 
+        id: "g6",
+        value: getRandomInt(0, 100),
         min: 0,
         max: 100,
         title: "Minimal",
-        label: "",  
+        label: "",
         showMinMax: false,
         gaugeColor: "#E6E6E6",
         levelColors: ["#555555"],
-        showInnerShadow: false,        
+        showInnerShadow: false,
         startAnimationTime: 1,
         startAnimationType: "linear",
         refreshAnimationTime: 1,
-        refreshAnimationType: "linear"          
+        refreshAnimationType: "linear"
       });
-      
+
         setInterval(function() {
           g1.refresh(getRandomInt(0, 100));
-          g2.refresh(getRandomInt(0, 100));          
+          g2.refresh(getRandomInt(0, 100));
           g3.refresh(getRandomInt(0, 100));
           g4.refresh(getRandomInt(0, 100));
-          g5.refresh(getRandomInt(0, 100));          
+          g5.refresh(getRandomInt(0, 100));
           g6.refresh(getRandomInt(0, 100));
         }, 2500);
       };
@@ -2023,7 +2023,7 @@ var App = function () {
         $('#js_update_1').on('click', function() {
             chart1.update(Math.random()*100);
         });
-        
+
         //Pie 2
         $('#pie_2').easyPieChart({
             easing: 'easeOutBounce',
@@ -2037,7 +2037,7 @@ var App = function () {
         $('#js_update_2').on('click', function() {
             chart2.update(Math.random()*100);
         });
-        
+
         //Pie 3
         $('#pie_3').easyPieChart({
             easing: 'easeOutBounce',
@@ -2051,7 +2051,7 @@ var App = function () {
         $('#js_update_3').on('click', function() {
             chart3.update(Math.random()*100);
         });
-        
+
         //Pie 4
         $('#pie_4').easyPieChart({
             easing: 'easeOutBounce',
@@ -2071,7 +2071,7 @@ var App = function () {
     /*  Easy Pie chart for profile
     /*-----------------------------------------------------------------------------------*/
     var handleProfileSkillPie = function () {
-        
+
         //Pie 1
         $('#pie_1').easyPieChart({
             easing: 'easeOutBounce',
@@ -2082,7 +2082,7 @@ var App = function () {
             barColor: '#F0AD4E'
         });
         var chart1 = window.chart = $('#pie_1').data('easyPieChart');
-        
+
         //Pie 2
         $('#pie_2').easyPieChart({
             easing: 'easeOutBounce',
@@ -2093,7 +2093,7 @@ var App = function () {
             barColor: '#D9534F'
         });
         var chart2 = window.chart = $('#pie_2').data('easyPieChart');
-        
+
         //Pie 3
         $('#pie_3').easyPieChart({
             easing: 'easeOutBounce',
@@ -2169,27 +2169,27 @@ var App = function () {
     var handleCalendar = function () {
         /* initialize the external events
         -----------------------------------------------------------------*/
-    
+
         var initDrag = function (el) {
-        
+
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
             // it doesn't need to have a start or end
             var eventObject = {
                 title: $.trim(el.text()) // use the element's text as the event title
             };
-            
+
             // store the Event Object in the DOM element so we can get to it later
             el.data('eventObject', eventObject);
-            
+
             // make the event draggable using jQuery UI
             el.draggable({
                 zIndex: 999,
                 revert: true,      // will cause the event to go back to its
                 revertDuration: 0  //  original position after the drag
             });
-            
+
         }
-        
+
         var addEvent = function (title) {
             title = title.length == 0 ? "Untitled Event" : title;
             var html = $('<div class="external-event">' + title + '</div>');
@@ -2205,15 +2205,15 @@ var App = function () {
             var title = $('#event-title').val();
             addEvent(title);
         });
-    
-    
+
+
         /* initialize the calendar
         -----------------------------------------------------------------*/
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-        
+
         var calendar = $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -2241,27 +2241,27 @@ var App = function () {
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             drop: function(date, allDay) { // this function is called when something is dropped
-            
+
                 // retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
-                
+
                 // we need to copy it, so that multiple events don't have a reference to the same object
                 var copiedEventObject = $.extend({}, originalEventObject);
-                
+
                 // assign it the date that was reported
                 copiedEventObject.start = date;
                 copiedEventObject.allDay = allDay;
-                
+
                 // render the event on the calendar
                 // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
                 $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-                
+
                 // is the "remove after drop" checkbox checked?
                 if ($('#drop-remove').is(':checked')) {
                     // if so, remove the element from the "Draggable Events" list
                     $(this).remove();
                 }
-                
+
             },
             events: [
                 {
@@ -2318,7 +2318,7 @@ var App = function () {
                 }
             ]
         });
-        
+
     }
     /*-----------------------------------------------------------------------------------*/
     /*  JQVmaps
@@ -2362,7 +2362,7 @@ var App = function () {
             map.width(map.parent().width());
             map.vectorMap(data);
         }
-        
+
         //Init the maps
         setMap("world");
         setMap("usa");
@@ -2377,7 +2377,7 @@ var App = function () {
             setMap("germany");
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Isotope
     /*-----------------------------------------------------------------------------------*/
@@ -2403,7 +2403,7 @@ var App = function () {
                  return false;
             });
         });
-        
+
         function handleIsotopeStretch() {
             var width = $(window).width();
             if ( width < 768 ) {
@@ -2419,7 +2419,7 @@ var App = function () {
             handleIsotopeStretch();
         });
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Handle hover in gallery
     /*-----------------------------------------------------------------------------------*/
@@ -2482,10 +2482,10 @@ var App = function () {
             if (text.length == 0) {
                 return;
             }
-            
+
             //Get time
             var curr_time = moment().format('YYYY-MM-DD HH:mm:ss');
-            
+
             var msg = '';
                 msg +='<li class="animated fadeInLeft media">';
                 msg +=  '<a class="pull-right" href="#">';
@@ -2496,7 +2496,7 @@ var App = function () {
                 msg +=  text;
                 msg +=  '</div>';
                 msg +='</li>';
-                
+
             var list = $('.'+elem+' .chat-list');
             list.append(msg);
             jQuery("abbr.timeago").timeago();
@@ -2510,7 +2510,7 @@ var App = function () {
             e.preventDefault();
             append();
         });
-        
+
         var input = $('.'+elem+' .chat-form input');
         //If Enter is pressed
         input.keypress(function (e) {
@@ -2531,8 +2531,8 @@ var App = function () {
             source:     'js/timelinejs/example_json.json',
             embed_id:   'my-timeline',
             debug:      true,
-            css:        'js/timelinejs/css/timeline.css',     
-            js:         'js/timelinejs/js/timeline-min.js'    
+            css:        'js/timelinejs/css/timeline.css',
+            js:         'js/timelinejs/js/timeline-min.js'
         });
     }
     /*-----------------------------------------------------------------------------------*/
@@ -2540,7 +2540,7 @@ var App = function () {
     /*-----------------------------------------------------------------------------------*/
     var handleSliderNav = function () {
         $('#address-book').sliderNav();
-        
+
         $('#address-book .slider-content ul li ul li a').click(function(e){
             e.preventDefault();
             var contact_card = $('#contact-card');
@@ -2592,7 +2592,7 @@ var App = function () {
             App.scrollTo();
             e.preventDefault();
         });
-    } 
+    }
     /*-----------------------------------------------------------------------------------*/
     /*  Handles navbar fixed top
     /*-----------------------------------------------------------------------------------*/
@@ -2605,15 +2605,15 @@ var App = function () {
             //Manage margin top
             $('#main-content').removeClass('margin-top-100').addClass('margin-top-50');
         }
-    } 
+    }
     /*-----------------------------------------------------------------------------------*/
     /*  Handles flot charts in dashboard
     /*-----------------------------------------------------------------------------------*/
     var handleDashFlotCharts = function () {
-        function chartMonth() { 
+        function chartMonth() {
             var data1 = [[0, 1.5],[1, 2], [2, 1], [3, 1.5], [4, 2.5],[5, 2], [6, 2], [7, 0.5], [8, 1], [9, 1.5], [10, 2],[11, 2.5], [12, 2], [13, 1.5], [14, 2.8], [15, 2],[16, 3], [17, 2], [18, 2.5], [19, 3],[20, 2.5], [21, 2], [22, 1.5], [23, 2.5], [24, 2], [25, 1.5],[26, 1], [27, 0.5], [28, 1], [29, 1],[30, 1.5], [31, 1]];
             var data2 = [[0, 2.5],[1, 3.5], [2, 2], [3, 3], [4, 4],[5, 3.5], [6, 3.5], [7, 1], [8, 2], [9, 3], [10, 4],[11, 5], [12, 4], [13, 3], [14, 5], [15, 3.5],[16, 5], [17, 4], [18, 5], [19, 6],[20, 5], [21, 4], [22, 3], [23, 5], [24, 4], [25, 3],[26, 2], [27, 1], [28, 2], [29, 2],[30, 3], [31, 2]];
-            
+
             var plot = $.plot($("#chart-dash"), [{
                 data: data2,
                 label: "Pageviews",
@@ -2677,7 +2677,7 @@ var App = function () {
                     show: false
                 },
                 colors: ["rgba(109,173,189,0.5)", "#70AFC4", "#DB5E8C"],
-                
+
                 xaxis: {
                     ticks: 5,
                     tickDecimals: 0,
@@ -2721,7 +2721,7 @@ var App = function () {
                 }
             });
         }
-        
+
         //Select chart
         function chart_select() {
                 // setup plot
@@ -2847,32 +2847,32 @@ var App = function () {
                 $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
 
         }
-        
+
         //Revenue chart
         function chart_revenue() {
             var likes = [[1, Math.random()*100], [2, Math.random()*100], [3, Math.random()*100], [4, Math.random()*100],[5,Math.random()*100],[6, Math.random()*100],[7, Math.random()*100],[8, Math.random()*100],[9, Math.random()*100],[10, Math.random()*100],[11, Math.random()*100],[12, Math.random()*100]];
-        
+
             var chartColor = $(this).parent().parent().css("color");
-            
+
             var plot = $.plot($("#chart-revenue"),
                    [ { data: likes} ], {
                        series: {
                            label: "Revenue",
-                           lines: { 
+                           lines: {
                                 show: true,
-                                lineWidth: 3, 
+                                lineWidth: 3,
                                 fill: false
                            },
-                           points: { 
-                                show: true, 
+                           points: {
+                                show: true,
                                 lineWidth: 3,
                                 fill: true,
-                                fillColor: chartColor 
-                           },   
+                                fillColor: chartColor
+                           },
                            shadowSize: 0
                        },
-                       grid: { hoverable: true, 
-                               clickable: true, 
+                       grid: { hoverable: true,
+                               clickable: true,
                                tickColor: "rgba(255,255,255,.15)",
                                borderColor: "rgba(255,255,255,0)"
                              },
@@ -2881,15 +2881,15 @@ var App = function () {
                             font: {
                                 color: "#fff"
                             },
-                            ticks:6, 
-                            tickDecimals: 0, 
+                            ticks:6,
+                            tickDecimals: 0,
                             tickColor: chartColor,
                        },
                        yaxis: {
                             font: {
                                 color: "#fff"
                             },
-                            ticks:4, 
+                            ticks:4,
                             tickDecimals: 0,
                             autoscaleMargin: 0.000001
                        },
@@ -2934,12 +2934,12 @@ var App = function () {
                     }
             });
         }
-        
+
         //Run the charts
         //chartMonth();
         //chart_select();
         //chart_revenue();
-        
+
         //Pie 1
         $('#dash_pie_1').easyPieChart({
             easing: 'easeOutBounce',
@@ -2970,7 +2970,7 @@ var App = function () {
             barColor: Theme.colors.pink
         });
         var chart3 = window.chart = $('#dash_pie_3').data('easyPieChart');
-        
+
         //Update the charts
         $('.js_update').on('click', function() {
             chart1.update(Math.random()*100);
@@ -2983,12 +2983,12 @@ var App = function () {
     /*  Handles vertically growing bars
     /*-----------------------------------------------------------------------------------*/
     var handleVerticalChart = function () {
-        if($('.verticalChart')) {       
-            $('.singleBar').each(function(){                
-                var percent = $(this).find('.value span').html();               
-                $(this).find('.value').animate({height:percent}, 2000, function() {                 
-                    $(this).find('span').fadeIn();               
-                });             
+        if($('.verticalChart')) {
+            $('.singleBar').each(function(){
+                var percent = $(this).find('.value span').html();
+                $(this).find('.value').animate({height:percent}, 2000, function() {
+                    $(this).find('span').fadeIn();
+                });
             });
         }
     }
@@ -3005,7 +3005,7 @@ var App = function () {
             var color = $(this).data("skin");
             setSkin(color);
         });
-        
+
         //Check which theme skin is set
          if ($.cookie('skin_color')) {
             setSkin($.cookie('skin_color'));
@@ -3170,7 +3170,7 @@ var App = function () {
 
             }, 25000);
     }
-    
+
     /*-----------------------------------------------------------------------------------*/
     /*  Handles Profile Edit
     /*-----------------------------------------------------------------------------------*/
@@ -3181,7 +3181,7 @@ var App = function () {
 
         //Initialise theme pages
         init: function () {
-        
+
             if (App.isPage("index")) {
                 handleDateTimePickers(); //Function to display Date Timepicker
                 handleSparkline();      //Function to display Sparkline charts
@@ -3292,7 +3292,7 @@ var App = function () {
                 handleProfileEdit();    //Function to handle profile edit tab
             }
             if (App.isPage("mini_sidebar")) {
-                collapseSidebar();  //Function to display mini menu             
+                collapseSidebar();  //Function to display mini menu
             }
             if (App.isPage("fixed_header_sidebar")) {
                 handleFixedSidebar();   //Function to display fixed sidebar

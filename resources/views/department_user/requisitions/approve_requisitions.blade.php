@@ -1,7 +1,7 @@
 @extends('layouts.department_user')
 @section('title') All Requisitions for Approve @stop
 @section('pageTitle') Approve Requisition @stop
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
@@ -44,12 +44,10 @@
 			            <td> {{ $v->department_user['name'] }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
 			            <td>
-			            
+
 			            <a class="btn btn-info" href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>
 
-						<a class="btn btn-warning active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></i>Approve</a>
-
-					
+									<a class="btn btn-warning active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></i>Approve</a>
 						</td>
 			        </tr>
 			        @endforeach

@@ -5,14 +5,14 @@
 		<!-- SIDEBAR QUICK-LAUNCH -->
 		<!-- <div id="quicklaunch"> -->
 		<!-- /SIDEBAR QUICK-LAUNCH -->
-		
+
 		<!-- SIDEBAR MENU -->
 		<ul>
 			<li class="active">
 				<a href="{{ route('admin.dashboard') }}">
 				<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Dashboard</span>
 				<span class="selected"></span>
-				</a>					
+				</a>
 			</li>
 			<li class="has-sub">
 				<a href="javascript:;" class="">
@@ -44,8 +44,20 @@
 					<li><a class="" href="{{ route('item_group.create') }}"><span class="sub-menu-text">Add Item group</span></a></li>
 					<li><a class="" href="{{ route('item_group.index') }}"><span class="sub-menu-text">View Item Groups</span></a></li>
 					<li><a class="" href="{{ route('item_sub_group.create') }}"><span class="sub-menu-text">Add Item Sub Group</span></a></li>
-					
+
 					<li><a class="" href="{{ route('item_sub_group.index') }}"><span class="sub-menu-text">View All Item Sub Group</span></a></li>
+				</ul>
+			</li>
+
+			<li class="has-sub">
+				<a href="javascript:;" class="">
+				<i class="fa fa-arrows"></i> <span class="menu-text">Item</span>
+				<span class="arrow"></span>
+				</a>
+				<ul class="sub">
+					<li><a class="" href="{{ route('item_measurement.create') }}"><span class="sub-menu-text">Add Item</span></a></li>
+
+					<li><a class="" href="{{ route('item_measurement.index') }}"><span class="sub-menu-text">View All Items</span></a></li>
 				</ul>
 			</li>
 
@@ -56,7 +68,7 @@
 				</a>
 				<ul class="sub">
 					<li><a class="" href="{{ route('measurement_unit.create') }}"><span class="sub-menu-text">Add Measurement Unit</span></a></li>
-					
+
 					<li><a class="" href="{{ route('measurement_unit.index') }}"><span class="sub-menu-text">View All Item Sub Group</span></a></li>
 				</ul>
 			</li>
@@ -120,11 +132,11 @@
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
-					
+
 					<li><a class="" href="{{ route('admin.requisition.index') }}"><span class="sub-menu-text">View Requisition</span></a></li>
 				</ul>
 			</li>
-			
+
 			<!--Permission and roles-->
 			<li class="has-sub">
 				<a href="javascript:;" class="">

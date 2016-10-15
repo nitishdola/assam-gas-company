@@ -1,4 +1,4 @@
-@extends('layouts.department_user')
+@extends('layouts.admin')
 @section('title') Measurement of Item @stop
 @section('pageTitle') Measurement of Item @stop
 
@@ -23,7 +23,7 @@
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-		    <div class="col-xs-12">
+		    <div class="col-xs-10">
 			    {!! Form::open(array('route' => 'item_measurement.store', 'id' => 'item_measurement.store', 'class' => 'form-horizontal row-border')) !!}
 			        @include('admin.item_measurements._form')
 

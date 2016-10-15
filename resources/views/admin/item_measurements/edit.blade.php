@@ -1,4 +1,4 @@
-@extends('layouts.department_user')
+@extends('layouts.admin')
 @section('title') Edit Item @stop
 @section('pageTitle') Edit Item @stop
 @section('content')

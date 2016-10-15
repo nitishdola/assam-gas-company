@@ -1043,45 +1043,45 @@ Route::group(['prefix'=>'item'], function() {
 //     ]);
 // });
 
-Route::group(['prefix'=>'measurement-of-salvage-item'], function() {
+Route::group(['prefix'=>'salvage-item'], function() {
     Route::get('/create', [
         'as' => 'salvage_item_measurement.create',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@create'
     ]);
 
     Route::post('/store', [
         'as' => 'salvage_item_measurement.store',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@store'
     ]);
 
     Route::get('/view-all', [
         'as' => 'salvage_item_measurement.index',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@index'
     ]);
 
     Route::get('/edit/{num}', [
         'as' => 'salvage_item_measurement.edit',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@edit'
     ]);
 
     Route::post('/update/{num}', [
         'as' => 'salvage_item_measurement.update',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@update'
     ]);
 
     Route::get('/disable/{num}', [
         'as' => 'salvage_item_measurement.disable',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@disable'
     ]);
      Route::get('/view-salvage-item-details/{num}', [
         'as' => 'salvage_item_measurement.view',
-        'middleware' => ['department_user'],
+        'middleware' => ['admin'],
         'uses' => 'SalvageItemMeasurementsController@view'
     ]);
 

@@ -15,15 +15,13 @@ use App\SalvageItemMeasurement;
 class SalvageItemMeasurementsController extends Controller
 {
     public function create() {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
     	$item_groups	      = [''=> 'Select Item Group'] + ItemGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$item_sub_groups	  = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$measurement_units	  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$locations	          = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
     	$racks	              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-    	return view('department_user.salvage_item_measurements.create', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
+    	return view('admin.salvage_item_measurements.create', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
     }
 
     public function store(Request $request) {
@@ -32,7 +30,7 @@ class SalvageItemMeasurementsController extends Controller
 
         $data['expiry_date'] 	= date('Y-m-d', strtotime( $data['expiry_date'] ));
         $data['wef'] 			= date('Y-m-d', strtotime( $data['wef'] ));
-        $data['created_by'] 	= Auth::guard('department_user')->user()->id; 
+        $data['created_by'] 	= Auth::guard('admin')->user()->id;
 
     	$message = '';
     	if(SalvageItemMeasurement::create($data)) {
@@ -44,8 +42,6 @@ class SalvageItemMeasurementsController extends Controller
     }
 
     public function index(Request $request) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
 
         $where = [];
         if($request->item_group_id) {
@@ -68,7 +64,7 @@ class SalvageItemMeasurementsController extends Controller
             $where['rack_id'] = $request->rack_id;
         }
 
-      
+
         if($request->item_code) {
             $where['item_code'] = $request->item_code;
         }
@@ -78,24 +74,20 @@ class SalvageItemMeasurementsController extends Controller
         $item_sub_groups    = [''=> 'Select Item Sub Group'] + ItemSubGroup::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $measurement_units  = [''=> 'Select Unit of Measurement'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $locations          = [''=> 'Select Location'] + Location::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $racks              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray(); 
-		$results            = SalvageItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
-		return view('department_user.salvage_item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results','user'));
+        $racks              = [''=> 'Select Rack'] + Rack::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+		    $results            = SalvageItemMeasurement::where($where)->with(['item_group', 'item_sub_group', 'measurement_unit', 'location_id', 'rack_id', 'creator'])->orderBy('item_name', 'DESC')->paginate(20);
+		return view('admin.salvage_item_measurements.index', compact('item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks', 'results','user'));
 	}
 
 
     public function view( $id ) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
         $id = Crypt::decrypt($id);
         $info = SalvageItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
-       return view('department_user.salvage_item_measurements.view', compact('info','user'));
+       return view('admin.salvage_item_measurements.view', compact('info','user'));
     }
 
 
     public function edit( $id ) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
         $id = Crypt::decrypt($id);
         $salvage_item_measurement = SalvageItemMeasurement::findOrFail($id);
 
@@ -108,16 +100,16 @@ class SalvageItemMeasurementsController extends Controller
         $salvage_item_measurement['expiry_date']    = date('d-m-Y', strtotime( $salvage_item_measurement['expiry_date'] ));
         $salvage_item_measurement['wef']            = date('d-m-Y', strtotime( $salvage_item_measurement['wef'] ));
 
-        return view('department_user.salvage_item_measurements.edit', compact('salvage_item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
+        return view('admin.salvage_item_measurements.edit', compact('salvage_item_measurement','item_groups', 'item_sub_groups', 'measurement_units', 'locations', 'racks','user'));
     }
 
 
     public function update($id , Request $request) {
-        $id = Crypt::decrypt($id); 
+        $id = Crypt::decrypt($id);
         $rules = SalvageItemMeasurement::$rules;
 
         $rules['item_code']  = $rules['item_code'] . ',id,' . $id;
-        
+
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
@@ -140,10 +132,10 @@ class SalvageItemMeasurementsController extends Controller
 
 
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id = Crypt::decrypt($id);
         $item_measurement = SalvageItemMeasurement::findOrFail($id);
         $message = '';
-        //change the status of department to 0
+        //change the status of item to 0
         $item_measurement->status = 0;
         if($item_measurement->save()) {
             $message .= 'Item removed successfully !';

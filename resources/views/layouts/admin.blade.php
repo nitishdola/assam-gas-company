@@ -63,15 +63,16 @@
 						<div class="row">
 							<div class="col-lg-12">
 								@if(Session::has('message'))
-	                            <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
-	                                <button type="button" class="close" data-dismiss="alert">×</button>
-	                                {!! Session::get('message') !!}
-	                            </div>
-	                            @endif
-	                        </div>
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        {!! Session::get('message') !!}
+                    </div>
+                    @endif
+                </div>
 						</div>
-
-						@yield('content')
+						<div class="row">
+							@yield('content')
+						</div>
 
 					</div><!-- /CONTENT-->
 				</div>

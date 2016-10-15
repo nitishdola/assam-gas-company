@@ -1,4 +1,4 @@
-@extends('layouts.department_user')
+@extends('layouts.admin')
 @section('title') All Items @stop
 @section('pageTitle') All Items @stop
 @section('breadcumb')

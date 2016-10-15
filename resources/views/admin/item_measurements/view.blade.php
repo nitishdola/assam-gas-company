@@ -1,12 +1,12 @@
 
-@extends('layouts.department_user')
+@extends('layouts.admin')
 
 @section('pageTitle') View Item @stop
 <style>
   .item-field{padding: 6px 0;background: #f6f6f6;margin-bottom: 4px;}
   h5 {text-align: center;padding: 15px 0;text-decoration: underline;}
 
- 
+
 </style>
 
 @section('content')
@@ -84,7 +84,7 @@
                   <div class="col-md-6"><i class="fa fa-gg"></i> <b>ABC</b> </div>
                   <div class="col-md-6"> {{ $info->abc }}</div>
                 </div>
-              
+
               </div>
 
               <div class="col-md-6" style="padding-left:5px; padding-right:5px;">
@@ -157,16 +157,16 @@
                   <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> XYZ</b></div>
                   <div class="col-md-6 no-padding"> {{ $info->xyz }}</div>
                 </div>
-                 
+
               </div>
-             
+
               <div class="col-md-10 col-md-offset-1">
-               
-              
+
+
 
             </div>
             <hr>
-          
+
         </div>
 
 	</div>

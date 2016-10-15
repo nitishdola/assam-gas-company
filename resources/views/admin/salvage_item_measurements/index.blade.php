@@ -1,7 +1,7 @@
-@extends('layouts.department_user')
+@extends('layouts.admin')
 @section('title') All Items @stop
 @section('pageTitle') All Items @stop
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
@@ -18,8 +18,8 @@
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 			{!! Form::open(array('route' => 'salvage_item_measurement.index', 'id' => 'salvage_item_measurement.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
-			@include('department_user.salvage_item_measurements._search_form')
-			<div class="col-md-12"> 
+			@include('admin.salvage_item_measurements._search_form')
+			<div class="col-md-12">
 				{!! Form::label('', '', array('class' => 'col-md-4 control-label')) !!}
 			    {!! Form:: submit('Search', ['class' => 'btn btn-success']) !!}
 			</div>
@@ -42,7 +42,7 @@
 			            <th> Item Code </th>
 			            <th> Part Number </th>
 			            <th> Minimum Stock Level </th>
-			           
+
 			            <th> Action </th>
 			        </tr>
 			    </thead>
@@ -55,7 +55,7 @@
 			            <td> {{ $v->part_number }} </td>
 			            <td> {{ $v->minimum_stock_level }} </td>
 			             <td> <a href="{{ route('salvage_item_measurement.view', Crypt::encrypt($v->id) ) }}" title="View Item"><i class="fa fa-view" aria-hidden="true"></i>View More</a>| <a href="{{ route('salvage_item_measurement.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
-			            @if($v->status) | 
+			            @if($v->status) |
 						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('salvage_item_measurement.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash-o fa-fw"></i>Remove</a>
 						@endif
 						</td>

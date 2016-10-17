@@ -1,9 +1,9 @@
 <div id="items_block" class="col-xs-12" style="margin-bottom:15px;">
 	<div class="item material_item" style="border:1px solid #D9D6D6; padding:8px; background:#E7E3E3; margin:10px 0">
 		<div class="form-group {{ $errors->has('item_measurement_id') ? 'has-error' : ''}}">
-		  {!! Form::label('item_measurement_id', '', array('class' => 'col-md-3 control-label')) !!}
+		  {!! Form::label('item_measurement_id', 'Item', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-9">
-		    {!! Form::select('item_measurement_id[]', $item_measurements, null, ['class' => 'required form-control col-md-12 item_measurement', 'id' => 'item_measurement_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
+		    {!! Form::select('item_measurement_id[]', $item_measurements, null, ['class' => 'select2 required col-md-12 item_measurement', 'id' => 'item_measurement_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 		  {!! $errors->first('item_measurement_id', '<span class="help-inline">:message</span>') !!}
 		</div>
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="form-group {{ $errors->has('measurement_unit_id') ? 'has-error' : ''}}">
-		  {!! Form::label('measurement_unit_id', '', array('class' => 'col-md-3 control-label')) !!}
+		  {!! Form::label('measurement_unit', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-9">
 		    {!! Form::select('measurement_unit_id[]', $units, null, ['class' => 'required form-control col-md-12', 'id' => 'measurement_unit_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
@@ -45,7 +45,7 @@
 		    {!! Form::number('rate[]', null, ['class' => 'rate form-control required', 'id' => 'rate', 'placeholder' => 'Rate', 'readonly' => true, 'step' => '0.01', 'autocomplete' => 'off', 'required' => 'true']) !!}
 		  </div>
 
-		  <!-- 
+		  <!--
 		  {!! Form::label('value', '', array('class' => 'col-md-3 control-label')) !!}
 		  <div class="col-md-3">
 		    {!! Form::text('value[]', null, ['class' => 'disabled form-control', 'id' => 'value', 'disabled' => true, 'placeholder' => 'Value', 'autocomplete' => 'off',]) !!}
@@ -71,8 +71,7 @@
 </div>
 
 <div id="col-md-12">
-	<a href="#" class="btn btn-warning add_more_item">Add More Item <i class="fa fa-plus-square" aria-hidden="true"></i></a>
+	<a href="javascript:void(0)" class="btn btn-warning add_more_item">Add More Item <i class="fa fa-plus-square" aria-hidden="true"></i></a>
 
-	<a href="#" class="btn btn-danger remove_item" style="display:none">Remove <i class="fa fa-minus-square" aria-hidden="true"></i></a>
+	<a href="javascript:void(0)" class="btn btn-danger remove_item" style="display:none">Remove <i class="fa fa-minus-square" aria-hidden="true"></i></a>
 </div>
-

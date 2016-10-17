@@ -20,7 +20,7 @@
 @stop
 
 @section('content')
-<div class="col-lg-12">
+<div class="col-lg-10">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
 		    <div class="col-xs-12">
@@ -43,19 +43,24 @@
 <script>
 //load_sections();
 var item = 1;
+var $original = $('#item_measurement_id');
+$original.select2('destroy');
+var $item = $('.item');
+var $clone = $item.clone(true).removeClass('item'); // Clone item
+
 $('.add_more_item').click(function(e) {
 	item++;
 	e.preventDefault();
-	var $item = $('.item');
-	var $clone = $item.clone(true).removeClass('item'); // Clone item
+	$original.select2('destroy');
 	$clone.appendTo("#items_block");
+	$original.select2();
+	$clone.select2();
 	show_hide_item(item);
 });
 
 $('.remove_item').click(function(e) {
 	item--;
 	e.preventDefault();
-	$('.material_item:last').css("background-color", "#F56E6E").remove();
 	show_hide_item(item);
 });
 

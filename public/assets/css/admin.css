@@ -531,6 +531,25 @@ dt {
 dd {
   margin-left: 0;
 }
+
+/**custom css**/
+.danger-min {
+  color:#D9534F;
+  padding:10px;
+  background:#F2DEDE;
+  font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+  font-weight: 500;
+}
+
+.warning-min {
+  color:#8A6D3B;
+  padding:10px;
+  background:#FCF8E3;
+  font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+  font-weight: 500;
+}
+
+
 @media (min-width: 768px) {
   .dl-horizontal dt {
     float: left;

@@ -24,7 +24,11 @@ class DepartmentUsersController extends Controller
     	  $username = Auth::guard('department_user')->user()->username;
         $user = DepartmentUser::where('username', $username)->first();
 
-    	  return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement','user'));
+				$min_stocked_items 		= ItemMeasurement::select('item_name', 'item_code', 'stock_in_hand', 'minimum_stock_level', 'reorder_stock_level')->where('stock_in_hand', '<=', 'minimum_stock_level')->orderBy('stock_in_hand', 'ASC')->get();
+
+				$min_reordered_items 	= ItemMeasurement::select('item_name', 'item_code', 'stock_in_hand', 'minimum_stock_level', 'reorder_stock_level')->where('stock_in_hand', '<=', 'reorder_stock_level')->orderBy('reorder_stock_level', 'ASC')->get();
+
+    	  return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement','user', 'min_stocked_items', 'min_reordered_items'));
     }
 
     public function change_password() {
@@ -38,7 +42,7 @@ class DepartmentUsersController extends Controller
 
   public function update_password_department(Request $request) {
 
-     
+
       $rules = array(
           'current_password'          => 'required',
           'password_new'              => 'required|confirmed|different:current_password',

@@ -38,6 +38,11 @@
 		</div>
 	</div>
 </div>
+
+<div class="col-md-5">
+	{{ config('globals.requisition_form_number') }}
+</div>
+
 @endsection
 @section('pageJs')
 <script>

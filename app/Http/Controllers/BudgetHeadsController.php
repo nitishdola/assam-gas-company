@@ -10,22 +10,22 @@ use App\BudgetHead, App\Section, App\Department;
 class BudgetHeadsController extends Controller
 {
     public function index() {
-		$results = BudgetHead::whereStatus(1)->with(['creator', 'department', 'section'])->orderBy('name', 'DESC')->paginate(20);
-		return view('accounts_user.budget_heads.index', compact('results'));
-	}
+  		$results = BudgetHead::whereStatus(1)->with(['creator', 'department', 'section'])->orderBy('name', 'DESC')->paginate(20);
+  		return view('accounts_user.budget_heads.index', compact('results'));
+  	}
 
     public function create() {
-        $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-    	$results = BudgetHead::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
-    	return view('accounts_user.budget_heads.create', compact('results', 'departments', 'sections'));
+         $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    	   $results = BudgetHead::whereStatus(1)->orderBy('created_at', 'DESC')->take(5)->get();
+    	   return view('accounts_user.budget_heads.create', compact('results', 'departments', 'sections'));
     }
 
     public function store(Request $request) {
     	$validator = Validator::make($data = $request->all(), BudgetHead::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $data['created_by'] = Auth::guard('accounts_user')->user()->id; 
+        $data['created_by'] = Auth::guard('accounts_user')->user()->id;
     	$message = '';
     	if(BudgetHead::create($data)) {
             $message .= 'Budget head added successfully !';
@@ -42,15 +42,15 @@ class BudgetHeadsController extends Controller
         $departments    = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
        return view('accounts_user.budget_heads.edit', compact('BudgetHead', 'departments', 'sections'));
-      
+
     }
 
-    public function update( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+    public function update( $id, Request $request) {
+        $id = Crypt::decrypt($id);
         $rules = BudgetHead::$rules;
 
         $rules['name']  = $rules['name'] . ',id,' . $id;
-        
+
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
@@ -71,7 +71,7 @@ class BudgetHeadsController extends Controller
     }
 
     public function disable($id ) {
-        $id         = Crypt::decrypt($id); 
+        $id         = Crypt::decrypt($id);
         $BudgetHead = BudgetHead::findOrFail($id);
         $message    = '';
         //change the status of department to 0

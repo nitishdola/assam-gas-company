@@ -20,27 +20,26 @@
 @stop
 
 @section('content')
-<div class="col-lg-10">
-	<div class="widget-container fluid-height clearfix">
-		<div class="widget-content padded">
-		    <div class="col-xs-12">
-			    {!! Form::open(array('route' => 'requisition.store', 'id' => 'requisition.store', 'class' => 'form-horizontal row-border')) !!}
-			        @include('department_user.requisitions._form')
-			        <div style="height:30px;"></div>
-			        <h4> Requisition Material(s) </h4>
-			        @include('department_user.requisitions._item_form')
-			        <div class="col-xs-12" style="margin-top:30px;">
-			        {!! Form::label('', '', array('class' => 'col-md-5 control-label')) !!}
-			        {!! Form:: submit('Create Requisition', ['class' => 'btn btn-success']) !!}
-			        </div>
-			    {!!form::close()!!}
-			</div>
+<div class="widget-container fluid-height clearfix">
+	<div class="widget-content padded">
+	    <div class="col-xs-12">
+		    {!! Form::open(array('route' => 'requisition.store', 'id' => 'requisition.store', 'class' => 'form-horizontal row-border')) !!}
+		        @include('department_user.requisitions._form')
+		        <div style="height:30px;"></div>
+
+						<h4> Requisition Material(s) </h4>
+		        @include('department_user.requisitions._item_form2')
+		        <div class="col-xs-12" style="margin-top:30px;">
+		        {!! Form::label('', '', array('class' => 'col-md-5 control-label')) !!}
+		        {!! Form:: submit('Create Requisition', ['class' => 'btn btn-success']) !!}
+		        </div>
+		    {!!form::close()!!}
 		</div>
 	</div>
 </div>
 
 <div class="col-md-5">
-	{{ config('globals.requisition_form_number') }}
+	Form Number : 1
 </div>
 
 @endsection
@@ -48,23 +47,22 @@
 <script>
 //load_sections();
 var item = 1;
-var $original = $('#item_measurement_id');
-$original.select2('destroy');
-var $item = $('.item');
-var $clone = $item.clone(true).removeClass('item'); // Clone item
-
+var $latest_tr = $('#req_table tr:last');
 $('.add_more_item').click(function(e) {
 	item++;
-	e.preventDefault();
-	$original.select2('destroy');
-	$clone.appendTo("#items_block");
-	$original.select2();
-	$clone.select2();
+	$('.select2').select2("destroy");
+	var $clone = $latest_tr.clone();
+	$latest_tr.after($clone);
+	$('.select2').select2();
+	$clone.find('.select2').val('');
+	$clone.find(':text').val('');
 	show_hide_item(item);
+
 });
 
 $('.remove_item').click(function(e) {
 	item--;
+  $latest_tr.remove();
 	e.preventDefault();
 	show_hide_item(item);
 });
@@ -101,8 +99,8 @@ $('.item_measurement').change(function(e) {
 			},
 			success : function(resp) {
 				$.unblockUI();
-				$parent.find('.rate').val(resp.latest_rate);
-				$parent.find('.stock_in_hand').text(resp.stock_in_hand);
+				$latest_tr.find('.rate').val(resp.latest_rate);
+				$latest_tr.find('.stock_in_hand').text(resp.stock_in_hand);
 			}
 		});
 	}

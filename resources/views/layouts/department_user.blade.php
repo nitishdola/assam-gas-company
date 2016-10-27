@@ -147,6 +147,7 @@
 
      function load_racks() {
         $('#location_id').on('change', function() {
+						$.blockUI();
 
             var locationID = $(this).val();
             var data = '';
@@ -162,20 +163,19 @@
 
                     error : function(resp) {
                         console.log(resp);
+												$.unblockUI();
                     },
                     success:function(data) {
-                        $.blockUI();
 
+											  $.unblockUI();
                         setTimeout($.unblockUI, 500);
                         $('select[name="rack_id"]').empty();
                         $.each(data, function(key, value) {
                             $('select[name="rack_id"]').append('<option value="'+ key +'">'+ value +'</option>');
                         });
-
                      }
                 });
             }else{
-
                 $('select[name="rack_id"]').empty();
             }
         });
@@ -218,17 +218,14 @@ function load_subgroups() {
 
     $(document).ready(function() {
 
-    $('#edit').click(function() {
-        $.blockUI();
+	    $('#edit').click(function() {
+	        $.blockUI();
 
-        setTimeout($.unblockUI, 2000);
-    });
-});
+	        setTimeout($.unblockUI, 2000);
+	    });
+	});
 
 	</script>
-
-
-
 	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->
 </body>

@@ -1,7 +1,7 @@
 var App = function () {
 
     var currentPage = ''; // current page
-    var collapsed = true; //sidebar collapsed
+    var collapsed = false; //sidebar collapsed
     var is_mobile = false; //is screen mobile?
     var is_mini_menu = false; //is mini-menu activated
     var is_fixed_header = false; //is fixed header activated

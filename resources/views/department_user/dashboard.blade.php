@@ -21,7 +21,7 @@
 				   </div>
 				   <div class="panel-right">
 						<div class="number"> <a href="{{ route('item_measurement.index')}}">{{$total_item_measurement}}</a></div>
-						<div class="title">Total Measurements(Item)</div>
+						<div class="title">Total Item</div>
 				   </div>
 				</div>
 			 </div>
@@ -35,7 +35,7 @@
 				   </div>
 				   <div class="panel-right">
 						<div class="number"><a href="{{ route('salvage_item_measurement.index')}}">{{$total_salvage_measurement}}</a></div>
-						<div class="title">Total Salvage(Item)</div>
+						<div class="title">Total Salvage Item</div>
 				   </div>
 				</div>
 			 </div>

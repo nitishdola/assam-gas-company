@@ -26,7 +26,6 @@
 		    {!! Form::open(array('route' => 'requisition.store', 'id' => 'requisition.store', 'class' => 'form-horizontal row-border')) !!}
 		        @include('department_user.requisitions._form')
 		        <div style="height:30px;"></div>
-
 						<h4> Requisition Material(s) </h4>
 		        @include('department_user.requisitions._item_form2')
 		        <div class="col-xs-12" style="margin-top:30px;">
@@ -47,17 +46,32 @@
 <script>
 //load_sections();
 var item = 1;
-var $latest_tr = $('#req_table tr:last');
-$('.add_more_item').click(function(e) {
-	item++;
-	$('.select2').select2("destroy");
-	var $clone = $latest_tr.clone();
-	$latest_tr.after($clone);
-	$('.select2').select2();
-	$clone.find('.select2').val('');
-	$clone.find(':text').val('');
-	show_hide_item(item);
 
+
+
+// $('.add_more_item').click(function(e) {
+//
+// 	$latest_tr 	= $('#req_table tr:last');
+// 	$clone 			= $latest_tr.clone();
+//
+// 	$('select.select2').select2('destroy');
+// 	$latest_tr.after($clone);
+// 	$('select.select2').select2();
+// 	$clone.find(':text').val('');
+// 	item++;
+// 	show_hide_item(item);
+// });
+
+$('.add_more_item').click(function(e) {
+
+	$latest_tr 	= $('#req_table tr:last');
+	$('select.select2').select2('destroy');
+	$clone 			= $latest_tr.clone();
+	$latest_tr.after($clone);
+	$('select.select2').select2();
+	$clone.find(':text').val('');
+	item++;
+	show_hide_item(item);
 });
 
 $('.remove_item').click(function(e) {
@@ -76,12 +90,11 @@ function show_hide_item( item ) {
 }
 
 $('.item_measurement').change(function(e) {
-
 	var url 	= '';
 	var data	= '';
 	var $this = $(this);
 	var item_measurement_id = $this.val();
-	var $parent = $this.parents('.material_item');//$this.parent(); //$('.material_item');
+	var $parent = $this.parents('.material_item');
 	if(item_measurement_id != '' || item_measurement_id != 0) {
 		$.blockUI();
 		url 	+= '{{ route("rest.item_values") }}';

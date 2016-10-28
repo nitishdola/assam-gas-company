@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('pageTitle') Dashboard @stop
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -26,7 +26,7 @@
 				</div>
 			 </div>
 		  </div>
-		
+
 		  <div class="col-lg-4">
 			 <div class="dashbox panel panel-default">
 				<div class="panel-body">
@@ -83,8 +83,8 @@
 				</div>
 			 </div>
 		  </div>
-		  
-		    <div class="col-lg-4">
+
+		  <div class="col-lg-4">
 			 <div class="dashbox panel panel-default">
 				<div class="panel-body">
 				   <div class="panel-left red">

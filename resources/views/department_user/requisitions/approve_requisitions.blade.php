@@ -44,17 +44,15 @@
 			            <td> {{ $v->department_user['name'] }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->created_at)) }} </td>
 			            <td>
-
-			            <a class="btn btn-info" href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>
-
-									<a class="btn btn-warning active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></i>Approve</a>
-						</td>
+			            	<a class="btn btn-info" href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>
+										<a class="btn btn-warning active" href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="fa fa-paper-plane" aria-hidden="true"></i></i>Approve</a>
+									</td>
 			        </tr>
 			        @endforeach
 			    </tbody>
 			</table>
 			<div class="pagination">
-			{!! $results->render() !!}
+				{!! $results->render() !!}
 			</div>
 		    @else
 		    	<div class="alert alert-danger alert-dismissable alert-red">

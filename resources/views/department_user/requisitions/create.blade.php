@@ -16,9 +16,10 @@
 <li>
 	Material Requisition Form
 </li>
-
 @stop
-
+<style>
+.no-display { display: none; }
+</style>
 @section('content')
 <div class="widget-container fluid-height clearfix">
 	<div class="widget-content padded">
@@ -38,7 +39,7 @@
 </div>
 
 <div class="col-md-5">
-	Form Number : 1
+	<h3>Form Number : 1</h3>
 </div>
 
 @endsection
@@ -46,28 +47,15 @@
 <script>
 //load_sections();
 var item = 1;
-
-
-
-// $('.add_more_item').click(function(e) {
-//
-// 	$latest_tr 	= $('#req_table tr:last');
-// 	$clone 			= $latest_tr.clone();
-//
-// 	$('select.select2').select2('destroy');
-// 	$latest_tr.after($clone);
-// 	$('select.select2').select2();
-// 	$clone.find(':text').val('');
-// 	item++;
-// 	show_hide_item(item);
-// });
-
+$(".select2").select2();
 $('.add_more_item').click(function(e) {
 
 	$latest_tr 	= $('#req_table tr:last');
-	$('select.select2').select2('destroy');
+  $('select.select2').select2('destroy');
+
 	$clone 			= $latest_tr.clone();
-	$latest_tr.after($clone);
+
+	$latest_tr.after($clone); 
 	$('select.select2').select2();
 	$clone.find(':text').val('');
 	item++;

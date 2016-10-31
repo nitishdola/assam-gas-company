@@ -30,52 +30,58 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/datetimepicker-master/jquery.datetimepicker.css') }}"/ >
 	@yield('pageCss')
+	<style>
+	.navbar li a {
+		color:#FFF;
+	}
+
+	.navbar li ul a {
+		color:#444;
+	}
+	</style>
 </head>
 <body>
 	@include('department_user.common.header')
 	<!-- PAGE -->
 	<section id="page">
-		@include('department_user.common.sidebar')
-		<div id="main-content">
-			<div class="container">
-				<div class="row">
-					<div id="content" class="col-lg-12">
-						<div class="row">
-						  <div class="col-sm-12">
-						    <div class="page-header">
-						      <!-- BREADCRUMBS -->
-						      <ul class="breadcrumb">
-						        @yield('breadcumb')
-						      </ul>
-						      <!-- /BREADCRUMBS -->
-						      <div class="clearfix">
-						        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
-						        <!-- DATE RANGE PICKER -->
-						        <span class="date-range pull-right">
-						          @yield('sorting')
-						        </span>
-						        <!-- /DATE RANGE PICKER -->
-						      </div>
-						      <div class="description">@yield('pageSubTitle')</div>
-						    </div>
-						  </div>
-						</div>
+		<div class="container">
+			<div class="row">
+				<div id="content" class="col-lg-12">
+					<div class="row">
+					  <div class="col-sm-12">
+					    <div class="page-header">
+					      <!-- BREADCRUMBS -->
+					      <ul class="breadcrumb">
+					        @yield('breadcumb')
+					      </ul>
+					      <!-- /BREADCRUMBS -->
+					      <div class="clearfix">
+					        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
+					        <!-- DATE RANGE PICKER -->
+					        <span class="date-range pull-right">
+					          @yield('sorting')
+					        </span>
+					        <!-- /DATE RANGE PICKER -->
+					      </div>
+					      <div class="description">@yield('pageSubTitle')</div>
+					    </div>
+					  </div>
+					</div>
 
-						<div class="row">
-							<div class="col-lg-12">
-									@if(Session::has('message'))
-                  <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                      <button type="button" class="close" data-dismiss="alert">×</button>
-                      {!! Session::get('message') !!}
-                  </div>
-                  @endif
-              </div>
-						</div>
+					<div class="row">
+						<div class="col-lg-12">
+								@if(Session::has('message'))
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    {!! Session::get('message') !!}
+                </div>
+                @endif
+            </div>
+					</div>
 
-						@yield('content')
+					@yield('content')
 
-					</div><!-- /CONTENT-->
-				</div>
+				</div><!-- /CONTENT-->
 			</div>
 		</div>
 	</section>
@@ -125,7 +131,7 @@
 	<!-- GRITTER -->
 	<script type="text/javascript" src="{{ asset('public/assets/js/gritter/js/jquery.gritter.min.js') }}"></script>
 
-	<script src="{{ asset('public/assets/js/select2/select2.min.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 	<script src="{{ asset('public/assets/zebra/javascript/zebra_datepicker.js') }}"></script>
 

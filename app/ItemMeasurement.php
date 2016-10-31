@@ -11,8 +11,8 @@ class ItemMeasurement extends Model
     protected $guarded  = ['_token'];
 
     public static $rules = [
-    	'item_code' 			=>  'required|unique:item_measurements|max:255', 
-    	//'barcode'  				=>  'sometimes|unique:item_measurements|max:127',
+    	'item_code' 			=>  'required|unique:item_measurements|max:255',
+    	'barcode'  				=>  'max:127',
     	'item_name'  			=>  'required|max:255',
     	'item_description'  	=>  'required|max:500',
     	'part_number'  			=>  'required|max:255',
@@ -43,31 +43,31 @@ class ItemMeasurement extends Model
     	'stock_in_hand'  		=>  'required|numeric',
     ];
 
-    public function creator() 
+    public function creator()
 	{
-		return $this->belongsTo('App\DepartmentUser', 'created_by');
+		return $this->belongsTo('App\Admin', 'created_by');
 	}
 
-	public function item_group() 
+	public function item_group()
 	{
 		return $this->belongsTo('App\ItemGroup', 'item_group_id');
 	}
 
-	public function item_sub_group() 
+	public function item_sub_group()
 	{
 		return $this->belongsTo('App\ItemSubGroup', 'item_sub_group_id');
 	}
 
-	public function measurement_unit() 
+	public function measurement_unit()
 	{
 		return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');
 	}
-    public function location() 
+    public function location()
     {
         return $this->belongsTo('App\Location', 'location_id');
     }
 
-    public function rack() 
+    public function rack()
     {
         return $this->belongsTo('App\Rack', 'rack_id');
     }

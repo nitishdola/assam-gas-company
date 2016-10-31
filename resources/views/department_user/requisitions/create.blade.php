@@ -1,7 +1,7 @@
 @extends('layouts.department_user')
 @section('title') Material Requisition Form @stop
 @section('pageTitle') Material Requisition Form @stop
-
+@section('formNumber') (<span class="form-number">Form Number : {{ config('globals.req_form') }}</span>) @stop
 @section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
@@ -17,17 +17,15 @@
 	Material Requisition Form
 </li>
 @stop
-<style>
-.no-display { display: none; }
-</style>
 @section('content')
 <div class="widget-container fluid-height clearfix">
 	<div class="widget-content padded">
 	    <div class="col-xs-12">
 		    {!! Form::open(array('route' => 'requisition.store', 'id' => 'requisition.store', 'class' => 'form-horizontal row-border')) !!}
 		        @include('department_user.requisitions._form')
-		        <div style="height:30px;"></div>
-						<h4> Requisition Material(s) </h4>
+						<hr>
+		        <div class="col-xs-12" style="height:30px;"> <h3> Add Items </h3></div>
+
 		        @include('department_user.requisitions._item_form2')
 		        <div class="col-xs-12" style="margin-top:30px;">
 		        {!! Form::label('', '', array('class' => 'col-md-5 control-label')) !!}
@@ -38,10 +36,6 @@
 	</div>
 </div>
 
-<div class="col-md-5">
-	<h3>Form Number : 1</h3>
-</div>
-
 @endsection
 @section('pageJs')
 <script>
@@ -49,15 +43,14 @@
 var item = 1;
 $(".select2").select2();
 $('.add_more_item').click(function(e) {
-
 	$latest_tr 	= $('#req_table tr:last');
   $('select.select2').select2('destroy');
-
 	$clone 			= $latest_tr.clone();
-
-	$latest_tr.after($clone); 
+	$latest_tr.after($clone);
 	$('select.select2').select2();
 	$clone.find(':text').val('');
+	$clone.find('.quantity_demanded').val('');
+	$clone.find('.stock_in_hand').text('');
 	item++;
 	show_hide_item(item);
 });
@@ -77,7 +70,7 @@ function show_hide_item( item ) {
 	}
 }
 
-$('.item_measurement').change(function(e) {
+$('.item_measurement').change(function(e) { console.log('Change');
 	var url 	= '';
 	var data	= '';
 	var $this = $(this);
@@ -100,6 +93,7 @@ $('.item_measurement').change(function(e) {
 			},
 			success : function(resp) {
 				$.unblockUI();
+				$latest_tr 	= $('#req_table tr:last');
 				$latest_tr.find('.rate').val(resp.latest_rate);
 				$latest_tr.find('.stock_in_hand').text(resp.stock_in_hand);
 			}

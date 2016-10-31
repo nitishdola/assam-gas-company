@@ -28,6 +28,7 @@ class ItemMeasurementsController extends Controller
         $data['wef'] 			= date('Y-m-d', strtotime( $data['wef'] ));
         $data['created_by'] 	= Auth::guard('admin')->user()->id;
 
+      //  dd($data);
     	$message = '';
     	if(ItemMeasurement::create($data)) {
             $message .= 'Item added successfully !';
@@ -99,7 +100,7 @@ class ItemMeasurementsController extends Controller
      public function view( $id ) {
         $id   = Crypt::decrypt($id);
 
-       $info  = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location_id','rack_id')->first();
+       $info  = ItemMeasurement::where('id', $id)->with('item_group', 'item_sub_group', 'measurement_unit', 'location','rack')->first();
        return view('admin.item_measurements.view', compact('info','user'));
     }
 

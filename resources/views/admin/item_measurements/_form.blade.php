@@ -79,13 +79,13 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('asset_type') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('asset_type') ? 'has-error' : ''}}">
     <label class="col-md-3 control-label" for="radios">Asset Type</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="asset_type" id="radios-0" value="capital" checked="checked" type="radio">
         Capital
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="asset_type" id="radios-1" value="revenue" type="radio">
         Revenue
@@ -94,13 +94,13 @@
   </div>
 
 
-  <div class="form-group {{ $errors->has('insured') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('insured') ? 'has-error' : ''}}">
     <label class="col-md-3 control-label" for="radios">Insured</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="insured" id="radios-0" value="yes" checked="checked" type="radio">
         Insured
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="insured" id="radios-1" value="no" type="radio">
         Not-Insured
@@ -108,13 +108,13 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('review') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('review') ? 'has-error' : ''}}">
     <label class="col-md-3 control-label" for="radios">Review</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="review" id="radios-0" value="yes" checked="checked" type="radio">
         Review
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="review" id="radios-1" value="no" type="radio">
         Non-Review
@@ -122,13 +122,13 @@
     </div>
   </div>
 
-  <div class="form-group {{ $errors->has('product_preference') ? 'has-error' : ''}}"">
+  <div class="form-group {{ $errors->has('product_preference') ? 'has-error' : ''}}">
     <label class="col-md-3 control-label" for="radios">Product Preference</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="product_preference" id="radios-v" value="vital" checked="checked" type="radio">
         Vital
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="product_preference" id="radios-e" value="essential" type="radio">
         Essential
@@ -169,11 +169,11 @@
 
   <div class="form-group {{ $errors->has('abc') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">ABC</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="abc" id="radios-0" value="1" checked="checked" type="radio">
         Yes
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="abc" id="radios-1" value="0" type="radio">
         No
@@ -183,11 +183,11 @@
 
   <div class="form-group {{ $errors->has('xyz') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">XYZ</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="xyz" id="radios-0" value="1" checked="checked" type="radio">
         Yes
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="xyz" id="radios-1" value="0" type="radio">
         No
@@ -197,11 +197,11 @@
 
   <div class="form-group {{ $errors->has('fsn') ? 'has-error' : ''}}"">
     <label class="col-md-3 control-label" for="radios">FSN</label>
-    <div class="col-md-9"> 
+    <div class="col-md-9">
       <label class="radio-inline" for="radios-0">
         <input name="fsn" id="radios-0" value="1" checked="checked" type="radio">
         Yes
-      </label> 
+      </label>
       <label class="radio-inline" for="radios-1">
         <input name="fsn" id="radios-1" value="0" type="radio">
         No

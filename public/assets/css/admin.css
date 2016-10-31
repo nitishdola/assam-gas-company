@@ -548,7 +548,12 @@ dd {
   font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
   font-weight: 500;
 }
-
+.form-number {
+  font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+  font-size: 1.3em;
+  font-style: oblique;
+}
+.no-display { display: none; }
 
 @media (min-width: 768px) {
   .dl-horizontal dt {

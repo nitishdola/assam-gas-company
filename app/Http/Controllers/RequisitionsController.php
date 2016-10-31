@@ -23,17 +23,36 @@ class RequisitionsController extends Controller
 
             $units  = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-            return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units'));
+            //requisition number generate
+            $requisition_number = $this->generate_requisition_number();
+            $requisition_number = 'REQ_'.$requisition_number;
+
+            $financial_year = $this->calculateFiscalYear();
+            return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units', 'requisition_number', 'financial_year'));
         }else{
             $message = '';
             $message .= 'Unauthorize Aceess !';
             return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        } 
+        }
+    }
+
+
+    function calculateFiscalYear($inputDate = NULL){
+      if($inputDate == NULL) {
+        $inputDate = date('Y-m-d');
+      }
+      $financial_year_date = date('31-3-'.date('Y', strtotime($inputDate)));
+
+      if(strtotime($financial_year_date) >= strtotime($inputDate)) {
+        return (date('Y',strtotime($financial_year_date))-1).'-'.date('y',strtotime($financial_year_date));
+      }else{
+        return date('Y',strtotime($financial_year_date)).'-'.(date('y',strtotime($financial_year_date))+1);
+      }
     }
 
 
     public function store(Request $request) {
-        if($this->_department_user->can(['create_requisition'])) {  
+        if($this->_department_user->can(['create_requisition'])) {
             $message = '';
             DB::beginTransaction();
             /* Insert data to requisitions table */
@@ -43,6 +62,7 @@ class RequisitionsController extends Controller
                 if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
                 $data['department_id']  = Auth::guard('department_user')->user()->department_id;
                 $data['raised_by']     = Auth::guard('department_user')->user()->id;
+
                 $requisition = Requisition::create( $data );
             }catch(ValidationException $e)
             {
@@ -75,6 +95,15 @@ class RequisitionsController extends Controller
         }
     }
 
+    private function generate_requisition_number() {
+      //latest requisition number
+      $requisition = Requisition::select('id')->orderBy('id', 'DESC')->first();
+      if($requisition) {
+        return $requisition->id+1;
+      }
+      return 1;
+    }
+
 
     public function index(Request $request) {
         if($this->_department_user->can(['view_requisitions'])) {
@@ -97,7 +126,7 @@ class RequisitionsController extends Controller
                 $where['hod'] = $request->Approval;
             }
             $where['status'] = 1;
-          
+
             $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
             return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
@@ -106,7 +135,7 @@ class RequisitionsController extends Controller
             $message .= 'Unauthorize Aceess !';
             return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
          //$this->isViewAuthorized();
-    
+
             $username = Auth::guard('department_user')->user()->username;
             $user     = DepartmentUser::where('username', $username)->first();
             $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -137,10 +166,10 @@ class RequisitionsController extends Controller
             $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
             $where = [];
-           
+
             $where['hod']    = NULL;
             $where['status'] = 1;
-          
+
             $results = Requisition::where($where)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
             return view('department_user.requisitions.approve_requisitions', compact('departments','chargeable_accounts', 'results','user'));
@@ -198,26 +227,26 @@ class RequisitionsController extends Controller
         return view('department_user.requisitions.edit', compact('units', 'item_measurements', 'chargeable_accounts', 'requisitions','requisition_items','user'));
     }
 
-    
+
 
     public function update($id , Request $request) {
-        $id    = Crypt::decrypt($id); 
+        $id    = Crypt::decrypt($id);
         $rules = Requisition::$rules;
         $validator = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
         $requisition    = Requisition::findOrFail($id);
         $requisition_id = $requisition->id;
-         
+
        $message = '';
         DB::beginTransaction();
         /* Insert data to requisitions table */
         try {
 
             $data['department_id']  = Auth::guard('department_user')->user()->department_id;
-            $data['issue_date']     = date('Y-m-d'); 
+            $data['issue_date']     = date('Y-m-d');
             $data['raised_by']      = Auth::guard('department_user')->user()->id;
             $requisition->fill($data);
-  
+
             $requisition = $requisition->save();
         }catch(ValidationException $e)
         {
@@ -231,13 +260,13 @@ class RequisitionsController extends Controller
                 $item_details = RequisitionItem::where('id', $data['id'][$i])->where('requisition_id',
                     $requisition_id)->first();
                 $item_details->item_measurement_id = $request->item_measurement_id[$i];
-                $item_details->store_description   = $request->store_description[$i];               
+                $item_details->store_description   = $request->store_description[$i];
                 $item_details->measurement_unit_id = $request->measurement_unit_id[$i];
                 $item_details->quantity_demanded   = $request->quantity_demanded[$i];
                 $item_details->rate                = $request->rate[$i];
-                $item_details->save();         
-            }  
-        } 
+                $item_details->save();
+            }
+        }
         catch(ValidationException $e)
         {
             return Redirect::back();
@@ -251,7 +280,7 @@ class RequisitionsController extends Controller
 
 
     public function disable($id ) {
-        $id           = Crypt::decrypt($id); 
+        $id           = Crypt::decrypt($id);
         $requisitions = Requisition::findOrFail($id);
         $message = '';
         //change the status of department to 0
@@ -276,7 +305,7 @@ class RequisitionsController extends Controller
     }
 
     public function receiveRequisition( $id ) {
-        if($this->_department_user->can(['receive_requisition'])) {  
+        if($this->_department_user->can(['receive_requisition'])) {
             $id       = Crypt::decrypt($id);
             $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
             $requisition_items  = RequisitionItem::where('requisition_id', $id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->with(['measurement_unit', 'item_measurement'])->where('status',1)->get();
@@ -309,15 +338,15 @@ class RequisitionsController extends Controller
         $requisition_item->remarks          = $request->remarks;
         $requisition_item->issued_by        = Auth::guard('department_user')->user()->id;
         $requisition_item->issued_date      = date('Y-m-d');
-    
+
         if($requisition_item->save()) {
             $message = '';
             $message .= 'Successfully Issued !';
-            return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-success']);    
+            return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-success']);
         }else{
             $message = '';
             $message .= 'Issue was not successfull !';
             return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        }       
+        }
     }
 }

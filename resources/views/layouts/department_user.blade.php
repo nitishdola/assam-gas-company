@@ -45,44 +45,43 @@
 	<!-- PAGE -->
 	<section id="page">
 		<div class="container">
-			<div class="row">
-				<div id="content" class="col-lg-12">
-					<div class="row">
-					  <div class="col-sm-12">
-					    <div class="page-header">
-					      <!-- BREADCRUMBS -->
-					      <ul class="breadcrumb">
-					        @yield('breadcumb')
-					      </ul>
-					      <!-- /BREADCRUMBS -->
-					      <div class="clearfix">
-					        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
-					        <!-- DATE RANGE PICKER -->
-					        <span class="date-range pull-right">
-					          @yield('sorting')
-					        </span>
-					        <!-- /DATE RANGE PICKER -->
-					      </div>
-					      <div class="description">@yield('pageSubTitle')</div>
-					    </div>
-					  </div>
-					</div>
+			<div id="content">
+				<div class="row">
+				  <div class="col-sm-12">
+				    <div class="page-header">
+				      <!-- BREADCRUMBS -->
+				      <ul class="breadcrumb">
+				        @yield('breadcumb')
+				      </ul>
+				      <!-- /BREADCRUMBS -->
+				      <div class="clearfix">
+				        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
+								<br><br><h5>@yield('formNumber')</h5>
+				        <!-- DATE RANGE PICKER -->
+				        <span class="date-range pull-right">
+				          @yield('sorting')
+				        </span>
+				        <!-- /DATE RANGE PICKER -->
+				      </div>
+				      <div class="description">@yield('pageSubTitle')</div>
+				    </div>
+				  </div>
+				</div>
 
-					<div class="row">
-						<div class="col-lg-12">
-								@if(Session::has('message'))
-                <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    {!! Session::get('message') !!}
-                </div>
-                @endif
-            </div>
-					</div>
+				<div class="row">
+					<div class="col-lg-12">
+							@if(Session::has('message'))
+              <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  {!! Session::get('message') !!}
+              </div>
+              @endif
+          </div>
+				</div>
 
-					@yield('content')
+				@yield('content')
 
-				</div><!-- /CONTENT-->
-			</div>
+			</div><!-- /CONTENT-->
 		</div>
 	</section>
 	<!--/PAGE -->

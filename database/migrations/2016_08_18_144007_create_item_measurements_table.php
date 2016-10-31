@@ -53,7 +53,7 @@ class CreateItemMeasurementsTable extends Migration
             $table->foreign('measurement_unit_id')->references('id')->on('measurement_units');
             $table->foreign('location_id')->references('id')->on('locations');
             $table->foreign('rack_id')->references('id')->on('racks');
-            $table->foreign('created_by')->references('id')->on('department_users');
+            $table->foreign('created_by')->references('id')->on('admins');
         });
     }
 

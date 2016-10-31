@@ -2,7 +2,7 @@
   <div class="form-group {{ $errors->has('requisition_number') ? 'has-error' : ''}}">
     {!! Form::label('requisition_number', '', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-9">
-      {!! Form::text('requisition_number', null, ['class' => 'form-control required', 'id' => 'requisition_number', 'placeholder' => 'Requisition Number', 'autocomplete' => 'off', 'required' => 'true']) !!}
+      {!! Form::text('requisition_number', $requisition_number, ['class' => 'form-control required', 'id' => 'requisition_number', 'placeholder' => 'Requisition Number', 'readonly' => true, 'required' => 'true', ]) !!}
     </div>
     {!! $errors->first('requisition_number', '<span class="help-inline">:message</span>') !!}
   </div>
@@ -40,7 +40,7 @@
   <div class="form-group {{ $errors->has('financial_year') ? 'has-error' : ''}}">
     {!! Form::label('financial_year', '', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-9">
-      {!! Form::text('financial_year', null, ['class' => 'form-control required', 'id' => 'financial_year', 'placeholder' => 'Financial year', 'autocomplete' => 'off', 'required' => 'true']) !!}
+      {!! Form::text('financial_year', $financial_year, ['class' => 'form-control required', 'id' => 'financial_year', 'placeholder' => 'Financial year', 'autocomplete' => 'off', 'required' => 'true']) !!}
     </div>
     {!! $errors->first('financial_year', '<span class="help-inline">:message</span>') !!}
   </div>

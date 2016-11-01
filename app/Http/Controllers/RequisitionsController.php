@@ -61,7 +61,7 @@ class RequisitionsController extends Controller
                 $validator = Validator::make($data = $request->all(), Requisition::$rules);
                 if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors($validator)->withInput();
                 $data['department_id']  = Auth::guard('department_user')->user()->department_id;
-                $data['raised_by']     = Auth::guard('department_user')->user()->id;
+                $data['raised_by']      = Auth::guard('department_user')->user()->id;
 
                 $requisition = Requisition::create( $data );
             }catch(ValidationException $e)
@@ -188,7 +188,9 @@ class RequisitionsController extends Controller
             $requisitions->hod  = Auth::guard('department_user')->user()->id;
             $requisitions->hod_approve_date  = date('Y-m-d H:i:s');
            if($requisitions->save()){
-                return redirect()->route('requisition.approve.view_all')->with(['message', 'The Requisition has been Approved Successfully', 'alert-class' => 'alert-success']);
+            $requisition_number = $requisitions->requisition_number;
+                return view('department_user.requisitions.success', compact('requisition_number'));
+                //return redirect()->route('requisition.approve.success')->with(['requisition_number', $requisitions->requisition_]);
             }else{
                 return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
             }
@@ -300,7 +302,7 @@ class RequisitionsController extends Controller
         $user     = DepartmentUser::where('username', $username)->first();
         $id       = Crypt::decrypt($id);
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['measurement_unit', 'item_measurement'])->get();// dump($requisition_items);
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['item_measurement', 'item_measurement.measurement_unit'])->get();// dump($requisition_items);
         return view('department_user.requisitions.view',compact('info','requisition_items','user'));
     }
 

@@ -29,7 +29,7 @@ class PurchaseIndentsController extends Controller
     }
 
     public function store(Request $request) {
-        if($this->_department_user->can(['create_requisition'])) {
+        if($this->_department_user->can(['create_purchase_indent'])) {
             $message = '';
             DB::beginTransaction();
             /* Insert data to requisitions table */
@@ -40,7 +40,6 @@ class PurchaseIndentsController extends Controller
                 $data['created_by']     = Auth::guard('department_user')->user()->id;
                 $data['purchase_indent_date'] = date('Y-m-d', strtotime($request->purchase_indent_date));
                 $data['reference_date']       = date('Y-m-d', strtotime($request->reference_date));
-
                 $validator = Validator::make($data, PurchaseIndent::$rules);
                 if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
                 //Redirect::back()->withErrors($validator)->withInput();
@@ -70,6 +69,10 @@ class PurchaseIndentsController extends Controller
             DB::commit();
             $message .= 'Indent successfully generated !';
             return Redirect::route('purchase_indent.details', Crypt::encrypt($purchase_indent->id))->with('message', $message);
+        }else{
+            $message = '';
+            $message .= 'Unauthorize Aceess !';
+            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
         }
     }
 
@@ -82,7 +85,7 @@ class PurchaseIndentsController extends Controller
         $id = Crypt::decrypt($id);
         $info = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department', 'requisition.chargeable_account', 'requisition.department_user'])->whereId($id)->first();
 
-        $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $id)->with('purchase_indent', 'requisition_item')->get();
+        $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $id)->with('purchase_indent', 'requisition_item', 'requisition_item.measurement_unit')->get();
         $add_quotation_values = false;
         if($info->approval_hod_id != NULL && $info->approval_hod_date) {
           $add_quotation_values = true;

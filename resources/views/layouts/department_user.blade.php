@@ -46,14 +46,18 @@
 	<section id="page">
 		<div class="container">
 			<div id="content">
+				@if (trim($__env->yieldContent('pageTitle')) || trim($__env->yieldContent('breadcumb')))
 				<div class="row">
 				  <div class="col-sm-12">
 				    <div class="page-header">
 				      <!-- BREADCRUMBS -->
+							@if (trim($__env->yieldContent('breadcumb')))
 				      <ul class="breadcrumb">
 				        @yield('breadcumb')
 				      </ul>
+							@endif
 				      <!-- /BREADCRUMBS -->
+							@if (trim($__env->yieldContent('pageTitle')))
 				      <div class="clearfix">
 				        <h3 class="content-title pull-left">@yield('pageTitle')</h3>
 								<br><br><h5>@yield('formNumber')</h5>
@@ -64,25 +68,25 @@
 				        <!-- /DATE RANGE PICKER -->
 				      </div>
 				      <div class="description">@yield('pageSubTitle')</div>
+							@endif
 				    </div>
 				  </div>
 				</div>
+				@endif
 
+				@if(Session::has('message'))
 				<div class="row">
 					<div class="col-lg-12">
-							@if(Session::has('message'))
               <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
                   <button type="button" class="close" data-dismiss="alert">×</button>
                   {!! Session::get('message') !!}
               </div>
-              @endif
           </div>
 				</div>
-
+				@endif
 				@yield('content')
-
-			</div><!-- /CONTENT-->
 		</div>
+	</div>
 	</section>
 	<!--/PAGE -->
 	<!-- JAVASCRIPTS -->

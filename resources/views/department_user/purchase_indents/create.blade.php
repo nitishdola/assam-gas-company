@@ -2,7 +2,7 @@
 @section('title') Material Purchase Indent @stop
 @section('pageTitle') Material Purchase Indent @stop
 
-@section('breadcumb') 
+@section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
 	<a href="{{ route('department_user.dashboard') }}">Dashboard</a>
@@ -20,10 +20,10 @@
 @stop
 
 @section('content')
-<div class="col-lg-12">
-	<div class="widget-container fluid-height clearfix">
-		<div class="widget-content padded">
-		    <div class="col-xs-8">
+<div class="widget-container fluid-height clearfix">
+	<div class="widget-content padded">
+		<div class="row">
+		    <div class="col-xs-7">
 			    {!! Form::open(array('route' => 'purchase_indent.store', 'id' => 'purchase_indent.store', 'class' => 'form-horizontal row-border')) !!}
 			        @include('department_user.purchase_indents._form')
 
@@ -31,14 +31,14 @@
 			        <input type="hidden" name="requisition_item_ids[]" value="{{ $v->id }}">
 			        @endforeach
 			        <input type="hidden" name="requisition_id" value="{{ $requisition_id }} ">
-			        <div class="col-md-12"> 
+			        <div class="col-md-12">
 			        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}
 			        	{!! Form:: submit('Submit', ['class' => 'btn btn-success']) !!}
 			        </div>
 			    {!!form::close()!!}
 			</div>
 
-			<div class="col-md-4" style="height: 500px; overflow: scroll;">
+			<div class="col-md-3" style="height: 500px; overflow: scroll;">
 				<h3> Description of Goods </h3>
 				<ul>
 					@foreach($requisition_items as $k => $v)

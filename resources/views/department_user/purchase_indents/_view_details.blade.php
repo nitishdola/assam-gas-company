@@ -1,43 +1,3 @@
-@section('pageCss')
-<style>
-span.step {
-  background: #6B6D72;
-  border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: #ffffff;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 1.6em;
-  margin-right: 5px;
-  text-align: center;
-  width: 1.6em;
-  font-size: 2.3em;
-}
-.item-list {
-  background: #f8f8f8;
-}
-</style>
-@stop
-@section('pageTitle') View Purchase Indent Details @stop
-<style>
-  .item-field{
-    padding: 6px 0;
-    background: #f6f6f6;
-    margin-bottom: 4px;
-  }
-  h5 {
-    text-align: center;
-    padding: 15px 0;
-    text-decoration: underline;
-  }
-  hr.style13 {
-    height: 5px;
-    border: 0;
-    box-shadow: 0 10px 10px -10px #8c8b8b inset;
-  }
-</style>
-
 <div class="box box-primary">
 
   <div class="box-body item-view">
@@ -99,18 +59,18 @@ span.step {
       </div>
 
       <div class="col-xs-12">
-        <strong> Justification for Purchase</strong>
-        <p>
+        <div class="col-md-2 no-padding"><strong> Justification for Purchase</strong></div>
+        <div class="col-md-6 no-padding">
           {{ $info->justification_of_the_purchase }}
-        </p>
+        </div>
       </div>
 
       @if($info->remarks)
       <div class="col-xs-12">
-        <strong> Remarks</strong>
-        <p>
+        <div class="col-md-2 no-padding"><strong> Remarks</strong></div>
+        <div class="col-md-6 no-padding">
           {{ $info->remarks }}
-        </p>
+        </div>
       </div>
       @endif
 
@@ -118,7 +78,7 @@ span.step {
           @if($info->approval_hod_id == NULL && $info->approval_hod_date == NULL)
             @if($info->checked_by != NULL && $info->checked_on != NULL)
               <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify by HOD</a>
-            @else if($info->checked_by == NULL && $info->checked_on == NULL)
+            @elseif($info->checked_by == NULL && $info->checked_on == NULL)
               <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger">Check</a>
             @endif
           @else
@@ -179,59 +139,40 @@ span.step {
     </div>
   </div>
 
+  <hr class="style13">
   <div class="box-body item-view">
-    <h3>Material Item(s) Details</h3>
-    @foreach($purchase_indent_items as $k => $v)
-    <hr class="style13">
-    <div class="row item-list">
-      <div class="col-md-1"><span class="step"> {{ $k+1 }}</span></div>
-      <div class="col-md-6">
-        <div class="col-md-12 item-field">
-          <div class="col-md-6"><i class="fa fa-gg"></i><b> Store Description</b> </div>
-          <div class="col-md-6"> {{$v->requisition_item['store_description']}}</div>
-        </div>
+    <h4>Items Required</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item</th>
+          <th>Measurement Unit</th>
+          <th>Stock in Hand</th>
+          <th>Description</th>
+          <th>Quantity Demanded</th>
+          <th>Previous Rate</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
 
-        <div class="col-md-12 item-field">
-          <div class="col-md-6"><i class="fa fa-gg"></i><b> Quantity Demanded</b> </div>
-          <div class="col-md-6"> {{$v->requisition_item['quantity_demanded']}}</div>
-        </div>
-
-        <div class="col-md-12 item-field">
-          <div class="col-md-6"><i class="fa fa-gg"></i><b> Item Measurement</b> </div>
-          <div class="col-md-6"> {{ $v->requisition_item->item_measurement['item_name'] }}</div>
-        </div>
-
-        <div class="col-md-3">&nbsp;</div>
-        <div class="col-md-9">
-          <h4>Stock Position : {{$v->requisition_item->item_measurement['stock_in_hand']}} </h4>
-        </div>
-      </div>
-
-      <div class="col-md-5">
-        <div class="col-md-12 item-field">
-            <div class="col-md-6 no-padding"><i class="fa fa-gg"></i>
-              <b> Measurement Unit</b>
-            </div>
-            <div class="col-md-6 no-padding"> {{$v->requisition_item->measurement_unit['name']}} </div>
-        </div>
-        <div class="col-md-12 item-field">
-            <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Approx Rate</b> </div>
-            <div class="col-md-6 no-padding"> {{$v->requisition_item['rate']}} </div>
-        </div>
-        <div class="col-md-12 item-field">
-          <div class="col-md-6 no-padding"><i class="fa fa-gg"></i><b> Remarks </b></div>
-            <div class="col-md-6 no-padding">@if($v->requisition_item['remarks'] != '') {{$v->requisition_item['remarks']}} @else -- @endif</div>
-        </div>
-      </div>
-
-      <div class="col-md-8">
-        <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
-        <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
-      </div>
-
-    </div>
+      <tbody>
+        @foreach($purchase_indent_items as $k => $v)
+        <tr>
+          <td> {{ $k+1 }} </td>
+          <td> {{$v['requisition_item']['item_measurement']->item_name}} </td>
+          <td> {{$v['requisition_item']['item_measurement']['measurement_unit']->name}} </td>
+          <td> {{$v->requisition_item->item_measurement['stock_in_hand']}} </td>
+          <td> {{$v->requisition_item['store_description']}} </td>
+          <td> {{$v->requisition_item['quantity_demanded']}} </td>
+          <td> {{$v->requisition_item['rate']}} </td>
+          <td> {{$v->requisition_item['remarks']}} </td>
+          <td>
+            <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+            <!-- <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a> -->
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
   </div>
-  @endforeach
-
-
-</div>

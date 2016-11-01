@@ -930,6 +930,20 @@ Route::group(['prefix'=>'quotation-values'], function() {
     ]);
 });
 
+Route::group(['prefix'=>'purchase-indent-item'], function() {
+    Route::get('/add-previous-rate/{purchase_indent_id}', [
+        'as' => 'add.previous_rates',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@add_item_previous_rate'
+    ]);
+
+    Route::post('/add-previous-rate/{purchase_indent_id}', [
+        'as' => 'store.previous_rates',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@store_item_previous_rate'
+    ]);
+});
+
 //Tender Management
 Route::group(['prefix'=>'nit'], function() {
     Route::get('/create', [

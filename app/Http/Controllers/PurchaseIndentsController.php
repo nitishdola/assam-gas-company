@@ -156,4 +156,11 @@ class PurchaseIndentsController extends Controller
       $values = QuotationValue::whereId( $purchase_indent_item_id )->with(['purchase_indent_item', 'vendor'])->get();
       return view('department_user.purchase_indents.qoutation.view', compact('values', 'info'));
     }
+
+    public function add_item_previous_rate($id = NULL) {
+      $id   = Crypt::decrypt($id);
+      $info = PurchaseIndentItem::whereId($id)->with('requisition_item', 'requisition_item.item_measurement')->first();
+      //dd($info);
+      return view('department_user.purchase_indents.qoutation.add_item_previous_rate', compact('info'));
+    }
 }

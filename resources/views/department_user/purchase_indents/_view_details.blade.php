@@ -153,6 +153,7 @@
           <th>Quantity Demanded</th>
           <th>Previous Rate</th>
           <th>Remarks</th>
+          <td>Add Quotation Values/ Direct Purchase</td>
         </tr>
       </thead>
 
@@ -169,6 +170,7 @@
           <td> {{$v->requisition_item['remarks']}} </td>
           <td>
             <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+            <a href="{{ route('add.previous_rates', Crypt::encrypt($v->id)) }}" class="btn btn-warning"><b>Purchase Directly <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
             <!-- <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a> -->
           </td>
         </tr>

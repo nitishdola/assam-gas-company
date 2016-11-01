@@ -23,7 +23,6 @@
   </tbody>
 </table>
 
-
 <div id="col-md-12">
 	<a href="javascript:void(0)" class="btn btn-warning add_more_item">Add More Item <i class="fa fa-plus-square" aria-hidden="true"></i></a>
 	<a href="javascript:void(0)" class="btn btn-danger remove_item" style="display:none">Remove <i class="fa fa-minus-square" aria-hidden="true"></i></a>

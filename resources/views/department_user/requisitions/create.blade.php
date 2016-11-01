@@ -45,8 +45,8 @@ $(".select2").select2();
 $('.add_more_item').click(function(e) {
 	$latest_tr 	= $('#req_table tr:last');
   $('select.select2').select2('destroy');
-	$clone 			= $latest_tr.clone();
-	$latest_tr.after($clone);
+	$clone 			= $latest_tr.clone(true, true);
+	$latest_tr.after($clone);// console.log($clone.html());
 	$('select.select2').select2();
 	$clone.find(':text').val('');
 	$clone.find('.quantity_demanded').val('');
@@ -70,7 +70,8 @@ function show_hide_item( item ) {
 	}
 }
 
-$('.item_measurement').change(function(e) { console.log('Change');
+//$('.item_measurement').change(function(e) {
+$(".item_measurement").on("change", function() { console.log('Change');
 	var url 	= '';
 	var data	= '';
 	var $this = $(this);
@@ -80,7 +81,6 @@ $('.item_measurement').change(function(e) { console.log('Change');
 		$.blockUI();
 		url 	+= '{{ route("rest.item_values") }}';
 		data 	+= '&item_measurement_id='+item_measurement_id;
-
 		$.ajax({
 			data : data,
 			url  : url,

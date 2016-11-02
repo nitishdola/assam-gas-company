@@ -937,7 +937,7 @@ Route::group(['prefix'=>'purchase-indent-item'], function() {
         'uses' => 'PurchaseIndentsController@add_item_previous_rate'
     ]);
 
-    Route::post('/add-previous-rate/{purchase_indent_id}', [
+    Route::post('/store-previous-rate/{purchase_indent_id}', [
         'as' => 'store.previous_rates',
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@store_item_previous_rate'
@@ -968,6 +968,12 @@ Route::group(['prefix'=>'nit'], function() {
         'as' => 'nit.details',
         'middleware' => ['department_user'],
         'uses' => 'NitsController@details'
+    ]);
+
+    Route::get('/comparative-study/{num}', [
+        'as' => 'nit.comparative_study',
+        'middleware' => ['department_user'],
+        'uses' => 'NitsController@comparative_study'
     ]);
 });
 

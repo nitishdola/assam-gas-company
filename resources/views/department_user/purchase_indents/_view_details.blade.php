@@ -1,7 +1,7 @@
-<div class="box box-primary">
-
+<?php $accept = false; ?>
+<div class="box box-primary" style="padding:20px;">
   <div class="box-body item-view">
-    <h3>Purchase Indent Details</h3>
+    <h4>Purchase Indent Details</h4>
     <hr class="style13">
     <div class="row">
       <div class="col-md-6">
@@ -24,6 +24,16 @@
           <div class="col-md-6"><i class="fa fa-gg"></i><b>Reference Date</b> </div>
           <div class="col-md-6">{{ date('d-m-Y', strtotime($info->reference_date)) }} </div>
         </div>
+
+        @if($info->remarks)
+        <div class="col-xs-12">
+          <div class="col-md-2 no-padding"><strong> Remarks</strong></div>
+          <div class="col-md-6 no-padding">
+            {{ $info->remarks }}
+          </div>
+        </div>
+        @endif
+
       </div>
 
       <div class="col-md-6">
@@ -56,41 +66,37 @@
         </div>
         @endif
 
+        <div class="col-xs-12">
+          <div class="col-md-6 no-padding"><strong> Justification for Purchase</strong></div>
+          <div class="col-md-6 no-padding">
+            {{ $info->justification_of_the_purchase }}
+          </div>
+        </div>
+
       </div>
 
-      <div class="col-xs-12">
-        <div class="col-md-2 no-padding"><strong> Justification for Purchase</strong></div>
-        <div class="col-md-6 no-padding">
-          {{ $info->justification_of_the_purchase }}
-        </div>
-      </div>
 
-      @if($info->remarks)
-      <div class="col-xs-12">
-        <div class="col-md-2 no-padding"><strong> Remarks</strong></div>
-        <div class="col-md-6 no-padding">
-          {{ $info->remarks }}
-        </div>
-      </div>
-      @endif
+
+
 
       <div class="col-xs-4 col-md-offset-4">
-          @if($info->approval_hod_id == NULL && $info->approval_hod_date == NULL)
+
+          <?php if($info->approval_hod_id == NULL && $info->approval_hod_date == NULL){ ?>
             @if($info->checked_by != NULL && $info->checked_on != NULL)
-              <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify by HOD</a>
+              <a href="{{ route('purchase_indent.approve', Crypt::encrypt($info->id)) }}" onclick="return confirm('Are you sure you want to Approve this indent ?');" class="btn btn-danger">Verify This Purchase Indent ( by HOD )</a>
             @elseif($info->checked_by == NULL && $info->checked_on == NULL)
-              <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger">Check</a>
+              <a href="{{ route('purchase_indent.check', Crypt::encrypt($info->id)) }}"  onclick="return confirm('Are you sure you want to Check this indent ?');" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> Check This Purchase Indent</a>
             @endif
-          @else
-            <!-- INDENT READY FOR NIT -->
-          @endif
+          <?php }else{
+            $accept = true;
+          } ?>
         </div>
 
     </div>
   </div>
 
   <div class="box-body item-view">
-    <h3>Requisition Details</h3>
+    <h4>Requisition Details</h4>
     <hr class="style13">
     <div class="row">
       <div class="col-md-6">
@@ -153,7 +159,7 @@
           <th>Quantity Demanded</th>
           <th>Previous Rate</th>
           <th>Remarks</th>
-          <td>Add Quotation Values/ Direct Purchase</td>
+          <th>Add Quotation Values/ Direct Purchase</th>
         </tr>
       </thead>
 
@@ -169,9 +175,23 @@
           <td> {{$v->requisition_item['rate']}} </td>
           <td> {{$v->requisition_item['remarks']}} </td>
           <td>
-            <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
-            <a href="{{ route('add.previous_rates', Crypt::encrypt($v->id)) }}" class="btn btn-warning"><b>Purchase Directly <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+            @if($accept)
+              @if(!count($v->quotation_values) && !count($v->previous_rates))
+                <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+                <a href="{{ route('add.previous_rates', Crypt::encrypt($v->id)) }}" class="btn btn-warning"><b>Purchase Directly <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+             @else
+                @if(count($v->quotation_values))
+                  VIEW COMPARATIVE STATEMENT
+                @endif
+
+                @if(count($v->previous_rates))
+                  VIEW FINAL RATES FROM VENDORS
+                @endif
+             @endif
             <!-- <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a> -->
+            @else
+            <a alt="Indent must be checked by department/HOD to add NIT rates or previous rates !" href="javascript:void()" class="btn btn-success disabled"><b>Indent not yet checked <i class="fa fa-meh-o" aria-hidden="true"></i> </b></a>
+            @endif
           </td>
         </tr>
         @endforeach

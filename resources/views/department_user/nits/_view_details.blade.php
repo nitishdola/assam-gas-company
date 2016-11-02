@@ -39,8 +39,6 @@ span.step {
 </style>
 
 <div class="box box-primary">
-
-
   <div class="box-body item-view">
     <h3>NIT Details</h3>
     <hr class="style13">

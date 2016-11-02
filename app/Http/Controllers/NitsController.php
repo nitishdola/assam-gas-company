@@ -51,12 +51,18 @@ class NitsController extends Controller
         }
         return Redirect::route('nit.index')->with('message', $message);
     }
-
-    public function details( $id = NULL) {
+    /**
+    * View NIT details
+    * Comparative study
+    **/
+    
+    public function comparative_study( $id = NULL) {
       $id   = Crypt::decrypt($id);
       $info = Nit::whereId($id)->with(['creator', 'purchase_indent', 'purchase_indent.budget_head',  'purchase_indent.checker',  'purchase_indent.approved_by', 'purchase_indent.creator', 'purchase_indent.requisition.department', 'purchase_indent.requisition'])->first();
       $purchase_indent_items = PurchaseIndentItem::where('purchase_indent_id', $info->purchase_indent['id'])->with('purchase_indent', 'requisition_item')->get();
 
-      return view('department_user.nits.details', compact('info', 'purchase_indent_items'));
+      return view('department_user.nits.comparative_study', compact('info', 'purchase_indent_items'));
     }
+
+
 }

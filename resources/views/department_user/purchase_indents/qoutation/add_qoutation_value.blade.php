@@ -14,7 +14,7 @@
 </li>
 
 <li>
-	Add Qoutation Values
+	Add Qutation Values
 </li>
 
 @stop

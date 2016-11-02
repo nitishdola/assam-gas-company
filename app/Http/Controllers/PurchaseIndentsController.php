@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem, App\Vendor, App\QuotationValue;
+use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem, App\PurchaseIndentItemRate, App\Vendor, App\QuotationValue;
 class PurchaseIndentsController extends Controller
 {
     public function __construct() {
@@ -90,6 +90,19 @@ class PurchaseIndentsController extends Controller
         if($info->approval_hod_id != NULL && $info->approval_hod_date) {
           $add_quotation_values = true;
         }
+
+        foreach($purchase_indent_items as $k => $v) {
+          $purchase_indent_item_id = $v->id;
+          //check if quation is added
+          $quotation_values = QuotationValue::where('purchase_indent_item_id', $purchase_indent_item_id)->get();
+          $purchase_indent_items[$k]['quotation_values'] = $quotation_values;
+
+          //check if previous rate is added
+          $purchase_indent_item_rates = PurchaseIndentItemRate::where('purchase_indent_item_id', $purchase_indent_item_id)->get();
+          $purchase_indent_items[$k]['previous_rates'] = $purchase_indent_item_rates;
+        }
+        // dump($purchase_indent_items);
+        // die();
         return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items', 'add_quotation_values'));
     }
 
@@ -152,7 +165,7 @@ class PurchaseIndentsController extends Controller
 
     public function view_qoutation_valus( $purchase_indent_item_id = NULL ) {
       $purchase_indent_item_id   = Crypt::decrypt($purchase_indent_item_id);
-      $info = PurchaseIndentItem::with('purchase_indent', 'requisition_item', 'requisition_item.item_measurement')->first();
+      $info   = PurchaseIndentItem::with('purchase_indent', 'requisition_item', 'requisition_item.item_measurement')->first();
       $values = QuotationValue::whereId( $purchase_indent_item_id )->with(['purchase_indent_item', 'vendor'])->get();
       return view('department_user.purchase_indents.qoutation.view', compact('values', 'info'));
     }
@@ -160,7 +173,25 @@ class PurchaseIndentsController extends Controller
     public function add_item_previous_rate($id = NULL) {
       $id   = Crypt::decrypt($id);
       $info = PurchaseIndentItem::whereId($id)->with('requisition_item', 'requisition_item.item_measurement')->first();
-      //dd($info);
-      return view('department_user.purchase_indents.qoutation.add_item_previous_rate', compact('info'));
+      $vendors  	= Vendor::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+      return view('department_user.purchase_indents.qoutation.add_item_previous_rate', compact('info', 'vendors'));
+    }
+
+    //store item rates
+    public function store_item_previous_rate(Request $request,$id) {
+      $message = '';
+      $class   = '';
+      $data = $request->all();
+      $purchase_indent_item_id = Crypt::decrypt($id);
+      $purchase_indent_item = PurchaseIndentItem::findOrFail( $purchase_indent_item_id );
+      $data['purchase_indent_item_id'] = $purchase_indent_item_id;
+      $validator = Validator::make($data, PurchaseIndentItemRate::$rules);
+      if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+      PurchaseIndentItemRate::create( $data );
+
+      $class   .= 'alert-success';
+      $message .= '<b>'. count($request->vendor_id).'</b> Rates added !';
+
+      return Redirect::route('purchase_indent.details', Crypt::encrypt( $purchase_indent_item->purchase_indent_id ))->with(['message' => $message, 'alert-class' => $class]);
     }
 }

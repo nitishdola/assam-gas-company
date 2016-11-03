@@ -895,6 +895,12 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'uses' => 'PurchaseIndentsController@details'
     ]);
 
+    Route::get('/view-checked', [
+        'as' => 'purchase_indent.view_checked',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@view_checked'
+    ]);
+
     Route::get('/check/{num}', [
         'as' => 'purchase_indent.check',
         'middleware' => ['department_user'],
@@ -1019,49 +1025,6 @@ Route::group(['prefix'=>'item'], function() {
         'uses' => 'ItemMeasurementsController@view'
     ]);
 });
-
-// Route::group(['prefix'=>'measurement-of-item'], function() {
-//     Route::get('/create', [
-//         'as' => 'item_measurement.create',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@create'
-//     ]);
-//
-//     Route::post('/store', [
-//         'as' => 'item_measurement.store',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@store'
-//     ]);
-//
-//     Route::get('/view-all', [
-//         'as' => 'item_measurement.index',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@index'
-//     ]);
-//
-//     Route::get('/edit/{num}', [
-//         'as' => 'item_measurement.edit',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@edit'
-//     ]);
-//
-//     Route::post('/update/{num}', [
-//         'as' => 'item_measurement.update',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@update'
-//     ]);
-//
-//     Route::get('/disable/{num}', [
-//         'as' => 'item_measurement.disable',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@disable'
-//     ]);
-//     Route::get('/view-item-details/{num}', [
-//         'as' => 'item_measurement.view',
-//         'middleware' => ['department_user'],
-//         'uses' => 'ItemMeasurementsController@view'
-//     ]);
-// });
 
 Route::group(['prefix'=>'salvage-item'], function() {
     Route::get('/create', [

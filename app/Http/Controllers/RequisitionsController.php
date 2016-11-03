@@ -16,7 +16,7 @@ class RequisitionsController extends Controller
     }
 
     public function create() {
-        if($this->_department_user->can(['create_requisition'])) {
+        //if($this->_department_user->can(['create_requisition'])) {
             $chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
             $item_measurements  = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
@@ -29,11 +29,11 @@ class RequisitionsController extends Controller
 
             $financial_year = $this->calculateFiscalYear();
             return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units', 'requisition_number', 'financial_year'));
-        }else{
-            $message = '';
-            $message .= 'Unauthorize Aceess !';
-            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        }
+        // }else{
+        //     $message = '';
+        //     $message .= 'Unauthorize Aceess !';
+        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        // }
     }
 
 
@@ -52,7 +52,7 @@ class RequisitionsController extends Controller
 
 
     public function store(Request $request) {
-        if($this->_department_user->can(['create_requisition'])) {
+        //if($this->_department_user->can(['create_requisition'])) {
             $message = '';
             DB::beginTransaction();
             /* Insert data to requisitions table */
@@ -92,7 +92,7 @@ class RequisitionsController extends Controller
             DB::commit();
             $message .= 'Requisition successfully generated !';
             return Redirect::route('requisition.create')->with('message', $message);
-        }
+        //}
     }
 
     private function generate_requisition_number() {
@@ -106,7 +106,7 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
-        if($this->_department_user->can(['view_requisitions'])) {
+        //if($this->_department_user->can(['view_requisitions'])) {
             $username = Auth::guard('department_user')->user()->username;
             $user     = DepartmentUser::where('username', $username)->first();
             $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -130,36 +130,36 @@ class RequisitionsController extends Controller
             $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
             return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
-        }else{
-            $message = '';
-            $message .= 'Unauthorize Aceess !';
-            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-         //$this->isViewAuthorized();
+        // }else{
+        //     $message = '';
+        //     $message .= 'Unauthorize Aceess !';
+        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        //  //$this->isViewAuthorized();
 
-            $username = Auth::guard('department_user')->user()->username;
-            $user     = DepartmentUser::where('username', $username)->first();
-            $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-            $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        //     $username = Auth::guard('department_user')->user()->username;
+        //     $user     = DepartmentUser::where('username', $username)->first();
+        //     $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+        //     $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-            $where = [];
-            if($request->department_id) {
-                $where['department_id'] = $request->department_id;
-            }
-            if($request->chargeable_account_id) {
-                $where['chargeable_account_id'] = $request->chargeable_account_id;
-            }
-             if($request->requisition_number) {
-                $where['requisition_number'] = $request->requisition_number;
-            }
-             if($request->Approval) {
-                $where['hod'] = $request->Approval;
-            }
-        }
+        //     $where = [];
+        //     if($request->department_id) {
+        //         $where['department_id'] = $request->department_id;
+        //     }
+        //     if($request->chargeable_account_id) {
+        //         $where['chargeable_account_id'] = $request->chargeable_account_id;
+        //     }
+        //      if($request->requisition_number) {
+        //         $where['requisition_number'] = $request->requisition_number;
+        //     }
+        //      if($request->Approval) {
+        //         $where['hod'] = $request->Approval;
+        //     }
+        // }
     }
 
    //requisition approve process by hod of the departments
     public function view_all_requisitions(Request $request) {
-        if($this->_department_user->can(['requisition_check_user'])) {
+        //if($this->_department_user->can(['requisition_check_user'])) {
             $username = Auth::guard('department_user')->user()->username;
             $user     = DepartmentUser::where('username', $username)->first();
             $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -173,16 +173,16 @@ class RequisitionsController extends Controller
             $results = Requisition::where($where)->with(['department_user', 'department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
             return view('department_user.requisitions.approve_requisitions', compact('departments','chargeable_accounts', 'results','user'));
-        }else{
-            $message = '';
-            $message .= 'Unauthorize Aceess !';
-            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        }
+        // }else{
+        //     $message = '';
+        //     $message .= 'Unauthorize Aceess !';
+        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        // }
     }
 
     public function approveRequisition($id)
     {
-        if($this->_department_user->can(['requisition_check_user'])) {
+        //if($this->_department_user->can(['requisition_check_user'])) {
             $id                 = Crypt::decrypt($id);
             $requisitions       = Requisition::findOrFail($id);
             $requisitions->hod  = Auth::guard('department_user')->user()->id;
@@ -194,7 +194,7 @@ class RequisitionsController extends Controller
             }else{
                 return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
             }
-        }
+        //}
     }
     public function view_approved(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
@@ -307,17 +307,17 @@ class RequisitionsController extends Controller
     }
 
     public function receiveRequisition( $id ) {
-        if($this->_department_user->can(['receive_requisition'])) {
+        //if($this->_department_user->can(['receive_requisition'])) {
             $id       = Crypt::decrypt($id);
             $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
             $requisition_items  = RequisitionItem::where('requisition_id', $id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->with(['measurement_unit', 'item_measurement'])->where('status',1)->get();
                 return view('department_user.requisitions.receive',compact('info','requisition_items','user'));
             return Redirect::route('requisition.view_approved')->with('message', $message);
-        }else{
-            $message = '';
-            $message .= 'Unauthorize Aceess !';
-            return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        }
+        // }else{
+        //     $message = '';
+        //     $message .= 'Unauthorize Aceess !';
+        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
+        // }
     }
 
     public function requisition_issue_view( $requisition_id = NULL, $requisition_item_id = NULL) {

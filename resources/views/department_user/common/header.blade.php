@@ -43,6 +43,20 @@
 				</a>
 			</li>
 
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="fa fa-bars"></i>
+					<span class="name"> Purchase Indent</span>
+					<i class="fa fa-angle-down"></i>
+				</a>
+				<ul class="dropdown-menu skins">
+					<li><a href="{{route('requisition.view_approved')}}" data-skin="default">Generate</a></li>
+
+					<li><a href="{{route('purchase_indent.view_checked')}}" data-skin="default">Check Purchase Indent</a></li>
+					
+				 </ul>
+			</li>
+
 		</ul>
 
 		<ul class="nav navbar-nav pull-right">

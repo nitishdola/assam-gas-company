@@ -1,11 +1,11 @@
-<div class="form-group {{ $errors->has('purchase_indent_id') ? 'has-error' : ''}}">
-  {!! Form::label('purchase_indent_id', '', array('class' => 'col-md-3 control-label')) !!}
+<div class="form-group">
+  {!! Form::label('Indent Item', '', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
-    {!! Form::select('purchase_indent_id', $purchase_indents, null, ['class' => 'select2 required col-md-6', 'required' => true, 'id' => 'item_code', 'placeholder' => 'Select Purchase Indent Number', 'autocomplete' => 'off', 'required' => 'true']) !!}
+    <strong>{{ $item_name }}</strong>
   </div>
-  {!! $errors->first('purchase_indent_id', '<span class="help-inline">:message</span>') !!}
 </div>
 
+{!! Form::hidden('purchase_indent_item_id', $purchase_indent_item_id, ['class' => 'form-control required', 'readonly' => 'readonly',  'id' => 'purchase_indent_item_id', 'autocomplete' => 'off', 'required' => 'true']) !!}
 <div class="form-group {{ $errors->has('nit_number') ? 'has-error' : ''}}">
   {!! Form::label('nit_number', '', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">

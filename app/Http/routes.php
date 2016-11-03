@@ -889,13 +889,19 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'uses' => 'PurchaseIndentsController@index'
     ]);
 
+    Route::get('/view-indents', [
+        'as' => 'purchase_indent.view_indents',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@view_indents'
+    ]);
+
     Route::get('/details/{num}', [
         'as' => 'purchase_indent.details',
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@details'
     ]);
 
-    Route::get('/view-checked', [
+    Route::get('/view-checked-list', [
         'as' => 'purchase_indent.view_checked',
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@view_checked'
@@ -911,6 +917,13 @@ Route::group(['prefix'=>'purchase-indent'], function() {
         'as' => 'purchase_indent.approve',
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@approve'
+    ]);
+
+
+    Route::get('/add-vendor-list', [
+        'as' => 'purchase_indent.view_all_approved_indents',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@view_all_approved_indents'
     ]);
 });
 
@@ -934,6 +947,12 @@ Route::group(['prefix'=>'quotation-values'], function() {
         'middleware' => ['department_user'],
         'uses' => 'PurchaseIndentsController@view_qoutation_valus'
     ]);
+
+    Route::get('/accept/{id}', [
+        'as' => 'quotation_values.accept',
+        'middleware' => ['department_user'],
+        'uses' => 'PurchaseIndentsController@accept_qoutation_valus'
+    ]);
 });
 
 Route::group(['prefix'=>'purchase-indent-item'], function() {
@@ -952,7 +971,7 @@ Route::group(['prefix'=>'purchase-indent-item'], function() {
 
 //Tender Management
 Route::group(['prefix'=>'nit'], function() {
-    Route::get('/create', [
+    Route::get('/create/{num}', [
         'as' => 'nit.create',
         'middleware' => ['department_user'],
         'uses' => 'NitsController@create'

@@ -23,7 +23,7 @@
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-        <h2> Add Quotation Value for Item {{ $info->requisition_item->item_measurement['name'] }} </h2>
+        <h4> Quotation Value for Item {{ $info->requisition_item->item_measurement['item_name'] }} : NIT Number <span class="oblique">{{ $nit_details->nit_number }} </span></h4>
 		    <div class="col-xs-12">
 			    {!! Form::open(array('route' => 'quotation_values.store', 'id' => 'quotation_values.store', 'class' => 'form-horizontal row-border')) !!}
           <div  style="background:#d9d9d9; padding:15px;" class="col-md-12">
@@ -35,7 +35,7 @@
                 <buttun id="add_more_quote_value" type="button" class="btn btn-info"> <i class="fa fa-plus-square" aria-hidden="true"></i> Add More </div>
                 <buttun style="display:none;" id="remove_quote_value" type="button" class="btn btn-danger"> <i class="fa fa-plus-square" aria-hidden="true"></i> Remove </div>
               </div>
-			        <input type="hidden" name="purchase_indent_item_id" value="{{ $id }} ">
+			        <input type="hidden" name="nit_id" value="{{ $nit_details->id }} ">
           </div>
 	        <div class="col-md-12" style="margin-top:30px;">
 	        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\PurchaseIndent, App\PurchaseIndentItem;
+use App\PurchaseIndent, App\PurchaseIndentItem,App\ItemMeasurement;
 use App\Nit;
 
 class NitsController extends Controller
@@ -20,10 +20,13 @@ class NitsController extends Controller
       return view('department_user.nits.index', compact('results'));
     }
 
-    public function create() {
+    public function create($purchase_indent_item_id = NULL) {
+      $purchase_indent_item_id   = Crypt::decrypt($purchase_indent_item_id);
+      $item_info = PurchaseIndentItem::whereId($purchase_indent_item_id)->with('requisition_item.item_measurement')->first();
+      $item_name = $item_info['requisition_item']['item_measurement']->item_name;
         //if($this->_department_user->can(['create_tender'])) {
-            $purchase_indents  = PurchaseIndent::orderBy('created_at', 'ASC')->lists('purchase_indent_number', 'id')->toArray();
-            return view('department_user.nits.create', compact('purchase_indents'));
+
+            return view('department_user.nits.create', compact('purchase_indents', 'purchase_indent_item_id', 'item_name'));
         // }else{
         //     $message = '';
         //     $message .= 'Unauthorize Aceess !';
@@ -55,7 +58,7 @@ class NitsController extends Controller
     * View NIT details
     * Comparative study
     **/
-    
+
     public function comparative_study( $id = NULL) {
       $id   = Crypt::decrypt($id);
       $info = Nit::whereId($id)->with(['creator', 'purchase_indent', 'purchase_indent.budget_head',  'purchase_indent.checker',  'purchase_indent.approved_by', 'purchase_indent.creator', 'purchase_indent.requisition.department', 'purchase_indent.requisition'])->first();

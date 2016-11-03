@@ -176,16 +176,22 @@
           <td> {{$v->requisition_item['remarks']}} </td>
           <td>
             @if($accept)
-              @if(!count($v->quotation_values) && !count($v->previous_rates))
-                <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+              @if(!count($v->quotation_values) && !count($v->previous_rates) && !$v->nits)
+                <!-- <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a> -->
+                <a href="{{ route('nit.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Generate NIT <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
                 <a href="{{ route('add.previous_rates', Crypt::encrypt($v->id)) }}" class="btn btn-warning"><b>Purchase Directly <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
              @else
-                @if(count($v->quotation_values))
-                  VIEW COMPARATIVE STATEMENT
+                @if(!$v->nits)
+                  <a href="{{ route('quotation_values.create', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Add Quotation values for NIT <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a>
+                @elseif(!$v->q_accepted)
+                  <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>VIEW COMPARATIVE CHART <i class="fa fa-search-plus" aria-hidden="true"></i> </b></a>
+                @else
+                  <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>Receive Item <i class="fa fa-search-plus" aria-hidden="true"></i> </b></a>
                 @endif
 
+
                 @if(count($v->previous_rates))
-                  VIEW FINAL RATES FROM VENDORS
+                  VIEW COMPARATIVE CHART
                 @endif
              @endif
             <!-- <a href="{{ route('quotation_values.view', Crypt::encrypt($v->id)) }}" class="btn btn-info"><b>View Quotation Values <i class="fa fa-plus-square" aria-hidden="true"></i> </b></a> -->

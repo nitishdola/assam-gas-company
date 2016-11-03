@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuotationValue extends Model
 {
-    protected $fillable = array('purchase_indent_item_id', 'vendor_id', 'value', 'status');
+    protected $fillable = array('nit_id', 'vendor_id', 'value', 'status');
     protected $table    = 'quotation_values';
     protected $guarded  = ['_token'];
 
     public static $rules = [
-      'purchase_indent_item_id'	=>  'required|exists:purchase_indent_items,id',
+      'nit_id'	                =>  'required|exists:nits,id',
       'vendor_id'	              =>  'required|exists:vendors,id',
       'value'	                  =>  'required|numeric',
     ];
 
-  public function purchase_indent_item()
+  public function nit()
   {
-    return $this->belongsTo('App\PurchaseIndentItem', 'purchase_indent_item_id');
+    return $this->belongsTo('App\Nit', 'nit_id');
   }
 
   public function vendor()

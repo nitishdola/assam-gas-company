@@ -20,10 +20,10 @@
 @stop
 
 @section('content')
-<div class="col-lg-12">
-	<div class="widget-container fluid-height clearfix">
-		<div class="widget-content padded">
-		    <div class="col-xs-12">
+<div class="widget-container fluid-height clearfix">
+	<div class="widget-content padded">
+		<div class="row">
+		    <div class="col-xs-10">
 			    {!! Form::open(array('route' => 'nit.store', 'id' => 'nit.store', 'class' => 'form-horizontal row-border')) !!}
 			        @include('department_user.nits._form')
 			        <div class="col-md-12">

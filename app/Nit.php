@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nit extends Model
 {
-  protected $fillable = array('purchase_indent_id', 'nit_number', 'subject', 'description', 'nit_date', 'sale_period_from', 'sale_period_to', 'nit_opening_date', 'nit_closing_date', 'nit_pre_bid_date', 'estimate_cost', 'tender_cost', 'emd_cost', 'currency', 'tender_details', 'tender_type', 'created_by', 'checked_on', 'checked_by', 'approved_on', 'approved_by', 'status');
+  protected $fillable = array('purchase_indent_item_id', 'nit_number', 'subject', 'description', 'nit_date', 'sale_period_from', 'sale_period_to', 'nit_opening_date', 'nit_closing_date', 'nit_pre_bid_date', 'estimate_cost', 'tender_cost', 'emd_cost', 'currency', 'tender_details', 'tender_type', 'created_by', 'checked_on', 'checked_by', 'approved_on', 'approved_by', 'status');
   protected $table    = 'nits';
   protected $guarded  = ['_token'];
 
   public static $rules = [
-    'purchase_indent_id'=>  'required|exists:purchase_indents,id',
+    'purchase_indent_item_id'=>  'required|exists:purchase_indent_items,id',
     'nit_number'        =>  'required|unique:nits|max:127',
     'subject'           =>  'required|min:3',
     'description'       =>  'required|min:5',
@@ -45,8 +45,8 @@ class Nit extends Model
     return $this->belongsTo('App\DepartmentUser', 'created_by');
   }
 
-  public function purchase_indent()
+  public function purchase_indent_item()
   {
-    return $this->belongsTo('App\PurchaseIndent', 'purchase_indent_id');
+    return $this->belongsTo('App\PurchaseIndentItem', 'purchase_indent_item_id');
   }
 }

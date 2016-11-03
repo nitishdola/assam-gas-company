@@ -52,8 +52,10 @@
 				<ul class="dropdown-menu skins">
 					<li><a href="{{route('requisition.view_approved')}}" data-skin="default">Generate</a></li>
 
-					<li><a href="{{route('purchase_indent.view_checked')}}" data-skin="default">Check Purchase Indent</a></li>
-					
+					<li><a href="{{route('purchase_indent.view_indents')}}" data-skin="default">Check Purchase Indent</a></li>
+					<li><a href="{{route('purchase_indent.view_checked')}}" data-skin="default">Approve Purchase Indent by HOD</a></li>
+					<li><a href="{{route('purchase_indent.view_all_approved_indents')}}" data-skin="default">Generate NIT/Add Vendor Rates</a></li>
+
 				 </ul>
 			</li>
 

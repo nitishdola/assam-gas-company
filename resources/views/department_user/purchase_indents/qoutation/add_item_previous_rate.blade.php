@@ -34,7 +34,7 @@
           </div>
 	        <div class="col-md-12" style="margin-top:30px;">
 	        	{!! Form::label('', '', array('class' => 'col-md-3 control-label')) !!}
-	        	{!! Form:: submit('Add Quotation', ['class' => 'btn btn-success']) !!}
+	        	{!! Form:: submit('Add Rate', ['class' => 'btn btn-success']) !!}
 	        </div>
 			    {!!form::close()!!}
 			</div>

@@ -1,6 +1,6 @@
 @extends('layouts.department_user')
-@section('title') Checked Purchase Indents @stop
-@section('pageTitle') Checked Purchase Indents @stop
+@section('title') Check Purchase Indents @stop
+@section('pageTitle') Check Purchase Indents @stop
 @section('breadcumb')
 <li>
 	<i class="fa fa-home"></i>
@@ -44,7 +44,7 @@
 			            <th> Reference Number </th>
 			            <th> Reference Date </th>
 			            <th> Budget Head </th>
-			            <th> HOD Approval</th>
+			            <th> View </th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -58,7 +58,7 @@
 			            <td class="hidden-xs"> {{ $v->reference_number }} </td>
 			            <td> {{ date('d-m-Y', strtotime($v->reference_date)) }} </td>
 			            <td> {{ $v->budget_head['name'] }} </td>
-			            <td> <a href="{{ route('purchase_indent.details', Crypt::encrypt($v->id) ) }}" class="btn btn-info">HOD Approval</a> </td>
+			            <td> <a href="{{ route('purchase_indent.details', Crypt::encrypt($v->id) ) }}" class="btn btn-success">View and Check</a> </td>
 			        </tr>
 			        @endforeach
 			    </tbody>

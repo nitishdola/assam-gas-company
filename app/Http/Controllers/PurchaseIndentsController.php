@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem, App\PurchaseIndentItemRate, App\Vendor, App\QuotationValue;
+use App\BudgetHead, App\RequisitionItem, App\PurchaseIndent, App\PurchaseIndentItem, App\PurchaseIndentItemRate, App\Vendor, App\QuotationValue, App\Nit;
 class PurchaseIndentsController extends Controller
 {
     public function __construct() {
@@ -81,6 +81,14 @@ class PurchaseIndentsController extends Controller
         return view('department_user.purchase_indents.index', compact('results'));
     }
 
+    /**
+    * View indents which are not yet checked
+    **/
+    public function view_indents() {
+      $results = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department'])->where('checked_by', NULL)->paginate(20);
+      return view('department_user.purchase_indents.view_indents', compact('results'));
+    }
+
     public function details($id = null) {
         $id = Crypt::decrypt($id);
         $info = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department', 'requisition.chargeable_account', 'requisition.department_user'])->whereId($id)->first();
@@ -93,17 +101,42 @@ class PurchaseIndentsController extends Controller
 
         foreach($purchase_indent_items as $k => $v) {
           $purchase_indent_item_id = $v->id;
+          $q_accepted = false;
+          $q_accepted_id = NULL;
+
           //check if quation is added
-          $quotation_values = QuotationValue::where('purchase_indent_item_id', $purchase_indent_item_id)->get();
-          $purchase_indent_items[$k]['quotation_values'] = $quotation_values;
+          $nit_details = Nit::where('purchase_indent_item_id', $purchase_indent_item_id)->first();
+          $purchase_indent_items[$k]['quotation_values'] = [];
+          if($nit_details) {
+            $quotation_values = QuotationValue::where('nit_id', $nit_details->id)->get();
+            $purchase_indent_items[$k]['quotation_values'] = $quotation_values;
+
+            foreach($quotation_values as $qndx => $qval) {
+              if($qval->is_accepted) {
+                $q_accepted  =true;
+                $q_accepted_id = $qval->id;
+              }
+            }
+
+            $purchase_indent_items[$k]['q_accepted']    = $q_accepted;
+            $purchase_indent_items[$k]['q_accepted_id'] = $q_accepted_id;
+
+          }
+
 
           //check if previous rate is added
           $purchase_indent_item_rates = PurchaseIndentItemRate::where('purchase_indent_item_id', $purchase_indent_item_id)->get();
           $purchase_indent_items[$k]['previous_rates'] = $purchase_indent_item_rates;
+
+          //check if NIT is generated
+          $nits = Nit::where('purchase_indent_item_id', $purchase_indent_item_id)->count();
+          $purchase_indent_items[$k]['nits'] = $nits;
+          if($nits) {
+
+          }
+
         }
-        // dump($purchase_indent_items);
-        // die();
-        return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items', 'add_quotation_values'));
+        return view('department_user.purchase_indents.details', compact('info', 'purchase_indent_items', 'add_quotation_values', 'nits'));
     }
 
     public function view_checked() {
@@ -143,8 +176,10 @@ class PurchaseIndentsController extends Controller
         $id   = Crypt::decrypt($id);
         $info = PurchaseIndentItem::whereId($id)->with('requisition_item', 'requisition_item.item_measurement')->first();
 
+        $nit_details = Nit::where('purchase_indent_item_id', $id)->first();
+
         $vendors  	= Vendor::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        return view('department_user.purchase_indents.qoutation.add_qoutation_value', compact('info', 'id', 'vendors'));
+        return view('department_user.purchase_indents.qoutation.add_qoutation_value', compact('info', 'id', 'vendors', 'nit_details'));
     }
     //store qoutation values
     public function store_qoutation_value(Request $request) {
@@ -153,9 +188,9 @@ class PurchaseIndentsController extends Controller
 
       if( count($request->vendor_id) == count($request->value) ) {
         for($i = 0; $i < count($request->vendor_id); $i++) {
-            $item_data['purchase_indent_item_id']     = $request->purchase_indent_item_id;
-            $item_data['vendor_id']                   = $request->vendor_id[$i];
-            $item_data['value']                       = $request->value[$i];
+            $item_data['nit_id']     = $request->nit_id;
+            $item_data['vendor_id']  = $request->vendor_id[$i];
+            $item_data['value']      = $request->value[$i];
             $validator = Validator::make($item_data, QuotationValue::$rules);
             if ($validator->fails()) return Redirect::back();
             $requisition_item = QuotationValue::create( $item_data );
@@ -171,9 +206,26 @@ class PurchaseIndentsController extends Controller
 
     public function view_qoutation_valus( $purchase_indent_item_id = NULL ) {
       $purchase_indent_item_id   = Crypt::decrypt($purchase_indent_item_id);
-      $info   = PurchaseIndentItem::with('purchase_indent', 'requisition_item', 'requisition_item.item_measurement')->first();
-      $values = QuotationValue::whereId( $purchase_indent_item_id )->with(['purchase_indent_item', 'vendor'])->get();
+
+      $nit_details = Nit::where('purchase_indent_item_id', $purchase_indent_item_id)->first();
+
+      $info   = PurchaseIndentItem::where('id', $purchase_indent_item_id)->with('purchase_indent', 'requisition_item', 'requisition_item.item_measurement')->first();
+      $values = QuotationValue::where( 'nit_id', $nit_details->id )->with(['nit', 'vendor'])->get();
       return view('department_user.purchase_indents.qoutation.view', compact('values', 'info'));
+    }
+
+    public function accept_qoutation_valus( $id) {
+      $id   = Crypt::decrypt($id);
+      $quotation_value = QuotationValue::findOrFail($id);
+      $quotation_value->is_accepted = 1;
+      $quotation_value->save();
+      $class   = 'alert-success';
+      $message = '<b>Vendor Rate Accepted !';
+
+      $nit_id = $quotation_value->nit_id;
+      $nit    = Nit::findOrFail($nit_id);
+
+      return Redirect::route('quotation_values.view', Crypt::encrypt( $nit->purchase_indent_item_id ))->with(['message' => $message, 'alert-class' => $class]);
     }
 
     public function add_item_previous_rate($id = NULL) {
@@ -199,5 +251,16 @@ class PurchaseIndentsController extends Controller
       $message .= '<b>'. count($request->vendor_id).'</b> Rates added !';
 
       return Redirect::route('purchase_indent.details', Crypt::encrypt( $purchase_indent_item->purchase_indent_id ))->with(['message' => $message, 'alert-class' => $class]);
+    }
+
+
+    public function view_all_approved_indents() {
+      $results = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department'])->where('checked_by', '!=', NULL)->where('approval_hod_id', '!=', NULL)->paginate(20);
+      return view('department_user.purchase_indents.view_all_approved_indents', compact('results'));
+    }
+
+    public function receive_items() {
+      $results = PurchaseIndent::with(['creator', 'requisition', 'budget_head', 'checker', 'approved_by', 'requisition.department'])->where('checked_by', '!=', NULL)->where('approval_hod_id', '!=', NULL)->paginate(20);
+      return view('department_user.purchase_indents.view_all_approved_indents', compact('results'));
     }
 }

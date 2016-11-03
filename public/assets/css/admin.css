@@ -554,6 +554,9 @@ dd {
   font-style: oblique;
 }
 .no-display { display: none; }
+.oblique {
+    font-style: oblique;
+}
 h2 { font-family: "Franklin Gothic Medium","Franklin Gothic","ITC Franklin Gothic",Arial,sans-serif}
 @media (min-width: 768px) {
   .dl-horizontal dt {

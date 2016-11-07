@@ -128,6 +128,10 @@
 				<span class="arrow"></span>
 				</a>
 				<ul class="sub">
+
+					<li><a class="" href="{{ route('material_user.create') }}"><span class="sub-menu-text">Add Material Department User</span></a>
+					</li>
+
 					<li><a class="" href="{{ route('department_user.create') }}"><span class="sub-menu-text">Add Department User</span></a>
 					</li>
 					<li><a class="" href="{{route('department_user.index')}}"><span class="sub-menu-text">View Department Users</span></a>

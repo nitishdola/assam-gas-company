@@ -13,7 +13,7 @@ class Requisition extends Model
     public static $rules = [
     	'requisition_number' 	=>  'required',
     	'job_number' 			    =>  'required',
-    	'nature_of_work' 		  =>  'required',
+    	//'nature_of_work' 		  =>  'required',
     	'chargeable_account_id' =>  'required|exists:chargeable_accounts,id',
     	'financial_year' 		  =>  'required|min:7',
     ];

@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
-	<title>Department Dashboard | @yield('pageTitle')</title>
+	<title>Material Department Dashboard | @yield('pageTitle')</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/animatecss/animate.min.css') }}" />
 	<!-- DATE RANGE PICKER -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" />
-	<!-- TODO -->
+	<!--ToDo-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/jquery-todo/css/styles.css') }}" />
 	<!-- FULL CALENDAR -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/fullcalendar/fullcalendar.min.css') }}" />
@@ -41,7 +41,7 @@
 	</style>
 </head>
 <body>
-	@include('department_user.common.header')
+	@include('material_user.common.header')
 	<!-- PAGE -->
 	<section id="page">
 		<div class="container">
@@ -77,11 +77,11 @@
 				@if(Session::has('message'))
 				<div class="row">
 					<div class="col-lg-12">
-              			<div class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                  			<button type="button" class="close" data-dismiss="alert">×</button>
-                  			{!! Session::get('message') !!}
-              			</div>
-          			</div>
+              <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  {!! Session::get('message') !!}
+              </div>
+          </div>
 				</div>
 				@endif
 				@yield('content')
@@ -123,7 +123,7 @@
     <script src="{{ asset('public/assets/js/flot/jquery.flot.pie.min.js') }}"></script>
     <script src="{{ asset('public/assets/js/flot/jquery.flot.stack.min.js') }}"></script>
     <script src="{{ asset('public/assets/js/flot/jquery.flot.crosshair.min.js') }}"></script>
-	<!-- TODO -->
+	<!-- ToDo -->
 	<script type="text/javascript" src="{{ asset('public/assets/js/jquery-todo/js/paddystodolist.js') }}"></script>
 	<!-- TIMEAGO -->
 	<script type="text/javascript" src="{{ asset('public/assets/js/timeago/jquery.timeago.min.js') }}"></script>
@@ -149,91 +149,6 @@
 			$('input.datepicker').Zebra_DatePicker({ format: 'd-m-Y'});
 			jQuery('.datetimepicker').datetimepicker( { format:'Y-m-d H:i:s'});
 		});
-	</script>
-	<script type="text/javascript">
-	/****************************************Restcontroller*********************/
-    /*****************************casecading drop down,block ui etc*************/
-
-     function load_racks() {
-        $('#location_id').on('change', function() {
-						$.blockUI();
-
-            var locationID = $(this).val();
-            var data = '';
-            data += '&location_id='+locationID;
-            url = "{{ route('rest.get_racks') }}";
-
-            if(locationID ) {
-                $.ajax({
-                    url  : url,
-                    type : "GET",
-                    data : data,
-                    dataType : "json",
-
-                    error : function(resp) {
-                        console.log(resp);
-												$.unblockUI();
-                    },
-                    success:function(data) {
-
-											  $.unblockUI();
-                        setTimeout($.unblockUI, 500);
-                        $('select[name="rack_id"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="rack_id"]').append('<option value="'+ key +'">'+ value +'</option>');
-                        });
-                     }
-                });
-            }else{
-                $('select[name="rack_id"]').empty();
-            }
-        });
-    }
-// for load sub groups
-function load_subgroups() {
-        $('#item_group_id').on('change', function() {
-
-            var groupID = $(this).val();
-            var data = '';
-            data += '&item_group_id='+groupID;
-            url = "{{ route('rest.get_sub_groups') }}";
-
-            if(groupID ) {
-                $.ajax({
-                    url  : url,
-                    type : "GET",
-                    data : data,
-                    dataType : "json",
-
-                    error : function(resp) {
-                        console.log(resp);
-                    },
-                    success:function(data) {
-                        $.blockUI();
-                        setTimeout($.unblockUI, 500);
-                        $('select[name="item_sub_group_id"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="item_sub_group_id"]').append('<option value="'+ key +'">'+ value +'</option>');
-                        });
-
-                     }
-                });
-            }else{
-
-                $('select[name="item_sub_group_id"]').empty();
-            }
-        });
-    }
-
-    $(document).ready(function() {
-
-	    $('#edit').click(function() {
-	        $.blockUI();
-
-	        setTimeout($.unblockUI, 2000);
-	    });
-	});
-
 	</script>
 	@yield('pageJs')
 	<!-- /JAVASCRIPTS -->

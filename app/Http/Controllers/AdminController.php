@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
-use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser,App\Role,App\Permission,App\PermissionRole,App\RoleDepartmentUser;
+use App\Department,App\ChargeableAccount,App\Requisition,App\RequisitionItem, App\Rack,App\Location, App\Designation,App\Section, App\DepartmentUser,App\AccountsUser,App\Role,App\Permission,App\PermissionRole,App\RoleDepartmentUser, App\MaterialUser;
 
 class AdminController extends Controller
 {
@@ -37,7 +37,7 @@ class AdminController extends Controller
         $validator = Validator::make($data = $request->all(), DepartmentUser::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 
-        $data['created_by'] = Auth::guard('admin')->user()->id; 
+        $data['created_by'] = Auth::guard('admin')->user()->id;
         $data['password']   = bcrypt( config('globals.department_user_password') );
         $message = '';
         if(DepartmentUser::create($data)) {
@@ -50,7 +50,7 @@ class AdminController extends Controller
     }
 
 
-    public function view_department_users(Request $request) { 
+    public function view_department_users(Request $request) {
         $where['status'] = 1;
         if($request->department_id) {
             $where['department_id'] = $request->department_id;
@@ -73,7 +73,7 @@ class AdminController extends Controller
         $results = DepartmentUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
         return view('admin.users.department.index', compact('results', 'departments','designations', 'sections'));
     }
-  
+
 
     public function edit( $id ) {
         $id = Crypt::decrypt($id);
@@ -84,8 +84,8 @@ class AdminController extends Controller
         return view('admin.users.department.edit', compact('departmentuser','departments','sections','designations'));
     }
 
-    public function update( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+    public function update( $id, Request $request) {
+        $id = Crypt::decrypt($id);
         $rules = DepartmentUser::$rules;
 
         $rules['name']              = $rules['name'] . ',id,' . $id;
@@ -108,9 +108,9 @@ class AdminController extends Controller
         return Redirect::route('department_user.index')->with('message', $message);
     }
 
-     
+
     public function disable($id ) {
-        $id = Crypt::decrypt($id); 
+        $id = Crypt::decrypt($id);
         $department_user = DepartmentUser::findOrFail($id);
         $message = '';
         //change the status of department to 0
@@ -128,14 +128,14 @@ class AdminController extends Controller
    /*********************creation of account users  CRUD by admin*******************/
 
     public function create_account_user() {
-       
+
         return view('admin.users.account.create');
     }
 
     public function store_account_user(Request $request) {
         $validator = Validator::make($data = $request->all(), AccountsUser::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-        $data['created_by'] = Auth::guard('admin')->user()->id; 
+        $data['created_by'] = Auth::guard('admin')->user()->id;
         $data['password']   = bcrypt( config('globals.account_user_password') );
         $message = '';
         if(AccountsUser::create($data)) {
@@ -147,13 +147,13 @@ class AdminController extends Controller
         return Redirect::route('account_user.create')->with('message', $message);
     }
 
-    public function view_account_users(Request $request) { 
+    public function view_account_users(Request $request) {
         $where['status'] = 1;
-        
+
 
         if($request->username) {
             $where['username'] = $request->username;
-        }  
+        }
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $results = AccountsUser::where($where)->with(['department', 'section', 'creator'])->paginate(20);
@@ -167,8 +167,8 @@ class AdminController extends Controller
         return view('admin.users.account.edit', compact('accountuser'));
     }
 
-    public function update_account_user( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+    public function update_account_user( $id, Request $request) {
+        $id = Crypt::decrypt($id);
         $rules = AccountsUser::$rules;
        // $rules['name']              = $rules['name'] . ',id,' . $id;
         $validator = Validator::make($data = $request->all(), $rules);
@@ -188,9 +188,9 @@ class AdminController extends Controller
         return Redirect::route('account_user.index')->with('message', $message);
     }
 
-     
+
     public function disable_account_user($id ) {
-        $id = Crypt::decrypt($id); 
+        $id = Crypt::decrypt($id);
         $account_user = AccountsUser::findOrFail($id);
         $message = '';
         //change the status of department to 0
@@ -202,13 +202,13 @@ class AdminController extends Controller
         }
 
         return Redirect::route('account_user.index')->with('message', $message);
-       } 
+       }
 
 
     //******************Overview of Requisition Process....view,download***************//
-       
+
     public function requisition_index(Request $request) {
-       
+
         $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
@@ -226,7 +226,7 @@ class AdminController extends Controller
             $where['hod'] = $request->Approval;
         }
         $where['status'] = 1;
-      
+
         $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
         return view('admin.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
@@ -247,7 +247,7 @@ class AdminController extends Controller
     public function store_role(Request $request) {
         $validator = Validator::make($data = $request->all(), Role::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-        
+
         $message = '';
         if(Role::create($data)) {
             $message .= 'Role added successfully !';
@@ -258,7 +258,7 @@ class AdminController extends Controller
         return Redirect::route('role.create')->with('message', $message);
     }
 
-     public function index_role(Request $request) { 
+     public function index_role(Request $request) {
         $results = Role::orderBy('name', 'DESC')->paginate(20);
         return view('admin.role.index', compact('results'));
     }
@@ -269,8 +269,8 @@ class AdminController extends Controller
         return view('admin.role.edit', compact('roles'));
     }
 
-    public function update_role( $id, Request $request) { 
-        $id = Crypt::decrypt($id); 
+    public function update_role( $id, Request $request) {
+        $id = Crypt::decrypt($id);
         $rules = Role::$rules;
         $rules['name']              = $rules['name'] . ',id,' . $id;
         $validator = Validator::make($data = $request->all(), $rules);
@@ -291,7 +291,7 @@ class AdminController extends Controller
     }
 
     public function disable_role($id ) {
-        $id      = Crypt::decrypt($id); 
+        $id      = Crypt::decrypt($id);
         $roles   = Role::findOrFail($id);
 
         $message = '';
@@ -302,18 +302,18 @@ class AdminController extends Controller
             $message .= 'Unable to Delete Role!';
         }
          return Redirect::route('role.index')->with('message', $message);
-    } 
+    }
 
-   
+
     public function create_permission() {
-       
+
         return view('admin.permission.create');
     }
 
     public function store_permission(Request $request) {
         $validator = Validator::make($data = $request->all(), Permission::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-        
+
         $message = '';
         if(Permission::create($data)) {
             $message .= 'Permission added Successfully !';
@@ -325,7 +325,7 @@ class AdminController extends Controller
     }
 
 
-     public function index_permission(Request $request) { 
+     public function index_permission(Request $request) {
         $results = Permission::orderBy('name', 'DESC')->paginate(20);
         return view('admin.permission.index', compact('results'));
        }
@@ -336,8 +336,8 @@ class AdminController extends Controller
         return view('admin.permission.edit', compact('permissiones'));
     }
 
-    public function update_permission( $id, Request $request) { 
-        $id    = Crypt::decrypt($id); 
+    public function update_permission( $id, Request $request) {
+        $id    = Crypt::decrypt($id);
         $rules = Permission::$rules;
         $rules['name']  = $rules['name'] . ',id,' . $id;
         $validator      = Validator::make($data = $request->all(), $rules);
@@ -355,7 +355,7 @@ class AdminController extends Controller
     }
 
      public function disable_permission($id ) {
-        $id          = Crypt::decrypt($id); 
+        $id          = Crypt::decrypt($id);
         $message = '';
         $permissions = Permission::findOrFail($id)->forceDelete();
         if($permissions>0) {
@@ -364,9 +364,9 @@ class AdminController extends Controller
             $message .= 'Unable to Remove Permission !';
         }
         return Redirect::route('permission.index')->with('message', $message);
-    } 
+    }
 
-    /***************assign permissions to roles************************/ 
+    /***************assign permissions to roles************************/
 
     public function assign_permission() {
 
@@ -379,7 +379,7 @@ class AdminController extends Controller
     public function store_permission_assigned(Request $request) {
         $validator = Validator::make($data = $request->all(), PermissionRole::$rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-        
+
         $message = '';
         if(PermissionRole::create($data)) {
             $message .= 'Permission assigned successfully !';
@@ -390,7 +390,7 @@ class AdminController extends Controller
         return Redirect::route('assign_permission.create')->with('message', $message);
     }
 
-     public function index_assign_permission(Request $request) { 
+     public function index_assign_permission(Request $request) {
        /* $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Permission'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();*/
         $results = PermissionRole::with(['role', 'permission'])->paginate(20);
@@ -407,8 +407,8 @@ class AdminController extends Controller
         return view('admin.assign_permission.edit', compact('results','roles','permissions'));
     }
 
-    public function update_assign_permission( $id, Request $request) { 
-        $id    = Crypt::decrypt($id); 
+    public function update_assign_permission( $id, Request $request) {
+        $id    = Crypt::decrypt($id);
         $rules = PermissionRole::$rules;
         $rules['name']  = $rules['name'] . ',id,' . $id;
         $validator      = Validator::make($data = $request->all(), $rules);
@@ -425,7 +425,7 @@ class AdminController extends Controller
     }
 
      public function disable_assign_permission($id ) {
-        $id          = Crypt::decrypt($id); 
+        $id          = Crypt::decrypt($id);
         $message = '';
         $permissions = PermissionRole::findOrFail($id)->forceDelete();
         if($permissions>0) {
@@ -434,15 +434,15 @@ class AdminController extends Controller
             $message .= 'Unable to Remove Assigned Permission !';
         }
         return Redirect::route('assign_permission.index')->with('message', $message);
-    } 
-    
+    }
+
     /*************************assign role to users******************************/
 
     public function assign_role() {
         $department_users = [''=> 'Select a User'] + DepartmentUser::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
         $roles =  Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        
+
         return view('admin.assign_role.create',compact('roles','department_users'));
     }
 
@@ -462,12 +462,12 @@ class AdminController extends Controller
                     $message = '';
                     $message .= 'Oops..Role already assigned !';
                     return Redirect::route('assign_role.create')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-                   
+
                      }
-               } 
+               }
         }
 
-     public function index_assign_role(Request $request) { 
+     public function index_assign_role(Request $request) {
        /* $roles = [''=> 'Select Role'] + Role::orderBy('name', 'DESC')->lists('name', 'id')->toArray();
         $sections    = [''=> 'Select Permission'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();*/
         $results = RoleDepartmentUser::with(['role', 'department_users'])->paginate(20);
@@ -483,8 +483,8 @@ class AdminController extends Controller
         return view('admin.assign_permission.edit', compact('results','roles','department_users'));
     }
 
-    public function update_assigned_permission( $id, Request $request) { 
-        $id    = Crypt::decrypt($id); 
+    public function update_assigned_permission( $id, Request $request) {
+        $id    = Crypt::decrypt($id);
         $rules = RoleDepartmentUser::$rules;
         $rules['name']  = $rules['name'] . ',id,' . $id;
         $validator      = Validator::make($data = $request->all(), $rules);
@@ -502,7 +502,7 @@ class AdminController extends Controller
 
 
      public function disable_assigned_permission($id ) {
-        $id      = Crypt::decrypt($id); 
+        $id      = Crypt::decrypt($id);
         $message = '';
         $results = RoleDepartmentUser::findOrFail($id)->forceDelete();
         if($results>0) {
@@ -511,5 +511,31 @@ class AdminController extends Controller
             $message .= 'Unable to Remove Assigned Role!';
         }
         return Redirect::route('assign_role.index')->with('message', $message);
-    } 
+    }
+
+    /**
+    * Create Material Department Users
+    **/
+    /*****************creation of department users Section CRUD by admin*****************/
+     public function create_material_user() {
+         $sections    = [''=> 'Select Section'] + Section::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+       return view('admin.users.material.create', compact('sections'));
+     }
+
+     public function store_material_user(Request $request) {
+         $validator = Validator::make($data = $request->all(), MaterialUser::$rules);
+         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+
+         $data['created_by'] = Auth::guard('admin')->user()->id;
+         $data['password']   = bcrypt( config('globals.material_user_password') );
+         $message = '';
+         if(MaterialUser::create($data)) {
+             $message .= 'User added successfully !';
+         }else{
+             $message .= 'Unable to add user !';
+         }
+
+         return Redirect::route('material_user.create')->with('message', $message);
+     }
 }

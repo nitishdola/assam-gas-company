@@ -44,7 +44,7 @@ class RestController extends Controller
 
      public function itemValues() {
         if(isset($_GET['item_measurement_id']) && $_GET['item_measurement_id'] != '') {
-            return ItemMeasurement::where('id', $_GET['item_measurement_id'])->select(['latest_rate', 'stock_in_hand'])->first();
+            return ItemMeasurement::where('id', $_GET['item_measurement_id'])->select(['latest_rate', 'stock_in_hand', 'item_code'])->first();
         }
     }
 }

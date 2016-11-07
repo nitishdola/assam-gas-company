@@ -17,7 +17,7 @@ class RedirectIfNotDepartmentUser
     public function handle($request, Closure $next, $guard = 'department_user')
     {
         if (!Auth::guard($guard)->check()) {
-            return redirect('/');
+            return redirect('/user/department/login');
         }
         return $next($request);
     }

@@ -50,6 +50,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/user/accounts/logout',['as' => 'accounts_user.logout', 'uses' =>'AccountsUserAuth\AuthController@logout']);
     Route::get('/accounts/dashboard', ['as' => 'accounts_user.dashboard', 'uses' => 'AccountsUsersController@index']);
 
+    //Material Department User
+    Route::get('/user/material/login','MaterialUserAuth\AuthController@showLoginForm');
+    Route::post('/user/material/login','MaterialUserAuth\AuthController@login');
+    Route::get('/user/material/logout',['as' => 'material_user.logout', 'uses' =>'MaterialUserAuth\AuthController@logout']);
+    Route::get('/material/dashboard', ['as' => 'material_user.dashboard', 'uses' => 'MateriaUsersController@index']);
+
 });
 
 
@@ -685,6 +691,53 @@ Route::group(['prefix'=>'user'], function() {
             'uses' => 'AdminController@disable'
         ]);
     });
+
+    Route::group(['prefix'=>'material-department'], function() {
+        Route::get('/create', [
+            'as' => 'material_user.create',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@create_material_user'
+        ]);
+
+        Route::post('/store', [
+            'as' => 'material_user.store',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@store_material_user'
+        ]);
+
+
+        Route::get('/view-all', [
+            'as' => 'material_user.index',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@view_department_users'
+        ]);
+
+
+        Route::get('/change-password', [
+            'as' => 'material_user.change_password',
+            'middleware' => ['department_user'],
+            'uses' => 'DepartmentUsersController@change_password'
+        ]);
+
+        Route::get('/edit/{num}', [
+            'as' => 'material_user.edit',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@edit'
+        ]);
+
+        Route::post('/update/{num}', [
+            'as' => 'material_user.update',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@update'
+        ]);
+
+        Route::get('/disable/{num}', [
+            'as' => 'material_user.disable',
+            'middleware' => ['admin'],
+            'uses' => 'AdminController@disable'
+        ]);
+    });
+
      Route::group(['prefix'=>'account'], function() {
 
             Route::get('/create', [

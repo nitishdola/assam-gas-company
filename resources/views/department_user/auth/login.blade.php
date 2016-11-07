@@ -1,19 +1,19 @@
 @extends('layouts.auth')
-@section('login_name') AGCL Department @stop
+@section('login_name') AGCL Department User Login @stop
 
 @section('content')
 <div class="col-md-6 col-md-offset-3">
     <div class="login-box-plain">
-        <h2 class="bigintro">Login as Department</h2>
+        <h2 class="bigintro"> User Department Login</h2>
         <div class="divide-40"></div>
         <form role="form" method="POST" action="{{ url('/user/department/login') }}">
         {{ csrf_field() }}
-          <div class="form-group">
+          <div class="form-group {{ $errors->has('username') ? 'has-error' : ''}}">
             <label for="exampleInputEmail1">Username</label>
             <i class="fa fa-user"></i>
             <input type="username" class="form-control" required="required" name="username" value="{{ old('username') }}">
           </div>
-          <div class="form-group">
+          <div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}"">
             <label for="exampleInputPassword1">Password</label>
             <i class="fa fa-lock"></i>
             <input type="password" required="required" class="form-control" name="password">

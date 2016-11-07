@@ -56,6 +56,10 @@ return [
             'driver' => 'session',
             'provider' => 'accounts_users'
         ],
+        'material_user' => [
+            'driver' => 'session',
+            'provider' => 'material_users'
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -97,6 +101,10 @@ return [
         'accounts_users' => [
             'driver' => 'eloquent',
             'model' => App\AccountsUser::class,
+        ],
+        'material_users' => [
+            'driver' => 'eloquent',
+            'model' => App\MaterialUser::class,
         ]
         // 'users' => [
         //     'driver' => 'database',

@@ -1,6 +1,6 @@
 @extends('layouts.department_user')
-@section('title') Material Requisition Form @stop
-@section('pageTitle') Material Requisition Form @stop
+@section('title') Requisition Raise Form @stop
+@section('pageTitle') Requisition Raise Form @stop
 @section('formNumber') (<span class="form-number">Form Number : {{ config('globals.req_form') }}</span>) @stop
 @section('breadcumb')
 <li>
@@ -14,9 +14,10 @@
 </li>
 
 <li>
-	Material Requisition Form
+	Requisition Raise Form
 </li>
 @stop
+@section('pageCss') <style>.item_code { font-weight:500; } </style>
 @section('content')
 <div class="widget-container fluid-height clearfix">
 	<div class="widget-content padded">
@@ -24,7 +25,7 @@
 		    {!! Form::open(array('route' => 'requisition.store', 'id' => 'requisition.store', 'class' => 'form-horizontal row-border')) !!}
 		        @include('department_user.requisitions._form')
 						<hr>
-		        <div class="col-xs-12" style="height:30px;"> <h3> Add Items </h3></div>
+		        <div class="col-xs-12" style="padding-bottom: 10px;"> <h3> Add Items </h3></div>
 
 		        @include('department_user.requisitions._item_form2')
 		        <div class="col-xs-12" style="margin-top:30px;">
@@ -51,6 +52,7 @@ $('.add_more_item').click(function(e) {
 	$clone.find(':text').val('');
 	$clone.find('.quantity_demanded').val('');
 	$clone.find('.stock_in_hand').text('');
+	$clone.find('.item_code').text('');
 	item++;
 	show_hide_item(item);
 });
@@ -96,6 +98,7 @@ $(".item_measurement").on("change", function() { console.log('Change');
 				$latest_tr 	= $('#req_table tr:last');
 				$latest_tr.find('.rate').val(resp.latest_rate);
 				$latest_tr.find('.stock_in_hand').text(resp.stock_in_hand);
+				$latest_tr.find('.item_code').text(resp.item_code);
 			}
 		});
 	}

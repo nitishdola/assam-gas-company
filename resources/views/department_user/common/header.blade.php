@@ -31,8 +31,8 @@
 					<i class="fa fa-angle-down"></i>
 				</a>
 				<ul class="dropdown-menu skins">
-					<li><a href="{{route('requisition.create')}}" data-skin="default">Add</a></li>
-					<li><a href=" {{ route('requisition.index') }} " data-skin="night">View</a></li>
+					<li><a href="{{route('requisition.create')}}" data-skin="default">Raise</a></li>
+					<li><a href=" {{ route('requisition.index') }} " data-skin="night">View All Requisitions</a></li>
 				 </ul>
 			</li>
 

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-class RedirectIfNotAccountsUser
+class RedirectIfNotMaterialUser
 {
     /**
      * Handle an incoming request.
@@ -13,10 +13,10 @@ class RedirectIfNotAccountsUser
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = 'accounts_user')
+    public function handle($request, Closure $next, $guard = 'material_user')
     {
         if (!Auth::guard($guard)->check()) {
-            return redirect('/user/accounts/login');
+            return redirect('/user/material/login');
         }
         return $next($request);
     }

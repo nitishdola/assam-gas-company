@@ -19,13 +19,18 @@ class RequisitionsController extends Controller
         //if($this->_department_user->can(['create_requisition'])) {
             $chargeable_accounts  = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
-            $item_measurements  = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+            // $item_measurements  = [''=> 'Select Item'] + ItemMeasurement::whereStatus(1)->orderBy('item_name', 'DESC')->lists('item_name', 'id')->toArray();
+
+            $item_measurements = ItemMeasurement::select(DB::raw("CONCAT(item_name,' (', item_code, ')') AS full_name, id"))->lists('full_name', 'id');
 
             $units  = ['' => 'Select Unit'] + MeasurementUnit::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
 
             //requisition number generate
+            $department_id = Auth::guard('department_user')->user()->department_id;
+            $department    = Department::findOrFail($department_id);
+
             $requisition_number = $this->generate_requisition_number();
-            $requisition_number = 'REQ_'.$requisition_number;
+            $requisition_number = 'REQ|'.$department->department_code.'|'.$requisition_number;
 
             $financial_year = $this->calculateFiscalYear();
             return view('department_user.requisitions.create', compact('chargeable_accounts', 'item_measurements', 'units', 'requisition_number', 'financial_year'));
@@ -90,8 +95,11 @@ class RequisitionsController extends Controller
             }
             // Commit the queries!
             DB::commit();
-            $message .= 'Requisition successfully generated !';
-            return Redirect::route('requisition.create')->with('message', $message);
+            $message .= "Requisition ( $request->requisition_number ) successfully generated !";
+            //return Redirect::route('requisition.create')->with('message', $message);
+
+            return view('department_user.requisitions.create_success', compact('message'));
+
         //}
     }
 

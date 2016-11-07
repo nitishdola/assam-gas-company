@@ -13,7 +13,7 @@ use App\ItemMeasurement,App\SalvageItemMeasurement,App\Requisition;
 
 class DepartmentUsersController extends Controller
 {
-	public function __construct(){
+    public function __construct(){
     	$this->middleware('department_user');
     }
 

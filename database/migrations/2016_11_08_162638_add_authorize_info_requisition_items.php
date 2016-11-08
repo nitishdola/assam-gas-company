@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropUnitMeasurementIdRequisitionItems extends Migration
+class AddAuthorizeInfoRequisitionItems extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class DropUnitMeasurementIdRequisitionItems extends Migration
     public function up()
     {
         Schema::table('requisition_items', function (Blueprint $table) {
-            //$table->dropColumn('measurement_unit_id');
+          $table->integer('authorized_by', false, true)->nullable()->after('quantity_issued');
+          $table->date('authorized_date')->nullable()->after('authorized_by');
         });
     }
 

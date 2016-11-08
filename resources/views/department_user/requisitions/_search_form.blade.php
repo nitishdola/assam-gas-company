@@ -29,12 +29,20 @@
 </div>
 
 <div class="col-lg-6">
- <div class="form-group {{ $errors->has('Approval') ? 'has-error' : ''}}">
-  {!! Form::label('Approval', '', array('class' => 'col-md-3 control-label')) !!}
+  <?php
+    $requisition_status = array(
+        ''          => 'All',
+        'arrived'   => 'New Requisitions',
+        'accepted'  => 'Issued Requisitions',
+        'rejected'  => 'Sent for Indent Requisitions'
+    );
+  ?>
+ <div class="form-group {{ $errors->has('current_status') ? 'has-error' : ''}}">
+  {!! Form::label('Requisition Status', '', array('class' => 'col-md-3 control-label')) !!}
   <div class="col-md-9">
-    {!!Form::select('Approval', array('1' => 'Approved', 'NULL' => 'Not Approved')) !!}
+    {!! Form::select('current_status', $requisition_status, null, ['class' => 'col-md-12 form-control', 'id' => 'current_status']) !!}
   </div>
-  {!! $errors->first('Approval', '<span class="help-inline">:message</span>') !!}
+  {!! $errors->first('current_status', '<span class="help-inline">:message</span>') !!}
 </div>
   
 </div>

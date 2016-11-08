@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropSectionidDepartmentuser extends Migration
+class AddCurrentstatusRequisitions extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,8 @@ class DropSectionidDepartmentuser extends Migration
      */
     public function up()
     {
-        Schema::table('department_users', function (Blueprint $table) {
-            // $table->dropForeign(['section_id']);
-            // $table->dropColumn('section_id');
+        Schema::table('requisitions', function (Blueprint $table) {
+            //$table->enum('current_status',['arrived','accepted', 'rejected'])->default('arrived')->after('remarks');
         });
     }
 
@@ -25,7 +24,7 @@ class DropSectionidDepartmentuser extends Migration
      */
     public function down()
     {
-        Schema::table('department_users', function (Blueprint $table) {
+        Schema::table('requisitions', function (Blueprint $table) {
             //
         });
     }

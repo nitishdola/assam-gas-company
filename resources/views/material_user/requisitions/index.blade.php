@@ -1,4 +1,4 @@
-@extends('layouts.department_user')
+@extends('layouts.material_user')
 @section('title') All Items @stop
 @section('pageTitle') All Items @stop
 @section('breadcumb') 
@@ -8,7 +8,7 @@
 </li>
 <li>
 	<i class="fa fa-th"></i>
-	Requisitions |<a class="btn btn-info" href="{{ route('department-user-requisition.download') }}"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+	Requisitions
 </li>
 @stop
 
@@ -40,10 +40,8 @@
 			            <th class="hidden-xs">Department</th>
 			            <th> Requisition Number </th>
 			            <th> Job Number </th>
-			            <th> Nature of Work </th>
 			            <th> Chargeable Account </th>
-			            <th> Issue Date </th>
-			             <th> Actions </th>
+			            <th> Actions </th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -53,21 +51,8 @@
 			            <td class="hidden-xs"> {{ $v->department['name'] }} </td>
 			            <td> {{ $v->requisition_number }} </td>
 			            <td class="hidden-xs"> {{ $v->job_number }} </td>
-			            <td> {{ $v->nature_of_work }} </td>
 			            <td class="hidden-xs"> {{ $v->chargeable_account['name'] }} </td>
-			            <td> {{ date('d-m-Y', strtotime($v->issue_date)) }} </td>
-			            <td> <a href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="Edit Item">View More</a>|
-			            <a href="{{ route('requisition.edit', Crypt::encrypt($v->id) ) }}" title="Edit Item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
-			            @if($v->status) | 
-						<a onclick="return confirm('Are you sure you want to delete this item ?');"  style="color:red" href="{{ route('requisition.disable', Crypt::encrypt($v->id) ) }}" title="Remove Item"><i class="fa fa-trash-o fa-fw"></i>Remove</a>
-						@endif
-						@if($v->hod) |
-						<a class="btn btn-primary disabled">Approved</a>
-						 
-						 @else|
-						 <a class="btn btn-primary active" a href="{{ route('requisition.approve', Crypt::encrypt($v->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</a>
-						
-						  @endif
+			            <td> <a href="{{ route('requisition.view', Crypt::encrypt($v->id) ) }}" title="View Requisition Details" class="btn btn-info"><i class="fa fa-sign-in" aria-hidden="true"></i> View More</a>
 						</td>
 			        </tr>
 			        @endforeach

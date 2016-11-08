@@ -860,9 +860,16 @@ Route::group(['prefix'=>'requisition'], function() {
 
     Route::get('/view-all', [
         'as' => 'requisition.index',
-        'middleware' => ['department_user'],
+        'middleware' => ['material_user'],
         'uses' => 'RequisitionsController@index'
     ]);
+
+    Route::get('/view-all-new', [
+        'as' => 'requisition.view_arrived_requisitions',
+        'middleware' => ['material_user'],
+        'uses' => 'RequisitionsController@view_arrived_requisitions'
+    ]);
+
     Route::get('/edit/{num}', [
             'as' => 'requisition.edit',
             'middleware' => ['department_user'],
@@ -880,10 +887,16 @@ Route::group(['prefix'=>'requisition'], function() {
             'middleware' => ['department_user'],
             'uses' => 'RequisitionsController@disable'
     ]);
-     Route::get('/view-details/{num}', [
+    Route::get('/view-details/{num}', [
         'as' => 'requisition.view',
-        'middleware' => ['department_user'],
+        'middleware' => ['material_user'],
         'uses' => 'RequisitionsController@view'
+    ]);
+
+    Route::get('/approve-requisition-item/{num}', [
+        'as' => 'approve.requisition.item',
+        'middleware' => ['material_user'],
+        'uses' => 'RequisitionsController@approve_requisition_item_issue'
     ]);
 
     Route::get('/approve-view', [

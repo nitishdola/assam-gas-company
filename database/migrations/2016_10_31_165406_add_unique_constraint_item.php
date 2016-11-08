@@ -13,7 +13,7 @@ class AddUniqueConstraintItem extends Migration
     public function up()
     {
         Schema::table('item_measurements', function (Blueprint $table) {
-            $table->unique('item_code');
+            //$table->unique('item_code');
         });
     }
 

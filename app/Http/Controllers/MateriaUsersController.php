@@ -16,6 +16,7 @@ class MateriaUsersController extends Controller
     }
 
     public function index(){
-    	return view('material_user.dashboard');
+    	$new_requisitions = Requisition::where('current_status', 'arrived')->count();
+    	return view('material_user.dashboard', compact('new_requisitions'));
     }
 }

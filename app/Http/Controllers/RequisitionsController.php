@@ -114,8 +114,7 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
-        //if($this->_department_user->can(['view_requisitions'])) {
-            $username = Auth::guard('department_user')->user()->username;
+            $username = Auth::guard('material_user')->user()->username;
             $user     = DepartmentUser::where('username', $username)->first();
             $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
             $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
@@ -130,39 +129,23 @@ class RequisitionsController extends Controller
              if($request->requisition_number) {
                 $where['requisition_number'] = $request->requisition_number;
             }
-             if($request->Approval) {
-                $where['hod'] = $request->Approval;
+            if($request->current_status) {
+                $where['current_status'] = $request->current_status;
             }
+
             $where['status'] = 1;
 
             $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-            return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
-        // }else{
-        //     $message = '';
-        //     $message .= 'Unauthorize Aceess !';
-        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        //  //$this->isViewAuthorized();
+            return view('material_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
+    }
 
-        //     $username = Auth::guard('department_user')->user()->username;
-        //     $user     = DepartmentUser::where('username', $username)->first();
-        //     $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-        //     $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+    public function view_arrived_requisitions() {
+        $where['status'] = 1;
+        $where['current_status'] = 'arrived';
+        $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
 
-        //     $where = [];
-        //     if($request->department_id) {
-        //         $where['department_id'] = $request->department_id;
-        //     }
-        //     if($request->chargeable_account_id) {
-        //         $where['chargeable_account_id'] = $request->chargeable_account_id;
-        //     }
-        //      if($request->requisition_number) {
-        //         $where['requisition_number'] = $request->requisition_number;
-        //     }
-        //      if($request->Approval) {
-        //         $where['hod'] = $request->Approval;
-        //     }
-        // }
+            return view('department_user.requisitions.index', compact('departments','chargeable_accounts', 'results'));
     }
 
    //requisition approve process by hod of the departments
@@ -242,7 +225,7 @@ class RequisitionsController extends Controller
     public function update($id , Request $request) {
         $id    = Crypt::decrypt($id);
         $rules = Requisition::$rules;
-        $validator = Validator::make($data = $request->all(), $rules);
+        $validator      = Validator::make($data = $request->all(), $rules);
         if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
         $requisition    = Requisition::findOrFail($id);
         $requisition_id = $requisition->id;
@@ -256,13 +239,11 @@ class RequisitionsController extends Controller
             $data['issue_date']     = date('Y-m-d');
             $data['raised_by']      = Auth::guard('department_user')->user()->id;
             $requisition->fill($data);
-
             $requisition = $requisition->save();
         }catch(ValidationException $e)
         {
             return Redirect::back();
         }
-
         try{
 
             for($i = 0; $i < count($request->store_description); $i++) {
@@ -293,47 +274,37 @@ class RequisitionsController extends Controller
         $id           = Crypt::decrypt($id);
         $requisitions = Requisition::findOrFail($id);
         $message = '';
-        //change the status of department to 0
         $requisitions->status = 0;
         if($requisitions->save()) {
             $message .= 'Requisition removed successfully !';
         }else{
             $message .= 'Unable to remove Requisition !';
         }
-
         return Redirect::route('requisition.index')->with('message', $message);
     }
 
 
     public function view( $id ) {
-        $username = Auth::guard('department_user')->user()->username;
-        $user     = DepartmentUser::where('username', $username)->first();
         $id       = Crypt::decrypt($id);
         $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['item_measurement', 'item_measurement.measurement_unit'])->get();// dump($requisition_items);
-        return view('department_user.requisitions.view',compact('info','requisition_items','user'));
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['item_measurement', 'item_measurement.measurement_unit'])->get();
+        return view('material_user.requisitions.view_details',compact('info','requisition_items'));
     }
 
     public function receiveRequisition( $id ) {
-        //if($this->_department_user->can(['receive_requisition'])) {
-            $id       = Crypt::decrypt($id);
-            $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
-            $requisition_items  = RequisitionItem::where('requisition_id', $id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->with(['measurement_unit', 'item_measurement'])->where('status',1)->get();
-                return view('department_user.requisitions.receive',compact('info','requisition_items','user'));
-            return Redirect::route('requisition.view_approved')->with('message', $message);
-        // }else{
-        //     $message = '';
-        //     $message .= 'Unauthorize Aceess !';
-        //     return Redirect::route('department_user.dashboard')->with(['message' => $message, 'alert-class' => 'alert-danger']);
-        // }
+        $id       = Crypt::decrypt($id);
+        $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->where('quantity_issued', 0)->where('issued_by', NULL)->where('issued_date', NULL)->with(['measurement_unit', 'item_measurement'])->where('status',1)->get();
+            return view('department_user.requisitions.receive',compact('info','requisition_items','user'));
+        return Redirect::route('requisition.view_approved')->with('message', $message);
     }
 
     public function requisition_issue_view( $requisition_id = NULL, $requisition_item_id = NULL) {
-        $requisition_id = Crypt::decrypt($requisition_id);
-        $requisition_item_id = Crypt::decrypt($requisition_item_id);
+        $requisition_id         = Crypt::decrypt($requisition_id);
+        $requisition_item_id    = Crypt::decrypt($requisition_item_id);
 
-        $requisition_item = RequisitionItem::findOrFail($requisition_item_id );
-        $item_measurement_id = $requisition_item->item_measurement_id;
+        $requisition_item       = RequisitionItem::findOrFail($requisition_item_id );
+        $item_measurement_id    = $requisition_item->item_measurement_id;
 
         $requisition    = Requisition::findOrFail($requisition_id);
         $item           = ItemMeasurement::where(['id' => $item_measurement_id])->with(['item_group', 'item_sub_group', 'measurement_unit', 'location', 'rack'])->first();
@@ -358,5 +329,20 @@ class RequisitionsController extends Controller
             $message .= 'Issue was not successfull !';
             return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-danger']);
         }
+    }
+
+    /**
+    * Sent to HOD for authorization of item issue
+    */
+    public function approve_requisition_item_issue( $requisition_item_id = NULL ) {
+      $requisition_item_id    = Crypt::decrypt($requisition_item_id);
+      $requisition_item = RequisitionItem::findOrFail($requisition_item_id );
+      $requisition_item->authorized_by    = Auth::guard('material_user')->user()->id;
+      $requisition_item->authorized_date  = date('Y-m-d');
+      if($requisition_item->save()) {
+          $message = '';
+          $message .= 'Successfully Authorized !';
+          return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-success']);
+      }
     }
 }

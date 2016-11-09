@@ -35,4 +35,9 @@ class Requisition extends Model
     {
         return $this->belongsTo('App\ChargeableAccount', 'chargeable_account_id');
     }
+
+    function requisition_items($where = array())
+    {
+        return $this->hasMany('RequisitionItem')->where($where);
+    }
 }

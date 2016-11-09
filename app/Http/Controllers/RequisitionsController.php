@@ -171,22 +171,22 @@ class RequisitionsController extends Controller
         // }
     }
 
-    public function approveRequisition($id)
-    {
-        //if($this->_department_user->can(['requisition_check_user'])) {
-            $id                 = Crypt::decrypt($id);
-            $requisitions       = Requisition::findOrFail($id);
-            $requisitions->hod  = Auth::guard('department_user')->user()->id;
-            $requisitions->hod_approve_date  = date('Y-m-d H:i:s');
-           if($requisitions->save()){
-            $requisition_number = $requisitions->requisition_number;
-                return view('department_user.requisitions.success', compact('requisition_number'));
-                //return redirect()->route('requisition.approve.success')->with(['requisition_number', $requisitions->requisition_]);
-            }else{
-                return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
-            }
-        //}
-    }
+    // public function approveRequisition($id)
+    // {
+    //     //if($this->_department_user->can(['requisition_check_user'])) {
+    //         $id                 = Crypt::decrypt($id);
+    //         $requisitions       = Requisition::findOrFail($id);
+    //         $requisitions->hod  = Auth::guard('department_user')->user()->id;
+    //         $requisitions->hod_approve_date  = date('Y-m-d H:i:s');
+    //        if($requisitions->save()){
+    //         $requisition_number = $requisitions->requisition_number;
+    //             return view('department_user.requisitions.success', compact('requisition_number'));
+    //             //return redirect()->route('requisition.approve.success')->with(['requisition_number', $requisitions->requisition_]);
+    //         }else{
+    //             return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
+    //         }
+    //     //}
+    // }
     public function view_approved(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
@@ -344,5 +344,15 @@ class RequisitionsController extends Controller
           $message .= 'Successfully Authorized !';
           return Redirect::route('requisition.view_approved')->with(['message' => $message, 'alert-class' => 'alert-success']);
       }
+    }
+
+
+    public function view_pending_requisitions() {
+        $where = [];
+        //$where['status'] = 1;
+        $where['authorized_by'] = NULL;
+
+        $results = RequisitionItem::where($where)->with('requisition', 'item_measurement', 'requisition.department', 'requisition.department_user')->paginate(10);
+        return view('material_user.requisitions.view_pending_requisitions',compact('results'));
     }
 }

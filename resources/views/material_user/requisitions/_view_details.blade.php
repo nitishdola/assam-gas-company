@@ -76,7 +76,7 @@
               If Item sent to HOD for authorize & not yet authorize
             !-->
             @elseif($v->current_status == 'sent_to_hod')
-            <a href="#" class="btn btn-success">Authorize for Issue</a>
+            <a href="" class="btn btn-success">Authorize for Issue</a>
             <!--
               If Item is authorized for Issue
             !-->

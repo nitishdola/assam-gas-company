@@ -29,6 +29,11 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/agcl.css') }}">
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/datetimepicker-master/jquery.datetimepicker.css') }}"/ >
+
+	<!-- DATA TABLES -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/datatables/media/css/jquery.dataTables.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/datatables/media/assets/css/datatables.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/js/datatables/extras/TableTools/media/css/TableTools.min.css') }}" />
 	@yield('pageCss')
 	<style>
 	.navbar li a {
@@ -139,6 +144,13 @@
 	<script src="{{ asset('public/assets/zebra/javascript/zebra_datepicker.js') }}"></script>
 
 	<script src="{{ asset('public/assets/datetimepicker-master/build/jquery.datetimepicker.full.min.js') }}"></script>
+
+	<!-- DATA TABLES -->
+	<script type="text/javascript" src="{{ asset('public/assets/js/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/assets/js/datatables/media/assets/js/datatables.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/assets/js/datatables/extras/TableTools/media/js/TableTools.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/assets/js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js') }}"></script>
+	
 	<!-- CUSTOM SCRIPT -->
 	<script src="{{ asset('public/assets/js/script.js') }}"></script>
 	<script>

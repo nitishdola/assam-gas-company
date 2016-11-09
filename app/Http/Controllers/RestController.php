@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB, Validator, Redirect, Auth, Crypt;
 
-use App\ChargeableAccount,App\ItemSubGroup, App\Rack, App\Section, App\Department, App\ItemMeasurement;
+use App\ChargeableAccount,App\ItemSubGroup, App\Rack, App\Section, App\Department, App\ItemMeasurement,App\RequisitionItem;
 
 class RestController extends Controller
 {
@@ -45,6 +45,23 @@ class RestController extends Controller
      public function itemValues() {
         if(isset($_GET['item_measurement_id']) && $_GET['item_measurement_id'] != '') {
             return ItemMeasurement::where('id', $_GET['item_measurement_id'])->select(['latest_rate', 'stock_in_hand', 'item_code'])->first();
+        }
+    }
+
+    public function approveRequisition($id = NULL)
+    {
+        //if($this->_department_user->can(['requisition_check_user'])) {
+        if(isset($_GET['item_id']) && $_GET['item_id'] != '') {
+            $id                 = Crypt::decrypt($id);
+            $requisition_item   = RequisitionItem::findOrFail($id);
+            $requisition_item->authorized_by    = Auth::guard('material_user')->user()->id;
+            $requisition_item->authorized_date  = date('Y-m-d');
+            if($requisition_item->save()){
+                return true;
+            }else{
+                return false;
+            }
+        //}
         }
     }
 }

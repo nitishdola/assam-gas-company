@@ -11,7 +11,7 @@ class RequisitionItem extends Model
     protected $guarded  = ['_token'];
 
     public static $rules = [
-    	//'requisition_id' 		=>  'required|exists:requisitions,id',
+    	'requisition_id' 		=>  'required|exists:requisitions,id',
     	'item_measurement_id' 	=>  'required|exists:item_measurements,id',
     	//'store_description' 	=>  'required',
     	//'measurement_unit_id' 	=>  'required|exists:measurement_units,id',
@@ -20,11 +20,16 @@ class RequisitionItem extends Model
 
     ];
 
+    public function requisition()
+    {
+        return $this->belongsTo('App\Requisition', 'requisition_id');
+    }
 
     public function measurement_unit()
     {
         return $this->belongsTo('App\MeasurementUnit', 'measurement_unit_id');
     }
+    
     public function item_measurement()
     {
         return $this->belongsTo('App\ItemMeasurement', 'item_measurement_id');

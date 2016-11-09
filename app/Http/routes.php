@@ -899,16 +899,6 @@ Route::group(['prefix'=>'requisition'], function() {
         'uses' => 'RequisitionsController@approve_requisition_item_issue'
     ]);
 
-    Route::get('/approve-view', [
-        'as' => 'requisition.approve.view_all',
-        'middleware' => ['department_user'],
-        'uses' => 'RequisitionsController@view_all_requisitions'
-    ]);
-      Route::get('/approve-requisition/{num}', [
-            'as' => 'requisition.approve',
-            'middleware' => ['department_user'],
-            'uses' => 'RequisitionsController@approveRequisition'
-    ]);
 
     Route::get('/approved/list-all', [
         'as' => 'requisition.view_approved',
@@ -931,6 +921,21 @@ Route::group(['prefix'=>'requisition'], function() {
         'as' => 'requisition.issue',
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@requisition_issue'
+    ]);
+
+    /**
+    * Approve Reuistion Items
+    * Multiple Items from same or Multiple Requisitions
+    **/
+    Route::get('/view-pending-requisitions', [
+        'as' => 'requisition.view_all.pending_requisitions',
+        'middleware' => ['material_user'],
+        'uses' => 'RequisitionsController@view_pending_requisitions'
+    ]);
+    Route::get('/approve-requisition/{num}', [
+        'as' => 'requisition.approve',
+        'middleware' => ['material_user'],
+        'uses' => 'RequisitionsController@approveRequisition'
     ]);
 
 });
@@ -1319,5 +1324,10 @@ Route::group(['prefix'=>'rest'], function() {
     Route::get('/item-values', [
         'as' => 'rest.item_values',
         'uses' => 'RestController@itemValues'
+    ]);
+
+    Route::post('/approve-requisition-item', [
+        'as' => 'rest.approve_requisition_item',
+        'uses' => 'RestController@approveRequisition'
     ]);
 });

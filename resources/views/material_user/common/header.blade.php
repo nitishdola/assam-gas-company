@@ -36,7 +36,7 @@
 				</li>
 
 				<li>
-					<a href="{{ route('requisition.approve.view_all') }}">
+					<a href="{{ route('requisition.view_all.pending_requisitions') }}">
 						<i class="fa fa-check-square"></i>
 						<span class="name"> Approve Requisition (HOD)</span>
 					</a>

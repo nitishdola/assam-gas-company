@@ -48,20 +48,34 @@ class RestController extends Controller
         }
     }
 
-    public function approveRequisition($id = NULL)
+    public function approveRequisition()
     {
         //if($this->_department_user->can(['requisition_check_user'])) {
         if(isset($_GET['item_id']) && $_GET['item_id'] != '') {
-            $id                 = Crypt::decrypt($id);
+            //return $id                 = Crypt::decrypt($_GET['item_id']);
+            $id                 = $_GET['item_id'];
             $requisition_item   = RequisitionItem::findOrFail($id);
             $requisition_item->authorized_by    = Auth::guard('material_user')->user()->id;
             $requisition_item->authorized_date  = date('Y-m-d');
             if($requisition_item->save()){
-                return true;
+                return 'Approved';
             }else{
-                return false;
+                return 'Unable to approve ! Please try again';
             }
         //}
+        }
+    }
+
+    public function rejectRequisition() {
+        if(isset($_GET['item_id']) && $_GET['item_id'] != '') {
+            $id                 = $_GET['item_id'];
+            $requisition_item   = RequisitionItem::findOrFail($id);
+            $requisition_item->current_status    = 'rejected';
+            if($requisition_item->save()){
+                return 'Successfully Rejected';
+            }else{
+                return 'Unable to reject item ! Please try again';
+            }
         }
     }
 }

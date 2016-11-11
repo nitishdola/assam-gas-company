@@ -938,6 +938,11 @@ Route::group(['prefix'=>'requisition'], function() {
         'uses' => 'RequisitionsController@approveRequisition'
     ]);
 
+    Route::post('/approve-requisition-items', [
+        'as' => 'requisition.approve_multiple',
+        'uses' => 'RequisitionsController@approveMultipleRequisitions'
+    ]);
+
 });
 
 //Purchase Indent
@@ -1326,8 +1331,13 @@ Route::group(['prefix'=>'rest'], function() {
         'uses' => 'RestController@itemValues'
     ]);
 
-    Route::post('/approve-requisition-item', [
+    Route::get('/approve-requisition-item', [
         'as' => 'rest.approve_requisition_item',
         'uses' => 'RestController@approveRequisition'
+    ]);
+
+    Route::get('/reject-requisition-item', [
+        'as' => 'rest.reject_requisition_item',
+        'uses' => 'RestController@rejectRequisition'
     ]);
 });

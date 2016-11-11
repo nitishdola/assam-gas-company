@@ -13,7 +13,7 @@ class AddcolCurrentstatusRequisitionItems extends Migration
     public function up()
     {
         Schema::table('requisition_items', function (Blueprint $table) {
-            //$table->enum('current_status',['at_inventory','sent_to_hod','authorized_for_issue','isseud'])->default('at_inventory')->after('status');
+            //$table->enum('current_status',['at_inventory','sent_to_hod','authorized_for_issue','rejected', isseud'])->default('at_inventory')->after('status');
         });
     }
 

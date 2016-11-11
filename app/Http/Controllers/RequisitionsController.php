@@ -347,12 +347,57 @@ class RequisitionsController extends Controller
     }
 
 
-    public function view_pending_requisitions() {
+    public function view_pending_requisitions(Request $request) {
         $where = [];
-        //$where['status'] = 1;
-        $where['authorized_by'] = NULL;
+        $where['requisition_items.authorized_by'] = NULL;
 
-        $results = RequisitionItem::where($where)->with('requisition', 'item_measurement', 'requisition.department', 'requisition.department_user')->paginate(10);
-        return view('material_user.requisitions.view_pending_requisitions',compact('results'));
+        $requisition_number = $department_id = $job_number = '';
+        if($request->requisition_number) {
+            $requisition_number = $request->requisition_number;
+            $where['requisitions.requisition_number'] = $request->requisition_number;
+        } 
+
+        if($request->department_id) {
+            $department_id = $request->department_id;
+            $where['requisitions.department_id'] = $request->department_id;
+        }
+
+        if($request->job_number) {
+            $job_number = $request->job_number;
+            $where['requisitions.job_number'] = $request->job_number;
+        }
+
+        $departments = Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
+
+        $results = DB::table('requisition_items')
+            ->join('requisitions', 'requisitions.id', '=', 'requisition_items.requisition_id')
+            ->join('departments', 'departments.id', '=', 'requisitions.department_id')
+            ->join('department_users', 'department_users.id', '=', 'requisitions.raised_by')
+            ->join('item_measurements', 'item_measurements.id', '=', 'requisition_items.item_measurement_id')
+            ->where($where)
+            ->select('departments.name as department', 'departments.department_code as department_code', 'requisitions.requisition_number as requisition_number', 'requisitions.created_at as requisition_date', 'requisitions.job_number as job_number', 'department_users.name as raised_by', 'item_measurements.item_name as item_name', 'item_measurements.item_code as item_code', 'requisition_items.quantity_demanded', 'item_measurements.stock_in_hand', 'requisition_items.id as id')
+            ->paginate(30);
+        return view('material_user.requisitions.view_pending_requisitions',compact('results', 'departments', 'requisition_number', 'job_number', 'department_id'));
+    }
+
+    public function approveMultipleRequisitions( Request $request ) {
+        $message = '';
+        $count   = 0;
+
+        $alert_class = 'alert-danger';
+
+        if(count($request->ids)) {
+            for($i = 0; $i < count($request->ids); $i++ ) {
+                $item_id = $request->ids[$i];
+                $requisition_item   = RequisitionItem::findOrFail($item_id);
+                $requisition_item->authorized_by    = Auth::guard('material_user')->user()->id;
+                $requisition_item->authorized_date  = date('Y-m-d');
+                $requisition_item->save();
+                $count++;
+            }
+            $alert_class = 'alert-success';
+        }
+        $message .= $count.' Items authorized for issue ';
+        return Redirect::route('requisition.view_all.pending_requisitions')->with(['message' => $message, 'alert-class' => $alert_class]);
     }
 }

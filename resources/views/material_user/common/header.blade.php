@@ -31,17 +31,21 @@
 						<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu skins">
-						<li><a href=" {{ route('requisition.index') }} " data-skin="night">View All Requisitions</a></li>
+						<li>
+							<a href=" {{ route('requisition.index') }} " data-skin="night">
+							<i class="fa fa-search" aria-hidden="true"></i>
+								View All Requisitions</a>
+						</li>
+
+						<li>
+							<a href="{{ route('requisition.view_all.pending_requisitions') }}">
+								<i class="fa fa-check-square"></i>
+								<span class="name"> Approve Requisition (HOD)</span>
+							</a>
+						</li>
+
 					</ul>
-				</li>
-
-				<li>
-					<a href="{{ route('requisition.view_all.pending_requisitions') }}">
-						<i class="fa fa-check-square"></i>
-						<span class="name"> Approve Requisition (HOD)</span>
-					</a>
-				</li>
-
+				</li>		
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-bars"></i>

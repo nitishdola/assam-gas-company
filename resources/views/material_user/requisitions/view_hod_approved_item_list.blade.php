@@ -2,18 +2,12 @@
 @section('title') All Items @stop
 @section('pageTitle') All Items @stop
 @section('pageCss') <style>
-	.warning {
-		color:#C86902;
-		font-weight: 500;
-	}
-
 	.success {
 		color:#4BB521;
 		font-weight: 500;
 	}
-
-	.red-me {
-		background: #CD1919;
+	.modal-backdrop {
+	   background-color: #FFF;
 	}
 </style>
 @stop
@@ -33,7 +27,7 @@
 <div class="col-lg-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-			{!! Form::open(array('route' => 'requisition.view_all.pending_requisitions', 'id' => 'requisition.index', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
+			{!! Form::open(array('route' => 'requisition.view_hod_approved_item_list', 'id' => 'requisition.view_hod_approved_item_list', 'class' => 'form-horizontal row-border', 'method' => 'get')) !!}
 			<div class="col-md-4"> 
 				<div class="form-group {{ $errors->has('department_id') ? 'has-error' : ''}}">
 				    {!! Form::label('department_id', 'Department', array('class' => 'col-md-3 control-label')) !!}
@@ -79,13 +73,9 @@
 		<div class="widget-content padded">
 			@if(count($results))
 			<?php $count = 1; ?>
-
-			{!! Form::open(array('route' => 'requisition.approve_multiple', 'id' => 'requisition.approve_multiple', 'class' => 'form-horizontal row-border')) !!}
-
 			<table id="datatable1" class="table table-striped table-bordered table-advance table-hover">
 			    <thead>
 			        <tr>
-			        	<th rowspan="2" class="col-md-1"><input type="checkbox" name="check[]" id="select_all" value="1"> Select All </th>
 			            <th rowspan="2">#</th>
 			            <th rowspan="2" class="hidden-xs">Department</th>
 			            <th rowspan="2"> Requisition Number </th>
@@ -105,7 +95,6 @@
 			    <tbody>
 			        @foreach($results as $k => $v)
 			        <tr id="row_{{$v->id}}">
-			        	<td> <input type="checkbox" class="checkbox" name="ids[]" value="{{ $v->id }} ">
 			            <td> {{ (($results->currentPage() - 1 ) * $results->perPage() ) + $count + $k }} </td>
 			            <td class="hidden-xs"> {{ $v->department }} ( {{ $v->department_code }} )</td>
 			            <td> {{ $v->requisition_number }} </td>
@@ -113,14 +102,11 @@
 			            <td> {{ $v->job_number }} </td>
 			            <td class="hidden-xs"> {{ $v->raised_by }} </td>
 			            <td> {{ $v->item_name }} ( <b>{{ $v->item_code }} </b>)</td>
-			            <td> {{ $v->quantity_demanded }} </td>
+			            <td id="demanded_{{$v->id}}"> {{ $v->quantity_demanded }} </td>
 			            <td> <b> <span class="@if($v->quantity_demanded >= $v->stock_in_hand) warning @else success @endif"> {{ $v->stock_in_hand }} </span> </b> </td>
-			            
 			            <td> 
-			            	<a href="javascript:void(0);" title="Authorize for Issue" class="btn btn-success btn-xs" onclick="authorizeItem({{$v->id}})"> Authorize</a>
-			            	<a href="javascript:void(0);" title="Item cannot be issued" class="btn btn-danger btn-xs" onclick="rejectItem({{$v->id}})">Reject</a>
+			            	<a href="javascript:void(0);" title="Authorize for Issue" class="btn btn-success btn-xs" onclick="issueItem({{$v->id}})"> ISSUE</a>
 						</td>
-
 
 			        </tr>
 			        @endforeach
@@ -129,13 +115,6 @@
 			<div class="pagination">
 			{!! $results->render() !!}
 			</div>
-
-				<div class="col-md-2 col-md-offset-5" style="margin-top:10px;"> 
-					{!! Form:: submit('Authorize All Selected', ['class' => 'btn btn-success', 'id' => 'authorize_all', 'disabled' => true]) !!}
-				</div>
-			</div>
-
-			{!! Form::close() !!}
 		    @else
 		    	<div class="alert alert-danger alert-dismissable alert-red">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
@@ -145,52 +124,63 @@
 		</div>
 	</div>
 </div>
+
+<div class="bd-example">
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalLabel">Issue Item <span id="itemName"></span></h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="demanded" class="form-control-label">Demanded:</label>
+              <input type="text" class="form-control" id="demanded">
+            </div>
+            <div class="form-group">
+              <label for="issued" class="form-control-label">Issued:</label>
+              <input type="issued" class="form-control" id="issued">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="requisition_item_id">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="issue_item" class="btn btn-primary">Issue Item and Notify User Dept.</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
+
 @section('pageJs')
+
 <script>
-$('#datatable1').dataTable({
-	//"sPaginationType": "bs_full",
-	"paging": false,
-	'pageLength' : false
-});
+function issueItem(id) {
+	var demanded = $('#demanded_'+id).text();
+	$('#demanded').val(demanded);
+	$('#issued').val(demanded);
+	$('#requisition_item_id').val(id);
+	$('.modal').modal('show');	
+}
 
-//Select All
-$("#select_all").change(function() {  //"select all" change
-    $(".checkbox").prop('checked', $(this).prop("checked")); 
-    //change all ".checkbox" checked status
-    $('#authorize_all').prop('disabled', false);	 
-});
-
-//".checkbox" change
-$('.checkbox').change(function(){
-    //uncheck "select all", if one of the listed checkbox item is unchecked
-    if(false == $(this).prop("checked")){ //if this item is unchecked
-        $("#select_all").prop('checked', false); 
-        //change "select all" checked status to false
-
-    }
-    
-    //check "select all" if all checkbox items are checked
-    if ($('.checkbox:checked').length == $('.checkbox').length ) {
-        $("#select_all").prop('checked', true);
-    }
-
-    if( $('.checkbox:checked').length != 0) {
-		$('#authorize_all').prop('disabled', false);
-	}else{
-		$('#authorize_all').prop('disabled', true);
-	}
-});
-
-function authorizeItem(id) {
-	$.blockUI();
-	//authorize
+$('#issue_item').click(function(e) {
+	e.preventDefault();
 	var url = '';
 	var data = '';
-	data += '&item_id='+id;
-	url  += '{{ route("rest.approve_requisition_item") }}';
 
+	data += '&item_id='+$.trim($('#requisition_item_id').val())+'&issued='+$('#issued').val();
+	url  += '{{ route("requisition.issue_item") }}';
+	console.log(url);
+	console.log(data);
 	$.ajax({
 		url  : url,
 		data : data,
@@ -202,37 +192,13 @@ function authorizeItem(id) {
 		},
 		success : function(resp) {
 			$.unblockUI();
-			//console.log(resp);
-			alert(resp);
-			$('#row_'+id).slideUp(500);
-		}
-	});
-}
-
-function rejectItem(id) {
-	$.blockUI();
-	//authorize
-	var url = '';
-	var data = '';
-	data += '&item_id='+id;
-	url  += '{{ route("rest.reject_requisition_item") }}';
-
-	$.ajax({
-		url  : url,
-		data : data,
-		type : 'get',
-
-		error : function(resp) {
 			console.log(resp);
-			$.unblockUI();
-		},
-		success : function(resp) {
-			$.unblockUI();
-			//console.log(resp);
 			alert(resp);
-			$('#row_'+id).slideUp(500);
+			$('#row_'+$('#requisition_item_id').val()).css("background-color","#68D659");
+			$('#row_'+$('#requisition_item_id').val()).slideUp(500);
+			$('.modal').modal('hide');	
 		}
 	});
-}
+});
 </script>
 @stop

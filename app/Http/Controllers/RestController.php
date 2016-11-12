@@ -32,17 +32,17 @@ class RestController extends Controller
              }
    }
     /**********casecading dropdown for location to rack**********/
-     public function getSubgroups(){
+    public function getSubgroups(){
         if(isset($_GET['item_group_id']) && $_GET['item_group_id'] != '') {
             $item_group_id = $_GET['item_group_id'];    
             $item_sub_groups = DB::table("item_sub_groups")->where("item_group_id",$item_group_id)
                     ->lists("name","id");
                      return json_encode($item_sub_groups);
              }
-   }
+    }
 
 
-     public function itemValues() {
+    public function itemValues() {
         if(isset($_GET['item_measurement_id']) && $_GET['item_measurement_id'] != '') {
             return ItemMeasurement::where('id', $_GET['item_measurement_id'])->select(['latest_rate', 'stock_in_hand', 'item_code'])->first();
         }
@@ -57,6 +57,7 @@ class RestController extends Controller
             $requisition_item   = RequisitionItem::findOrFail($id);
             $requisition_item->authorized_by    = Auth::guard('material_user')->user()->id;
             $requisition_item->authorized_date  = date('Y-m-d');
+            $requisition_item->current_status   = 'authorized_for_issue';
             if($requisition_item->save()){
                 return 'Approved';
             }else{
@@ -75,6 +76,27 @@ class RestController extends Controller
                 return 'Successfully Rejected';
             }else{
                 return 'Unable to reject item ! Please try again';
+            }
+        }
+    }
+
+    public function issueItem() {
+        if(isset($_GET['item_id']) && $_GET['item_id'] != '') {
+            $id                 = $_GET['item_id'];
+            $requisition_item   = RequisitionItem::findOrFail($id); 
+
+            if($requisition_item->current_status == 'authorized_for_issue' && $requisition_item->authorized_by != NULL && $requisition_item->authorized_date != NULL) {
+
+                $requisition_item->current_status    = 'issued'; 
+                $requisition_item->quantity_issued   = $_GET['issued']; 
+                $requisition_item->issued_by         = Auth::guard('material_user')->user()->id;
+                $requisition_item->issued_date       = date('Y-m-d');
+
+                if($requisition_item->save()){
+                    echo 'Successfully Issued';
+                }
+            }else{
+                echo 'Unable to issue item ! Please try again';
             }
         }
     }

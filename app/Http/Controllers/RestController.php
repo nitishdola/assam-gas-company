@@ -100,4 +100,29 @@ class RestController extends Controller
             }
         }
     }
+
+    public function receiveRequisitionItem() {
+
+        if(isset($_GET['requisition_item_id']) && $_GET['requisition_item_id'] != '') {
+            $requisition_item_id = $_GET['requisition_item_id'];
+
+            $requisition_item = RequisitionItem::findOrFail($requisition_item_id);
+            $requisition_item->received_in_good_condition_by = Auth::guard('department_user')->user()->id;
+            $requisition_item->received_in_good_condition_date = date('Y-m-d');
+            $requisition_item->current_status = 'received_at_user_department';
+
+            if($requisition_item->save()) {
+                return 'Receive record updated ';
+            }else{
+                return 'Something went wrong ! Please try again ';
+            }
+        }
+    }
+
+    public function viewRequisitionItems() {
+        if(isset($_GET['requisition_id']) && $_GET['requisition_id'] != '') {
+            $requisition_id = $_GET['requisition_id'];
+            return RequisitionItem::where('requisition_id', $requisition_id)->where('status',1)->with('item_measurement')->get();
+        }
+    }
 }

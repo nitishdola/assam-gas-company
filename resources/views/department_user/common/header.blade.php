@@ -36,27 +36,12 @@
 				 </ul>
 			</li>
 
-			<li>
-				<a href="{{ route('requisition.approve.view_all') }}">
-					<i class="fa fa-check-square"></i>
-					<span class="name"> Approve Requisition (HOD)</span>
-				</a>
-			</li>
-
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="fa fa-bars"></i>
 					<span class="name"> Purchase Indent</span>
 					<i class="fa fa-angle-down"></i>
 				</a>
-				<ul class="dropdown-menu skins">
-					<li><a href="{{route('requisition.view_approved')}}" data-skin="default">Generate</a></li>
-
-					<li><a href="{{route('purchase_indent.view_indents')}}" data-skin="default">Check Purchase Indent</a></li>
-					<li><a href="{{route('purchase_indent.view_checked')}}" data-skin="default">Approve Purchase Indent by HOD</a></li>
-					<li><a href="{{route('purchase_indent.view_all_approved_indents')}}" data-skin="default">Generate NIT/Add Vendor Rates</a></li>
-
-				 </ul>
 			</li>
 
 		</ul>

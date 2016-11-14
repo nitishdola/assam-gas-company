@@ -857,8 +857,13 @@ Route::group(['prefix'=>'requisition'], function() {
         'middleware' => ['department_user'],
         'uses' => 'RequisitionsController@store'
     ]);
+    Route::get('/hod/approve/view', [
+        'as' => 'requisition.hod.approve.view',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@hodApproveView'
+    ]);
 
-    
+
 
     Route::get('/view-all-new', [
         'as' => 'requisition.view_arrived_requisitions',
@@ -955,6 +960,18 @@ Route::group(['prefix'=>'requisition'], function() {
         'as' => 'requisition.issue_item',
         'uses' => 'RestController@issueItem'
     ]);
+
+
+    /***
+    Department User
+    **/
+    Route::get('/user-department/view-details/{num}', [
+        'as' => 'requisition.user.view',
+        'middleware' => ['department_user'],
+        'uses' => 'RequisitionsController@userDepartmentView'
+    ]); 
+
+    
 
 });
 
@@ -1353,4 +1370,15 @@ Route::group(['prefix'=>'rest'], function() {
         'as' => 'rest.reject_requisition_item',
         'uses' => 'RestController@rejectRequisition'
     ]);
+
+    Route::get('/receive-requisition-item', [
+        'as' => 'rest.user_receive_item',
+        'uses' => 'RestController@receiveRequisitionItem'
+    ]);
+
+    Route::get('/view_requisition_items', [
+        'as' => 'rest.view_requisition_items',
+        'uses' => 'RestController@viewRequisitionItems'
+    ]);
+    
 });

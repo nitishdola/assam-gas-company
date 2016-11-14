@@ -18,6 +18,8 @@ class MaterialUser extends Authenticatable
      
     ];
 
+    protected $table    = 'material_users';
+
     public function creator() 
     {
         return $this->belongsTo('App\Admin', 'created_by');

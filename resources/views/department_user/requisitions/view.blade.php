@@ -1,21 +1,7 @@
 @extends('layouts.department_user')
 
-@section('title') Material Requisition Form Details @stop
-@section('pageTitle') Material Requisition Form Details
-<div class="col-xs-12">
-	<a class="btn btn-info" href="{{ route('requisition.edit', Crypt::encrypt($info->id) ) }}">
-		<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-	</a>
-	<a class="btn btn-danger" href="{{ route('requisition.index', Crypt::encrypt($info->id) ) }}">
-		<i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back
-	</a>
-	@if($info->hod)
-		<a class="btn btn-primary disabled">Approved</a>
-	@else
-		<a class="btn btn-primary active" href="{{ route('requisition.approve', Crypt::encrypt($info->id) ) }}"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i>Approve</a>
-	@endif
-</div>
-@stop
+@section('title') Material Requisition Details @stop
+@section('pageTitle') Material Requisition Details @stop
 
 @section('breadcumb')
 <li>
@@ -36,10 +22,42 @@
 @section('content')
 <div class="widget-container fluid-height clearfix">
 	<div class="widget-content padded">
-			<div class="col-md-12">
-				@include('department_user.requisitions._view_requisition_details')
-			</div>
+		<div class="col-md-12">
+			@include('department_user.requisitions._view_requisition_details')
 		</div>
 	</div>
+</div>
 
+@stop
+
+
+@section('pageJs')
+<script>
+function receiveItem(id) {
+	if(confirm('Are you sure you want to receive ? This action can not be undone.')) {
+		$.blockUI();
+		var data = '';
+		var url  = '';
+
+		data += '&requisition_item_id='+id;
+		url  += "{{ route('rest.user_receive_item') }}";
+		$.ajax({
+			data : data,
+			url  : url,
+
+			error : function(resp) {
+				$.unblockUI();
+				alert('Something went wrong !');
+				console.log(resp);
+			},
+
+			success : function(resp) {
+				$.unblockUI();
+				alert(resp);
+				location.reload();
+			}
+		});
+	}
+}
+</script>
 @stop

@@ -18,17 +18,26 @@ class DepartmentUsersController extends Controller
     }
 
     public function index(){
-        $total_item_measurement   = ItemMeasurement::count();
-        $total_salvage_measurement = SalvageItemMeasurement::count();
-        $total_requisition = Requisition::count();
-    	  $username = Auth::guard('department_user')->user()->username;
-        $user = DepartmentUser::where('username', $username)->first();
+
+      $department_user_id = $username = Auth::guard('department_user')->user()->id;
+
+      $total_item_measurement   = ItemMeasurement::count();
+      $total_salvage_measurement = SalvageItemMeasurement::count();
+      $total_requisition = Requisition::where('raised_by', $department_user_id)->count();
+
+      $requisitions = [''=> 'Select Requisition'] + Requisition::where('raised_by', $department_user_id)->orderBy('created_at', 'DESC')->lists('requisition_number', 'id')->toArray();
+
+      $username = Auth::guard('department_user')->user()->username;
+      $user = DepartmentUser::where('username', $username)->first();
+
+
+        
 
 				$min_stocked_items 		= ItemMeasurement::select('item_name', 'item_code', 'stock_in_hand', 'minimum_stock_level', 'reorder_stock_level')->where('stock_in_hand', '<=', 'minimum_stock_level')->orderBy('stock_in_hand', 'ASC')->get();
 
 				$min_reordered_items 	= ItemMeasurement::select('item_name', 'item_code', 'stock_in_hand', 'minimum_stock_level', 'reorder_stock_level')->where('stock_in_hand', '<=', 'reorder_stock_level')->orderBy('reorder_stock_level', 'ASC')->get();
 
-    	  return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement','user', 'min_stocked_items', 'min_reordered_items'));
+    	  return view('department_user.dashboard',compact('total_item_measurement','total_requisition','total_salvage_measurement','user', 'min_stocked_items', 'min_reordered_items', 'requisitions'));
     }
 
     public function change_password() {

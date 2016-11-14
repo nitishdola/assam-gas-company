@@ -68,6 +68,8 @@ class RequisitionsController extends Controller
                 $data['department_id']  = Auth::guard('department_user')->user()->department_id;
                 $data['raised_by']      = Auth::guard('department_user')->user()->id;
 
+                $data['current_status']    = 'sent_to_hod_for_approve';
+
                 $requisition = Requisition::create( $data );
             }catch(ValidationException $e)
             {
@@ -81,10 +83,14 @@ class RequisitionsController extends Controller
                     $item_data['measurement_unit_id']   = $request->measurement_unit_id[$i];
                     $item_data['quantity_demanded']     = $request->quantity_demanded[$i];
                     $item_data['rate']                  = $request->rate[$i];
+                    $item_data['requisition_id']    = $requisition->id;
+
+                    $item_data['current_status']    = 'sent_to_hod_for_approve';
 
                     $validator = Validator::make($item_data, RequisitionItem::$rules);
-                    if ($validator->fails()) return Redirect::back(); //Redirect::back()->withErrors( $validator )->withInput();
-                    $item_data['requisition_id']    = $requisition->id;
+                    if ($validator->fails()) return Redirect::back(); 
+                    //Redirect::back()->withErrors( $validator )->withInput();
+                    
                     $requisition_item = RequisitionItem::create( $item_data );
                 }
                 // Validate, then create if valid
@@ -103,6 +109,13 @@ class RequisitionsController extends Controller
         //}
     }
 
+    public function hodApproveView() {
+        $where['status'] = 1;
+        $where['current_status'] = 'sent_to_hod_for_approve';
+        $results = Requisition::where($where)->with(['department', 'chargeable_account', 'department_user'])->orderBy('created_at', 'DESC')->paginate(30);
+        return view('department_user.requisitions.hod_approve_view', compact('results'));
+    }
+
     private function generate_requisition_number() {
       //latest requisition number
       $requisition = Requisition::select('id')->orderBy('id', 'DESC')->first();
@@ -114,33 +127,7 @@ class RequisitionsController extends Controller
 
 
     public function index(Request $request) {
-
-            $where = '';
-            // $username = Auth::guard('material_user')->user()->username;
-            // $user     = DepartmentUser::where('username', $username)->first();
-            // $departments = [''=> 'Select Department'] + Department::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-            // $chargeable_accounts    = [''=> 'Select Chargeable Account'] + ChargeableAccount::whereStatus(1)->orderBy('name', 'DESC')->lists('name', 'id')->toArray();
-
-            // $where = [];
-            // if($request->department_id) {
-            //     $where['department_id'] = $request->department_id;
-            // }
-            // if($request->chargeable_account_id) {
-            //     $where['chargeable_account_id'] = $request->chargeable_account_id;
-            // }
-            //  if($request->requisition_number) {
-            //     $where['requisition_number'] = $request->requisition_number;
-            // }
-            // if($request->current_status) {
-            //     $where['current_status'] = $request->current_status;
-            // }
-
-            // $where['status'] = 1;
-
-            // $results = Requisition::where($where)->with(['department', 'chargeable_account'])->orderBy('created_at', 'DESC')->paginate(20);
-
-            // return view('material_user.requisitions.index', compact('departments','chargeable_accounts', 'results','user'));
-
+        $where = '';
         $results = DB::table('requisition_items')
             ->join('requisitions', 'requisitions.id', '=', 'requisition_items.requisition_id')
             ->join('departments', 'departments.id', '=', 'requisitions.department_id')
@@ -184,22 +171,6 @@ class RequisitionsController extends Controller
         // }
     }
 
-    // public function approveRequisition($id)
-    // {
-    //     //if($this->_department_user->can(['requisition_check_user'])) {
-    //         $id                 = Crypt::decrypt($id);
-    //         $requisitions       = Requisition::findOrFail($id);
-    //         $requisitions->hod  = Auth::guard('department_user')->user()->id;
-    //         $requisitions->hod_approve_date  = date('Y-m-d H:i:s');
-    //        if($requisitions->save()){
-    //         $requisition_number = $requisitions->requisition_number;
-    //             return view('department_user.requisitions.success', compact('requisition_number'));
-    //             //return redirect()->route('requisition.approve.success')->with(['requisition_number', $requisitions->requisition_]);
-    //         }else{
-    //             return redirect()->back()->with('message', 'Unable to process your request. Please try again or contact TechSupport.');
-    //         }
-    //     //}
-    // }
     public function view_approved(Request $request) {
         $username = Auth::guard('department_user')->user()->username;
         $user     = DepartmentUser::where('username', $username)->first();
@@ -450,4 +421,12 @@ class RequisitionsController extends Controller
             ->paginate(30);
         return view('material_user.requisitions.view_hod_approved_item_list',compact('results', 'departments', 'requisition_number', 'job_number', 'department_id'));
     }
+
+    public function userDepartmentView( $id = NULL ) {
+        //$id       = Crypt::decrypt($id);
+        $info     = Requisition::where('id', $id)->with('department', 'chargeable_account')->first();
+        $requisition_items  = RequisitionItem::where('requisition_id', $id)->with(['item_measurement', 'item_measurement.measurement_unit'])->get();
+        return view('department_user.requisitions.view',compact('info','requisition_items'));
+    }
+
 }
